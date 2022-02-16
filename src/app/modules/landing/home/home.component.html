@@ -25,9 +25,12 @@
         </ng-container>
         <!-- Navigation toggle button -->
         <ng-container *ngIf="isScreenSmall">
-            <button mat-icon-button (click)="toggleNavigation('topNavigation')">
+            <div class="flex items-center pl-2 ml-auto space-x-0.5 sm:space-x-2">
+                <user></user>
+            </div>
+            <!-- <button mat-icon-button (click)="toggleNavigation('topNavigation')">
                 <mat-icon [svgIcon]="'heroicons_outline:menu'"></mat-icon>
-            </button>
+            </button> -->
             <h2 class="text-secondary text-2xl md:text-3xl font-extrabold tracking-tight leading-7 sm:leading-10 ml-4">
                 LOADGISTIX </h2>
             <fuse-horizontal-navigation [name]="'topNavigation'" [navigation]="navigation">
