@@ -44,7 +44,7 @@ export class load {
         userIdDelivered: Guid,
         userIdDeliveredConfirmed: Guid,
 
-        bids: bid[]
+        bid: bid[]
     ) {
         this.id = id;
         this.userId = userId;
@@ -87,7 +87,7 @@ export class load {
         this.userIdDelivered = userIdDelivered;
         this.userIdDeliveredConfirmed = userIdDeliveredConfirmed;
 
-        this.bids = bids;
+        this.bid = bid;
     }
     public id: Guid;
     public userId: Guid;
@@ -130,5 +130,5 @@ export class load {
     public userIdDelivered: Guid;
     public userIdDeliveredConfirmed: Guid;
 
-    public bids: bid[];
+    public bid: bid[];
 }

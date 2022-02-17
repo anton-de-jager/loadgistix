@@ -703,7 +703,7 @@ export class LoadsComponent implements OnInit {
     }
 
     getBidCount(id: Guid){
-        return this.loadList.find(x => x.id == id) ? this.loadList.find(x => x.id == id).bids.filter(y => y.status.description === 'Open').length : 0;
+        return this.loadList.find(x => x.id == id) ? this.loadList.find(x => x.id == id).bid.filter(y => y.status.description === 'Open').length : 0;
     }
 
     getAddressSubstring(str: string, char: string) {

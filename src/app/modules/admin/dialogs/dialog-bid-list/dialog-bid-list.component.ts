@@ -76,7 +76,7 @@ export class DialogBidListComponent {
             this.readOnly = data.readOnly == 1 ? true : false;
         }, 100);
         //console.log(data.item.bids);
-        this.dataSource = new MatTableDataSource(data.item.bids);
+        this.dataSource = new MatTableDataSource(data.item.bid);
 
         this._unsubscribeAll = new Subject();
     }
