@@ -15,6 +15,7 @@ import { environment } from 'environments/environment';
     templateUrl: 'dialog-driver.component.html'
 })
 export class DialogDriverComponent {
+    timestamp: number = 0;
     imagesFolder = environment.api + 'Images/';
     form: FormGroup;
     formErrors: any;
@@ -31,6 +32,7 @@ export class DialogDriverComponent {
         private _snackBar: MatSnackBar,
         private apiService: ApiService,
         private sanitizer: DomSanitizer) {
+        this.timestamp = new Date().getTime();
         this.formErrors = data.formErrors;
         this.formData = data;
 
@@ -83,10 +85,6 @@ export class DialogDriverComponent {
 
     public hasError = (controlName: string, errorName: string) => {
         return this.form.controls[controlName].hasError(errorName);
-    }
-
-    timestamp(){
-        return new Date().getTime();
     }
 
     onNoClick(): void {

@@ -24,6 +24,7 @@ import { HttpEventType } from '@angular/common/http';
     encapsulation: ViewEncapsulation.None
 })
 export class DirectoryComponent implements OnInit {
+    timestamp: number = 0;
     loading: boolean;
     form: FormGroup;
     directoryCategoryList: directoryCategory[] = [];
@@ -177,6 +178,7 @@ export class DirectoryComponent implements OnInit {
                                     this.directoryList.push(apiResult.data);
                                     this.dataSource = new MatTableDataSource(this.directoryList);
                                     this.fuseSplashScreenService.hide(); this.loading = false;
+                                    this.timestamp = new Date().getTime();
                                 });
                             } else {
                                 this.directoryList.push(apiResult.data);
@@ -204,6 +206,7 @@ export class DirectoryComponent implements OnInit {
                                         this.directoryList[objIndex] = apiResult.data;
                                         this.dataSource = new MatTableDataSource(this.directoryList);
                                         this.fuseSplashScreenService.hide(); this.loading = false;
+                                        this.timestamp = new Date().getTime();
                                     });
                                 } else {
                                     let objIndex = this.directoryList.findIndex(x => x.id === row.id);

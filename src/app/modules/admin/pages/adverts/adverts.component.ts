@@ -27,6 +27,7 @@ const MAX_SIZE: number = 1048576;
     encapsulation: ViewEncapsulation.None
 })
 export class AdvertsComponent implements OnInit {
+    timestamp: number = 0;
     imagesFolder = environment.api + 'Images/';
     loading: boolean = true;
     form: FormGroup;
@@ -54,6 +55,7 @@ export class AdvertsComponent implements OnInit {
         private fuseSplashScreenService: FuseSplashScreenService,
         private fuseConfirmationService: FuseConfirmationService
     ) {
+        this.timestamp = new Date().getTime();
         this.fuseSplashScreenService.show(); this.loading = true;
         this.displayedColumns = ['cud', 'title', 'avatar', 'statusDescription'];
     }
@@ -197,6 +199,7 @@ export class AdvertsComponent implements OnInit {
                                     this.advertList.push(apiResult.data);
                                     this.dataSource = new MatTableDataSource(this.advertList);
                                     this.fuseSplashScreenService.hide(); this.loading = false;
+                                    this.timestamp = new Date().getTime();
                                 });
                             } else {
                                 this.advertList.push(apiResult.data);
@@ -224,6 +227,7 @@ export class AdvertsComponent implements OnInit {
                                         this.advertList[objIndex] = apiResult.data;
                                         this.dataSource = new MatTableDataSource(this.advertList);
                                         this.fuseSplashScreenService.hide(); this.loading = false;
+                                        this.timestamp = new Date().getTime();
                                     });
                                 } else {
                                     let objIndex = this.advertList.findIndex(x => x.id === row.id);
@@ -308,10 +312,6 @@ export class AdvertsComponent implements OnInit {
                 });
             }
         });
-    }
-
-    timestamp(){
-        return new Date().getTime();
     }
 
     uploadFile(fileToUpload, filename): Promise<boolean> {

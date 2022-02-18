@@ -35,6 +35,7 @@ const MAX_SIZE: number = 1048576;
     encapsulation: ViewEncapsulation.None
 })
 export class LoadsComponent implements OnInit {
+    timestamp: number = 0;
     loading: boolean = true;
     rangeItems: any[] = [
         { description: '10km', value: 10 },
@@ -378,6 +379,7 @@ export class LoadsComponent implements OnInit {
                                         this.loadList.push(apiResult.data);
                                         this.dataSource = new MatTableDataSource(this.loadList);
                                         this.fuseSplashScreenService.hide(); this.loading = false;
+                                        this.timestamp = new Date().getTime();
                                     });
                                 } else {
                                     this.loadList.push(apiResult.data);
@@ -413,6 +415,7 @@ export class LoadsComponent implements OnInit {
                                         this.loadList[objIndex] = apiResult.data;
                                         this.dataSource = new MatTableDataSource(this.loadList);
                                         this.fuseSplashScreenService.hide(); this.loading = false;
+                                        this.timestamp = new Date().getTime();
                                     });
                                 } else {
                                     let objIndex = this.loadList.findIndex(x => x.id === row.id);

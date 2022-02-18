@@ -44,7 +44,7 @@
                                 </th>
                                 <td mat-cell *matCellDef="let row" class="table-cell">
                                     <img *ngIf="row.avatar" style="max-width: 80px;max-height: 80px;"
-                                        [src]="imagesFolder + 'Adverts/' + row.id + row.avatar + '?t=' + timestamp()" class="image" />
+                                        [src]="imagesFolder + 'Adverts/' + row.id + row.avatar + '?t=' + timestamp" class="image" />
                                     <img *ngIf="!row.avatar" style="max-width: 80px;max-height: 80px;"
                                         src="assets/images/no-image.jpg" class="image" />
                                 </td>

@@ -27,6 +27,7 @@ const MAX_SIZE: number = 1048576;
     encapsulation: ViewEncapsulation.None
 })
 export class VehiclesComponent implements OnInit {
+    timestamp: number = 0;
     loading: boolean = true;
     form: FormGroup;
     vehicleList: vehicle[] = [];
@@ -274,6 +275,7 @@ export class VehiclesComponent implements OnInit {
                                         this.vehicleList.push(apiResult.data);
                                         this.dataSource = new MatTableDataSource(this.vehicleList);
                                         this.fuseSplashScreenService.hide(); this.loading = false;
+                                        this.timestamp = new Date().getTime();
                                     });
                                 } else {
                                     this.vehicleList.push(apiResult.data);
@@ -309,6 +311,7 @@ export class VehiclesComponent implements OnInit {
                                         this.vehicleList[objIndex] = apiResult.data;
                                         this.dataSource = new MatTableDataSource(this.vehicleList);
                                         this.fuseSplashScreenService.hide(); this.loading = false;
+                                        this.timestamp = new Date().getTime();
                                     });
                                 } else {
                                     let objIndex = this.vehicleList.findIndex(x => x.id === row.id);

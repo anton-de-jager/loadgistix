@@ -16,6 +16,7 @@ import { environment } from 'environments/environment';
     templateUrl: 'dialog-directory.component.html'
 })
 export class DialogDirectoryComponent {
+    timestamp: number = 0;
     imagesFolder = environment.api + 'Images/';
     form: FormGroup;
     formErrors: any;
@@ -32,6 +33,7 @@ export class DialogDirectoryComponent {
         private _snackBar: MatSnackBar,
         private apiService: ApiService,
         private sanitizer: DomSanitizer) {
+        this.timestamp = new Date().getTime();
         this.formErrors = data.formErrors;
         this.formData = data;
 
@@ -113,10 +115,6 @@ export class DialogDirectoryComponent {
                 this.form.controls['addressLon'].setValue(result.y);
             }
         });
-    }
-
-    timestamp(){
-        return new Date().getTime();
     }
 
     onNoClick(): void {

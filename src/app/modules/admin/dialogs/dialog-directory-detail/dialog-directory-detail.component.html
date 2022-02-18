@@ -4,7 +4,7 @@
 
     <div fxFlex fxLayout="row wrap" class="m-4">
         <img *ngIf="screenSize>800 && directoryItem.avatar" mat-card-md-image
-            [src]="imagesFolder + 'Directories/' + directoryItem.id + directoryItem.avatar + '?t=' + timestamp()">
+            [src]="imagesFolder + 'Directories/' + directoryItem.id + directoryItem.avatar + '?t=' + timestamp">
         <img *ngIf="screenSize>800 && !directoryItem.avatar" mat-card-md-image src="assets/images/no-image.jpg">
         <div fxFlex fxLayout="column">
             <div fxFlex fxLayout="column" fxLayout.gt-sm="row wrap" style="margin-bottom: 4px;">

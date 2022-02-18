@@ -17,6 +17,7 @@ import { environment } from 'environments/environment';
     templateUrl: 'dialog-advert.component.html'
 })
 export class DialogAdvertComponent {
+    timestamp: number = 0;
     imagesFolder = environment.api + 'Images/';
     loading: boolean = true;
     form: FormGroup;
@@ -34,6 +35,7 @@ export class DialogAdvertComponent {
         private _snackBar: MatSnackBar,
         private fuseSplashScreenService: FuseSplashScreenService,
         private apiService: ApiService) {
+        this.timestamp = new Date().getTime();
         this.formErrors = data.formErrors;
         this.formData = data;
 
@@ -88,10 +90,6 @@ export class DialogAdvertComponent {
 
     public hasError = (controlName: string, errorName: string) => {
         return this.form.controls[controlName].hasError(errorName);
-    }
-
-    timestamp(){
-        return new Date().getTime();
     }
 
     onNoClick(): void {

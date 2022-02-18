@@ -65,7 +65,7 @@
                     <mat-card-content>
                         <div fxFlex fxLayout="row wrap">
                             <img *ngIf="screenSize>800 && directoryItem.avatar" mat-card-md-image
-                            [src]="imagesFolder + 'Directories/' + directoryItem.id + directoryItem.avatar + '?t=' + timestamp()">
+                            [src]="imagesFolder + 'Directories/' + directoryItem.id + directoryItem.avatar + '?t=' + timestamp">
                             <img *ngIf="screenSize>800 && !directoryItem.avatar" mat-card-md-image
                             src="assets/images/no-image.jpg">
                             <div fxFlex fxLayout="column">

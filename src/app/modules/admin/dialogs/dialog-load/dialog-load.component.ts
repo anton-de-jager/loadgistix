@@ -22,6 +22,7 @@ import { environment } from 'environments/environment';
     templateUrl: 'dialog-load.component.html'
 })
 export class DialogLoadComponent {
+    timestamp: number = 0;
     imagesFolder = environment.api + 'Images/';
     form: FormGroup;
     formBid: FormGroup;
@@ -49,6 +50,7 @@ export class DialogLoadComponent {
         private apiService: ApiService,
         private _snackBar: MatSnackBar,
         private fuseSplashScreenService: FuseSplashScreenService) {
+        this.timestamp = new Date().getTime();
         if (data.readOnly == 1) {
             this.bidRow = data.item;
         }
@@ -64,15 +66,15 @@ export class DialogLoadComponent {
     ngOnInit(): void {
         this.form = this.data.form;
         this.formValid = false;
-        
+
         //console.log(this.form.value);
         this.data.loadCategoryList.forEach(loadCategoryItem => {
-            loadCategoryItem.loadTypeList = this.data.loadTypeList.filter(x => x.loadCategoryId == loadCategoryItem.id).sort((a,b) => a.description.localeCompare(b.description));
+            loadCategoryItem.loadTypeList = this.data.loadTypeList.filter(x => x.loadCategoryId == loadCategoryItem.id).sort((a, b) => a.description.localeCompare(b.description));
             this.loadCategoryList.push(loadCategoryItem);
         });
 
         setTimeout(() => {
-            this.loadCategoryList = this.loadCategoryList.sort((a,b) => a.description.localeCompare(b.description));
+            this.loadCategoryList = this.loadCategoryList.sort((a, b) => a.description.localeCompare(b.description));
             this.loadTypeChanged();
         }, 100);
     }
@@ -234,10 +236,6 @@ export class DialogLoadComponent {
                 });
             }
         });
-    }
-
-    timestamp(){
-        return new Date().getTime();
     }
 
     onNoClick(): void {

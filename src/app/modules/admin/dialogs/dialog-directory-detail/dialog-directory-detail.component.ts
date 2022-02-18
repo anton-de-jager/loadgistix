@@ -10,6 +10,7 @@ import { environment } from 'environments/environment';
   styleUrls: ['./dialog-directory-detail.component.scss']
 })
 export class DialogDirectoryDetailComponent implements OnInit {
+  timestamp: number = 0;
   imagesFolder = environment.api + 'Images/';
   directoryItem: any;
   screenSize: number = window.innerWidth;
@@ -18,21 +19,18 @@ export class DialogDirectoryDetailComponent implements OnInit {
     private dialog: MatDialog,
     public dialogRef: MatDialogRef<DialogDirectoryDetailComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
+    this.timestamp = new Date().getTime();
     this.directoryItem = data.directoryItem
   }
 
   @HostListener('window:resize', ['$event'])
   getScreenSize(event?) {
-      this.screenSize = window.innerWidth;
+    this.screenSize = window.innerWidth;
   }
 
   getAddressSubstring(str: string, char: string) {
     let arr = str.split(char);
     return arr.length > 1 ? arr[0] + ',' + arr[1] : str;
-  }
-
-  timestamp(){
-      return new Date().getTime();
   }
 
   ngOnInit(): void {

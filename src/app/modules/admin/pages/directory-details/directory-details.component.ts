@@ -37,6 +37,7 @@ export interface Section {
     encapsulation: ViewEncapsulation.None
 })
 export class DirectoryDetailsComponent implements OnInit {
+    timestamp: number = 0;
     imagesFolder = environment.api + 'Images/';
     loading: boolean = true;
     directoryItems: directory[] = [];
@@ -75,6 +76,7 @@ export class DirectoryDetailsComponent implements OnInit {
         private fuseSplashScreenService: FuseSplashScreenService,
         private _fuseMediaWatcherService: FuseMediaWatcherService
     ) {
+        this.timestamp = new Date().getTime();
         this.fuseSplashScreenService.show(); this.loading = true;
     }
 
@@ -171,10 +173,6 @@ export class DirectoryDetailsComponent implements OnInit {
 
         const dialogRef = this.dialog.open(DialogDirectoryDetailComponent,
             dialogConfig);
-    }
-
-    timestamp(){
-        return new Date().getTime();
     }
 
     getAddressSubstring(str: string, char: string) {

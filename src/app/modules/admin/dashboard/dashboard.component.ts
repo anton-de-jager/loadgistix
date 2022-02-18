@@ -16,6 +16,7 @@ import { environment } from 'environments/environment';
     encapsulation: ViewEncapsulation.None
 })
 export class DashboardComponent implements OnInit {
+    timestamp: number = 0;
     imagesFolder = environment.api + 'Images/';
     viewsAdvert: number;
     viewsBusinessDirectory: number;
@@ -46,6 +47,7 @@ export class DashboardComponent implements OnInit {
         private _snackBar: MatSnackBar,
         private fuseSplashScreenService: FuseSplashScreenService,
         private _dashboardService: DashboardService) {
+        this.timestamp = new Date().getTime();
 
         this.getDashboard().then(result => {
             //console.log(result);
@@ -117,10 +119,6 @@ export class DashboardComponent implements OnInit {
         //         }
         //     }
         // };
-    }
-
-    timestamp(){
-        return new Date().getTime();
     }
 
     ngOnInit(): void {

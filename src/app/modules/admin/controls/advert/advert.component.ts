@@ -17,6 +17,7 @@ import { environment } from 'environments/environment';
     encapsulation: ViewEncapsulation.Emulated
 })
 export class AdvertComponent implements OnInit {
+    timestamp: number = 0;
     imagesFolder = environment.api + 'Images/';
     loading: boolean = true;
     advertItems: advert[] = [];
@@ -28,6 +29,7 @@ export class AdvertComponent implements OnInit {
         public variableService: VariableService,
         private authService: AuthService,
         private _router: Router) {
+        this.timestamp = new Date().getTime();
     }
 
     ngOnInit() {
@@ -40,14 +42,11 @@ export class AdvertComponent implements OnInit {
                 if (authenticated) {
                     this.getAdverts().then(getAdvertsResult => {
                         this.advertItems = getAdvertsResult;
+                        this.timestamp = new Date().getTime();
                     });
                 }
             })
         });
-    }
-
-    timestamp(){
-        return new Date().getTime();
     }
 
     getAdverts(): Promise<advert[]> {

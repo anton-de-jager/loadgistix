@@ -15,6 +15,7 @@ import { environment } from 'environments/environment';
     templateUrl: 'dialog-vehicle.component.html'
 })
 export class DialogVehicleComponent {
+    timestamp: number = 0;
     imagesFolder = environment.api + 'Images/';
     form: FormGroup;
     formErrors: any;
@@ -23,7 +24,7 @@ export class DialogVehicleComponent {
     formData: any;
     previewImage: string = null;
     fileToUpload: any;
-    
+
     vehicleCategoryList: any[] = [];
 
     constructor(
@@ -32,6 +33,7 @@ export class DialogVehicleComponent {
         @Inject(MAT_DIALOG_DATA) public data: any,
         private _snackBar: MatSnackBar,
         private apiService: ApiService) {
+        this.timestamp = new Date().getTime();
         this.formErrors = data.formErrors;
         this.formData = data;
         this._unsubscribeAll = new Subject();
@@ -41,12 +43,12 @@ export class DialogVehicleComponent {
         this.form = this.data.form;
         this.formValid = false;
         this.data.vehicleCategoryList.forEach(vehicleCategoryItem => {
-            vehicleCategoryItem.vehicleTypeList = this.data.vehicleTypeList.filter(x => x.vehicleCategoryId == vehicleCategoryItem.id).sort((a,b) => a.description.localeCompare(b.description));
+            vehicleCategoryItem.vehicleTypeList = this.data.vehicleTypeList.filter(x => x.vehicleCategoryId == vehicleCategoryItem.id).sort((a, b) => a.description.localeCompare(b.description));
             this.vehicleCategoryList.push(vehicleCategoryItem);
         });
 
         setTimeout(() => {
-            this.vehicleCategoryList = this.vehicleCategoryList.sort((a,b) => a.description.localeCompare(b.description));
+            this.vehicleCategoryList = this.vehicleCategoryList.sort((a, b) => a.description.localeCompare(b.description));
             this.vehicleTypeChanged();
         }, 100);
     }
@@ -159,10 +161,6 @@ export class DialogVehicleComponent {
 
     public hasError = (controlName: string, errorName: string) => {
         return this.form.controls[controlName].hasError(errorName);
-    }
-
-    timestamp(){
-        return new Date().getTime();
     }
 
     onNoClick(): void {

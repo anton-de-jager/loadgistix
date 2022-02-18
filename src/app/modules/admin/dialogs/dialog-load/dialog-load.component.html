@@ -186,7 +186,7 @@
             </div>
 
             <div fxFlex="100" class="p-4" fxLayout="row" fxLayoutAlign="center center">
-                <input #Image id="fileInput" type="file" (change)="handleFileInput($event.target.files)"
+                <input #Image id="fileInput" type="file" (click)="Image.value = null" (change)="handleFileInput($event.target.files)"
                     accept=".jpg,.png,.jpeg" style="display:none" />
                 <div fxFlex fxLayout="column">
                     <div fxFlex fxLayout="row">
@@ -201,14 +201,14 @@
                             class="image" (click)="Image.click()" />
                         <img *ngIf="!previewImage && form.value.avatar && !readOnly"
                             style="max-width: 120px;max-height: 120px;width: auto;height: auto;"
-                            [src]="imagesFolder + 'Loads/' + form.value.id + form.value.avatar + '?t=' + timestamp()" class="image"
+                            [src]="imagesFolder + 'Loads/' + form.value.id + form.value.avatar + '?t=' + timestamp" class="image"
                             (click)="Image.click()" />
                         <img *ngIf="!previewImage && !form.value.avatar && !readOnly"
                             style="max-width: 120px;max-height: 120px;width: auto;height: auto;"
                             src="assets/images/no-image.jpg" class="image" (click)="Image.click()" />
                         <img *ngIf="readOnly && form.value.avatar"
                             style="max-width: 120px;max-height: 120px;width: auto;height: auto;"
-                            [src]="imagesFolder + 'Loads/' + form.value.id + form.value.avatar + '?t=' + timestamp()" class="image" />
+                            [src]="imagesFolder + 'Loads/' + form.value.id + form.value.avatar + '?t=' + timestamp" class="image" />
                         <img *ngIf="readOnly && !form.value.avatar"
                             style="max-width: 120px;max-height: 120px;width: auto;height: auto;"
                             src="assets/images/no-image.jpg" class="image" />

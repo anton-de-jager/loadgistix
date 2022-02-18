@@ -19,6 +19,7 @@ import { environment } from 'environments/environment';
     animations: fuseAnimations
 })
 export class AuthSignUpComponent implements OnInit {
+    timestamp: number = 0;
     imagesFolder = environment.api + 'Images/';
     @ViewChild('signUpNgForm') signUpNgForm: NgForm;
     yearlyBilling: boolean = false;
@@ -43,6 +44,7 @@ export class AuthSignUpComponent implements OnInit {
         private _router: Router,
         private apiService: ApiService
     ) {
+        this.timestamp = new Date().getTime();
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -204,10 +206,6 @@ export class AuthSignUpComponent implements OnInit {
                 this.signUpForm.controls['avatarChanged'].setValue(true);
             }
         });
-    }
-
-    timestamp(){
-        return new Date().getTime();
     }
 
     uploadFile(fileToUpload, filename): Promise<boolean> {

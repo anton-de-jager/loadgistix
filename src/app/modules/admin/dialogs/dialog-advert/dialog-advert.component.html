@@ -42,7 +42,7 @@
                 </mat-form-field>
             </div>
             <div fxFlex="100" fxFlex.gt-xs="50" class="p-4" fxLayout="row" fxLayoutAlign="center center">
-                <input #Image id="fileInput" type="file" (change)="handleFileInput($event.target.files)"
+                <input #Image id="fileInput" type="file" (click)="Image.value = null" (change)="handleFileInput($event.target.files)"
                     accept=".jpg,.png,.jpeg" style="display:none" />
                 <div fxFlex fxLayout="column">
                     <div fxFlex fxLayout="row">
@@ -56,7 +56,7 @@
                             [src]="previewImage" class="image" (click)="Image.click()" />
                         <img *ngIf="!previewImage && form.value.avatar"
                             style="max-width: 120px;max-height: 120px;width: auto;height: auto;"
-                            [src]="imagesFolder + 'Adverts/' + form.value.id + form.value.avatar + '?t=' + timestamp()" class="image"
+                            [src]="imagesFolder + 'Adverts/' + form.value.id + form.value.avatar + '?t=' + timestamp" class="image"
                             (click)="Image.click()" />
                         <img *ngIf="!previewImage && !form.value.avatar"
                             style="max-width: 120px;max-height: 120px;width: auto;height: auto;"

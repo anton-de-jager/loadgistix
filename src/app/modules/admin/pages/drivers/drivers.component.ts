@@ -24,6 +24,7 @@ import { HttpEventType } from '@angular/common/http';
     encapsulation: ViewEncapsulation.None
 })
 export class DriversComponent implements OnInit {
+    timestamp: number = 0;
     loading: boolean;
     form: FormGroup;
     licenceTypeList: licenceType[] = [];
@@ -175,6 +176,7 @@ export class DriversComponent implements OnInit {
                                         this.driverList.push(apiResult.data);
                                         this.dataSource = new MatTableDataSource(this.driverList);
                                         this.fuseSplashScreenService.hide(); this.loading = false;
+                                        this.timestamp = new Date().getTime();
                                     });
                                 } else {
                                     this.driverList.push(apiResult.data);
@@ -210,6 +212,7 @@ export class DriversComponent implements OnInit {
                                         this.driverList[objIndex] = apiResult.data;
                                         this.dataSource = new MatTableDataSource(this.driverList);
                                         this.fuseSplashScreenService.hide(); this.loading = false;
+                                        this.timestamp = new Date().getTime();
                                     });
                                 } else {
                                     let objIndex = this.driverList.findIndex(x => x.id === row.id);
