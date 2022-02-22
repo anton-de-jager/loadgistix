@@ -1,7 +1,7 @@
 <div class="flex flex-col flex-auto min-w-0">
     <div fxFlex fxLayout="column" class="page-layout blank p-4" fusePerfectScrollbar>
         <div fxLayout="row wrap" class="w-100-p">
-            <div fxFlex="100" fxFlex.gt-xs="24">
+            <div fxFlex="90" fxFlex.gt-xs="96">
                 <mat-form-field appearance="outline" class="w-100-p">
                     <mat-label>Within Range</mat-label>
                     <mat-select [(ngModel)]="range" placeholder="Within Range" [disabled]="loading">
@@ -10,7 +10,7 @@
                     </mat-select>
                 </mat-form-field>
             </div>
-            <div fxFlex="100" fxFlex.gt-xs="24">
+            <!-- <div fxFlex="100" fxFlex.gt-xs="24">
                 <mat-form-field appearance="outline" class="w-100-p">
                     <mat-label>Max Weight (kg)</mat-label>
                     <input matInput type="number" placeholder="Max Weight (kg)" [(ngModel)]="weight" [disabled]="loading">
@@ -29,8 +29,8 @@
                     <input matInput type="number" placeholder="Max Volume (litres)" [(ngModel)]="volumeLt"
                         [disabled]="loading">
                 </mat-form-field>
-            </div>
-            <div fxFlex="100" fxFlex.gt-xs="4" style="align-items:right">
+            </div> -->
+            <div fxFlex="10" fxFlex.gt-xs="4" style="align-items:right">
                 <button mat-mini-fab color="default" (click)="load()" matTooltip="Filter" [disabled]="loading"
                     style="margin-top: 12px;">
                     <mat-icon class="fab-icon">search</mat-icon>

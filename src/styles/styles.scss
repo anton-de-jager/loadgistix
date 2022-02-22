@@ -272,3 +272,11 @@ iframe {
   max-width: 45px!important;
   text-align: center;
 }
+
+.button-row {
+  display: table-cell;
+  width: 100%;
+}
+.button-row .mat-button-base {
+  margin: 8px 8px 8px 0;
+}

@@ -1,19 +1,16 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-import { FuseNavigationItem, FuseNavigationService, FuseVerticalNavigationComponent } from '@fuse/components/navigation';
-import { FuseMediaWatcherService } from '@fuse/services/media-watcher';
+import { Router } from '@angular/router';
+import { FuseNavigationItem } from '@fuse/components/navigation';
 import { VariableService } from 'app/shared/variable.service';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject } from 'rxjs';
 
 @Component({
-    selector     : 'landing-home',
-    templateUrl  : './home.component.html',
+    selector: 'landing-home',
+    templateUrl: './home.component.html',
     encapsulation: ViewEncapsulation.None
 })
-export class LandingHomeComponent
-{
-    yearlyBilling: boolean = true;
+export class LandingHomeComponent {
     isScreenSmall: boolean;
-    private _unsubscribeAll: Subject<any> = new Subject<any>();
     navigation: FuseNavigationItem[] = [
         {
             id: 'home',
@@ -31,43 +28,33 @@ export class LandingHomeComponent
         }
     ]
 
-    slides = [{'image': 'assets/images/banners/BusinessDirectory.png'}, {'image': 'assets/images/banners/FleetManagement.png'}];
-    
+    slides = [{ 'image': 'assets/images/banners/BusinessDirectory.png' }, { 'image': 'assets/images/banners/FleetManagement.png' }];
+
     constructor(
-        private _fuseNavigationService: FuseNavigationService,
         public variableService: VariableService,
-        private _fuseMediaWatcherService: FuseMediaWatcherService
-    )
-    {
-    }
-    ngOnInit(): void
-    {
-        // Subscribe to media changes
-        this._fuseMediaWatcherService.onMediaChange$
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe(({matchingAliases}) => {
-                // Check if the screen is small
-                this.isScreenSmall = !matchingAliases.includes('md');
-            });
+        private _router: Router
+    ) {
     }
 
-    toggleNavigation(name: string): void
-    {
-        // Get the navigation
-        const navigation = this._fuseNavigationService.getComponent<FuseVerticalNavigationComponent>(name);
-
-        if ( navigation )
-        {
-            // Toggle the opened status
-            navigation.toggle();
-        }
+    ngOnInit(): void {
     }
-    
+
     /**
      * Getter for current year
      */
-     get currentYear(): number
-     {
-         return new Date().getFullYear();
-     }
+    get currentYear(): number {
+        return new Date().getFullYear();
+    }
+
+    signIn(): void {
+        this._router.navigate(['/sign-in']);
+    }
+
+    signUp(): void {
+        this._router.navigate(['/sign-up']);
+    }
+
+    businessDirectory(): void {
+        this._router.navigate(['/business-directory']);
+    }
 }
