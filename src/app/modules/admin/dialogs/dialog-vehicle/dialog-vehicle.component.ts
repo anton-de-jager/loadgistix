@@ -9,6 +9,7 @@ import { DialogAddressComponent } from '../dialog-address/dialog-address.compone
 import { DialogCameraComponent } from '../dialog-camera/dialog-camera.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { environment } from 'environments/environment';
+import { address } from '../../models/address.model';
 
 @Component({
     selector: 'dialog-vehicle',
@@ -116,17 +117,18 @@ export class DialogVehicleComponent {
             dialogConfig);
 
 
-        dialogRef.afterClosed().subscribe(result => {
+        dialogRef.afterClosed().subscribe((result:address) => {
             if (result) {
+                console.log(control, result);
                 if (control == 'originatingAddressLabel') {
                     this.form.controls['originatingAddressLabel'].setValue(result.label);
-                    this.form.controls['originatingAddressLat'].setValue(result.x);
-                    this.form.controls['originatingAddressLon'].setValue(result.y);
+                    this.form.controls['originatingAddressLat'].setValue(result.lat);
+                    this.form.controls['originatingAddressLon'].setValue(result.lon);
                 }
                 if (control == 'destinationAddressLabel') {
                     this.form.controls['destinationAddressLabel'].setValue(result.label);
-                    this.form.controls['destinationAddressLat'].setValue(result.x);
-                    this.form.controls['destinationAddressLon'].setValue(result.y);
+                    this.form.controls['destinationAddressLat'].setValue(result.lat);
+                    this.form.controls['destinationAddressLon'].setValue(result.lon);
                 }
             }
         });

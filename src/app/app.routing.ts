@@ -67,8 +67,8 @@ export const appRoutes: Route[] = [
         },
         children: [
             { path: 'home', loadChildren: () => import('app/modules/landing/home/home.module').then(m => m.LandingHomeModule) },
-            //{ path: 'business-directory', loadChildren: () => import('app/modules/admin/pages/business-directory/business-directory.module').then(m => m.BusinessDirectoryModule) },
-            //{ path: 'directory-details', loadChildren: () => import('app/modules/admin/pages/directory-details/directory-details.module').then(m => m.DirectoryDetailsModule) }
+            { path: 'businessDirectory', loadChildren: () => import('app/modules/landing/businessDirectory/businessDirectory.module').then(m => m.BusinessDirectoryOpenModule) },
+            { path: 'directoryDetails', loadChildren: () => import('app/modules/landing/directoryDetails/directoryDetails.module').then(m => m.DirectoryDetailsOpenModule) }
         ]
     },
 

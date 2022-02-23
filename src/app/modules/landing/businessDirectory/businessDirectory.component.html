@@ -1,0 +1,54 @@
+<!-- Wrapper -->
+<div class="flex flex-col flex-auto w-full min-w-0">
+
+    <!-- Header -->
+    <div
+        class="relative flex flex-0 items-center w-full h-16 sm:h-20 px-4 md:px-6 z-49 shadow dark:shadow-none dark:border-b bg-card dark:bg-transparent print:hidden">
+        <div class="flex items-center mx-2 lg:mr-8">
+            <div class="hidden lg:flex">
+                <img class="dark:hidden w-14" src="assets/images/logo/logo.png">
+                <img class="hidden dark:flex w-24" src="assets/images/logo/logo-text-on-dark.png">
+            </div>
+            <img class="flex lg:hidden w-12" src="assets/images/logo/logo.png">
+            <h2 class="text-secondary text-2xl md:text-3xl font-extrabold tracking-tight leading-7 sm:leading-10 ml-4">
+                LOADGISTIX </h2>
+        </div>
+    </div>
+
+    <!-- Content -->
+    <div class="relative flex flex-col flex-auto min-w-0 overflow-hidden">
+        <div class="flex flex-col flex-auto min-w-0">
+            <div class="page-layout blank p-4" fusePerfectScrollbar>
+                <div class="grid grid-cols-1 sm:grid-cols-6 gap-6 w-full min-w-0">
+                    <div class="sm:col-span-4 lg:col-span-4 flex flex-col flex-auto p-6 overflow-hidden"
+                        style="padding: 0!important">
+                        <div class="table-container bg-card shadow rounded-2xl">
+                            <mat-card class="mat-elevation-z5" style="padding: 4px!important;">
+                                <mat-list>
+                                    <ng-container *ngFor="let directoryCategoryItem of directoryCategoryList">
+                                        <mat-list-item class="listItem"
+                                            *ngIf="(directoryCategoryItem.directory ? directoryCategoryItem.directory.length : 0) > 0">
+                                            <mat-icon mat-list-icon>note</mat-icon>
+                                            <div mat-line><a [href]="'#/directoryDetails?id='+directoryCategoryItem.id"
+                                                    [matBadge]="directoryCategoryItem.directory ? directoryCategoryItem.directory.length : 0"
+                                                    matBadgeOverlap="false">{{directoryCategoryItem.description}}</a>
+                                            </div>
+                                        </mat-list-item>
+                                    </ng-container>
+                                </mat-list>
+                            </mat-card>
+                        </div>
+                    </div>
+                    <div class="sm:col-span-2 lg:col-span-2 flex flex-col flex-auto p-6 overflow-hidden"
+                        style="padding: 0!important">
+                        <advert></advert>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div
+        class="relative flex flex-0 items-center w-full h-14 sm:h-20 px-4 md:px-6 z-49 border-t bg-card dark:bg-transparent print:hidden">
+        <span class="font-medium text-secondary">Loadgistix &copy; {{currentYear}}</span>
+    </div>
+</div>

@@ -111,8 +111,8 @@ export class DialogDirectoryComponent {
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
                 this.form.controls['addressLabel'].setValue(result.label);
-                this.form.controls['addressLat'].setValue(result.x);
-                this.form.controls['addressLon'].setValue(result.y);
+                this.form.controls['addressLat'].setValue(result.lat);
+                this.form.controls['addressLon'].setValue(result.lon);
             }
         });
     }

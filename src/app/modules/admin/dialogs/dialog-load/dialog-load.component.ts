@@ -146,13 +146,13 @@ export class DialogLoadComponent {
             if (result) {
                 if (control == 'originatingAddressLabel') {
                     this.form.controls['originatingAddressLabel'].setValue(result.label);
-                    this.form.controls['originatingAddressLat'].setValue(result.x);
-                    this.form.controls['originatingAddressLon'].setValue(result.y);
+                    this.form.controls['originatingAddressLat'].setValue(result.lat);
+                    this.form.controls['originatingAddressLon'].setValue(result.lon);
                 }
                 if (control == 'destinationAddressLabel') {
                     this.form.controls['destinationAddressLabel'].setValue(result.label);
-                    this.form.controls['destinationAddressLat'].setValue(result.x);
-                    this.form.controls['destinationAddressLon'].setValue(result.y);
+                    this.form.controls['destinationAddressLat'].setValue(result.lat);
+                    this.form.controls['destinationAddressLon'].setValue(result.lon);
                 }
             }
         });

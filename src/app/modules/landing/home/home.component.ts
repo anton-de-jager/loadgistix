@@ -55,6 +55,6 @@ export class LandingHomeComponent {
     }
 
     businessDirectory(): void {
-        this._router.navigate(['/business-directory']);
+        this._router.navigate(['/businessDirectory']);
     }
 }

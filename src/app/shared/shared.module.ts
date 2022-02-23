@@ -90,6 +90,7 @@ import { DialogProspectEmploymentComponent } from 'app/modules/admin/dialogs/pro
 import { DialogProspectEmploymentDutyComponent } from 'app/modules/admin/dialogs/prospectEmploymentDuty/dialog-prospectEmploymentDuty.component';
 import { DialogProspectEmploymentTechnologyComponent } from 'app/modules/admin/dialogs/prospectEmploymentTechnology/dialog-prospectEmploymentTechnology.component';
 import { DialogCvComponent } from 'app/modules/admin/dialogs/cv/dialog-cv.component';
+import { GoogleMapsModule } from '@angular/google-maps';
 // import * as moment from 'moment';
 
 // const CUSTOM_DATE_FORMATS: NgxMatDateFormats = {
@@ -157,7 +158,9 @@ import { DialogCvComponent } from 'app/modules/admin/dialogs/cv/dialog-cv.compon
 
         WebcamModule,
 
-        FlexLayoutModule
+        FlexLayoutModule,
+
+        GoogleMapsModule
     ],
     exports: [
         CommonModule,
@@ -214,7 +217,9 @@ import { DialogCvComponent } from 'app/modules/admin/dialogs/cv/dialog-cv.compon
         FlexLayoutModule,
         MapComponent,
         StarRatingComponent,
-        AdvertComponent
+        AdvertComponent,
+
+        GoogleMapsModule
     ],
     declarations: [
         DialogTcComponent,
