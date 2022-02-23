@@ -133,20 +133,24 @@ export class AuthService {
             switchMap((response: any) => {
                 console.log('response', response);
 
-                // Store the access token in the local storage
-                this.accessToken = response.accessToken;
-                localStorage.setItem('accessToken', this.accessToken);
-                localStorage.setItem('userId', response.user.userId);
-                localStorage.setItem('user', JSON.stringify(response.user))
+                if (response.user) {
+                    // Store the access token in the local storage
+                    this.accessToken = response.accessToken;
+                    localStorage.setItem('accessToken', this.accessToken);
+                    localStorage.setItem('userId', response.user.userId);
+                    localStorage.setItem('user', JSON.stringify(response.user))
 
-                // Set the authenticated flag to true
-                this._authenticated = true;
+                    // Set the authenticated flag to true
+                    this._authenticated = true;
 
-                // Store the user on the user service
-                this._userService.user = response.user;
+                    // Store the user on the user service
+                    this._userService.user = response.user;
 
-                // Return true
-                return of(true);
+                    // Return true
+                    return of(true);
+                }else{
+                    return of(false);
+                }
             })
         );
     }
