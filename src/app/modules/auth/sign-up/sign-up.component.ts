@@ -73,7 +73,7 @@ export class AuthSignUpComponent implements OnInit {
             cv: [false],
             job: [false],
             vehiclesQuantity: [0],
-            loadsQuantity: [0],
+            loadsQuantity: [-1],
             advertsQuantity: [0],
             directoryQuantity: [0],
             cvQuantity: [0],
@@ -162,7 +162,7 @@ export class AuthSignUpComponent implements OnInit {
 
     getTotal() {
         return (this.signUpForm.controls['vehiclesQuantity'].value)
-            + (this.signUpForm.controls['loadsQuantity'].value)
+            + (this.signUpForm.controls['loadsQuantity'].value > -1 ? this.signUpForm.controls['loadsQuantity'].value : 0)
             + (this.signUpForm.controls['advertsQuantity'].value)
             + (this.signUpForm.controls['directoryQuantity'].value);
             //+ (this.signUpForm.controls['cvQuantity'].value);

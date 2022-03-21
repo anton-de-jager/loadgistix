@@ -104,38 +104,38 @@
                 </div>
 
                 <mat-form-field appearance="outline" class="w-100-p">
+                    <mat-label>Business Directory</mat-label>
+                    <mat-select placeholder="Listings" formControlName="directoryQuantity">
+                        <mat-option [value]="0">None</mat-option>
+                        <mat-option [value]="99">R99 p/m</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="w-100-p">
+                    <mat-label>Advert</mat-label>
+                    <mat-select placeholder="Advert" formControlName="advertsQuantity">
+                        <mat-option [value]="0">None</mat-option>
+                        <mat-option [value]="199">R199 p/m</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="w-100-p">
                     <mat-label>Vehicles</mat-label>
-                    <mat-select placeholder="Vehicles" formControlName="vehiclesQuantity">
-                        <mat-option [value]="0">Not Selected</mat-option>
-                        <mat-option [value]="1050">R1,050.00 p/m</mat-option>
+                    <mat-select placeholder="Vehicle Listings" formControlName="vehiclesQuantity">
+                        <mat-option [value]="0">None</mat-option>
+                        <mat-option [value]="150">R150 p/m (1 Vehicle)</mat-option>
+                        <mat-option [value]="590">R590 p/m (5 Vehicles)</mat-option>
+                        <mat-option [value]="975">R975 p/m (10 Vehicles)</mat-option>
+                        <mat-option [value]="2250">R2,250 p/m (Unlimited Vehicles)</mat-option>
                     </mat-select>
                 </mat-form-field>
 
                 <mat-form-field appearance="outline" class="w-100-p">
                     <mat-label>Loads</mat-label>
                     <mat-select placeholder="Loads" formControlName="loadsQuantity">
-                        <mat-option [value]="0">Not Selected</mat-option>
-                        <mat-option [value]="1050">1 @ R1,050.00 p/m</mat-option>
-                    </mat-select>
-                </mat-form-field>
-
-                <mat-form-field appearance="outline" class="w-100-p">
-                    <mat-label>Adverts</mat-label>
-                    <mat-select placeholder="Adverts" formControlName="advertsQuantity">
-                        <mat-option [value]="0">None</mat-option>
-                        <mat-option [value]="150">1 @ R150.00 p/m</mat-option>
-                        <mat-option [value]="290">2 @ R290.00 p/m</mat-option>
-                        <mat-option [value]="420">3 @ R420.00 p/m</mat-option>
-                    </mat-select>
-                </mat-form-field>
-
-                <mat-form-field appearance="outline" class="w-100-p">
-                    <mat-label>Business Directory</mat-label>
-                    <mat-select placeholder="Listings" formControlName="directoryQuantity">
-                        <mat-option [value]="0">None</mat-option>
-                        <mat-option [value]="150">1 @ R150.00 p/m</mat-option>
-                        <mat-option [value]="290">2 @ R290.00 p/m</mat-option>
-                        <mat-option [value]="420">3 @ R420.00 p/m</mat-option>
+                        <mat-option [value]="-1">None</mat-option>
+                        <mat-option [value]="0">FREE (Once-Off)</mat-option>
+                        <mat-option [value]="1450">R1,450 p/m (Unlimited)</mat-option>
                     </mat-select>
                 </mat-form-field>
 
@@ -156,7 +156,7 @@
                 <hr>
                 
                 <div class="flex items-baseline whitespace-nowrap ng-star-inserted">
-                    <div class="text-6xl font-semibold leading-tight tracking-tight">{{getTotal() | currency:'R'}} /
+                    <div class="text-6xl font-semibold leading-tight tracking-tight">{{getTotal() | currency:'R':'symbol':'1.0-0'}} /
                         month</div>
                 </div>
 
@@ -187,8 +187,8 @@
                     <mat-progress-spinner *ngIf="signUpForm.disabled" [diameter]="24" [mode]="'indeterminate'">
                     </mat-progress-spinner>
                 </button> -->
-                <a
-                    href="https://www.payfast.co.za/eng/process?cmd=_paynow&amp;receiver=13227497&amp;item_name=Loadgistix+Gold&amp;amount=10.00&amp;return_url=https%3A%2F%2Fwww.madservices.co.za%2Fpayment-result&amp;cancel_url=https%3A%2F%2Fwww.madservices.co.za%2Fpayment-cancel&amp;cycles=0&amp;frequency=3&amp;m_payment_id=pay_now_13227497&amp;subscription_type=1&amp;recurring_amount=10.00"><img
+                <a *ngIf="signUpForm.value.agreements"
+                    href="https://www.payfast.co.za/eng/process?cmd=_paynow&amp;receiver=13227497&amp;item_name=Loadgistix+Gold&amp;amount=10.00&amp;return_url=https%3A%2F%2Fwww.loadgistix.co.za%2Fpayment-result&amp;cancel_url=https%3A%2F%2Fwww.loadgistix.co.za%2Fpayment-cancel&amp;cycles=0&amp;frequency=3&amp;m_payment_id=pay_now_13227497&amp;subscription_type=1&amp;recurring_amount=10.00"><img
                         src="https://www.payfast.co.za/images/buttons/light-large-subscribe.png" width="210" height="59"
                         alt="Subscribe" title="Subscribe Now with PayFast" /></a>
 

@@ -49,8 +49,8 @@ const iconTo = L.icon({
 
 export class MapComponent implements OnInit, AfterViewInit, OnChanges {
     private map: L.Map;
-    @Input() lat: number = 28.1045642;
-    @Input() lon: number = -26.3296247;
+    @Input() lat: number = -26.3296247;
+    @Input() lon: number = 28.1045642;
     @Input() label: string = '';
     @Input() loadsAvailable: load[] = [];
     @Input() directoryList: directory[] = [];
@@ -72,7 +72,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
         }
 
         this.map = L.map('map', {
-            center: [this.lon, this.lat],
+            center: [this.lat, this.lon],
             zoom: 14
         });
 
@@ -92,7 +92,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
 
         var minlat = 200, minlon = 200, maxlat = -200, maxlon = -200;
         this.loadsAvailable.forEach(loadItem => {
-            let plan = new L.Routing.Plan([new L.LatLng(loadItem.originatingAddressLon, loadItem.originatingAddressLat), new L.LatLng(loadItem.destinationAddressLon, loadItem.destinationAddressLat)], planOptions);
+            let plan = new L.Routing.Plan([new L.LatLng(loadItem.originatingAddressLat, loadItem.originatingAddressLon), new L.LatLng(loadItem.destinationAddressLat, loadItem.destinationAddressLon)], planOptions);
 
             let control = L.Routing.control({
                 router: L.Routing.osrmv1({
@@ -117,10 +117,10 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
             if (maxlat < loadItem.destinationAddressLat) maxlat = loadItem.destinationAddressLat;
             if (maxlon < loadItem.destinationAddressLon) maxlon = loadItem.destinationAddressLon;
 
-            L.marker(new L.LatLng(loadItem.originatingAddressLon, loadItem.originatingAddressLat), { icon: iconFrom }).addTo(this.map).on('click', () => {
+            L.marker(new L.LatLng(loadItem.originatingAddressLat, loadItem.originatingAddressLon), { icon: iconFrom }).addTo(this.map).on('click', () => {
                 this.select.emit(loadItem);
             });
-            L.marker(new L.LatLng(loadItem.destinationAddressLon, loadItem.destinationAddressLat), { icon: iconTo }).addTo(this.map).on('click', () => {
+            L.marker(new L.LatLng(loadItem.destinationAddressLat, loadItem.destinationAddressLon), { icon: iconTo }).addTo(this.map).on('click', () => {
                 this.select.emit(loadItem);
             });
         });
@@ -131,13 +131,13 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
             if (maxlat < loadItem.addressLat) maxlat = loadItem.addressLat;
             if (maxlon < loadItem.addressLon) maxlon = loadItem.addressLon;
 
-            L.marker(new L.LatLng(loadItem.addressLon, loadItem.addressLat), { icon: iconDefault }).addTo(this.map).on('click', () => {
+            L.marker(new L.LatLng(loadItem.addressLat, loadItem.addressLon), { icon: iconDefault }).addTo(this.map).on('click', () => {
                 this.select.emit(loadItem);
             });
         });
 
         setTimeout(() => {
-            this.map.fitBounds(L.latLngBounds(new L.LatLng(minlon, minlat), new L.LatLng(maxlon, maxlat)))
+            this.map.fitBounds(L.latLngBounds(new L.LatLng(minlat, minlon), new L.LatLng(maxlat, maxlon)))
         }, 100);
     }
 
