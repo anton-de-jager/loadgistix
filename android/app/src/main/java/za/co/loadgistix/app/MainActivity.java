@@ -1,4 +1,4 @@
-package za.co.loadgistix.app;
+package com.loadgistix.app;
 
 import com.getcapacitor.BridgeActivity;
 

@@ -1,7 +1,7 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'za.co.loadgistix.app',
+  appId: 'com.loadgistix.app',
   appName: 'loadgistix',
   webDir: 'www',
   bundledWebRuntime: false

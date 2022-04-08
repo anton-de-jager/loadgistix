@@ -1,5 +1,5 @@
 {
-	"appId": "za.co.loadgistix.app",
+	"appId": "com.loadgistix.app",
 	"appName": "loadgistix",
 	"webDir": "www",
 	"bundledWebRuntime": false
