@@ -4,8 +4,8 @@
 
 export const environment = {
     production: false,
-    //api: 'https://api.loadgistix.com/',
-    api: 'https://localhost:44357/',
+    api: 'https://api.loadgistix.com/',
+    //api: 'https://localhost:44357/',
     apiUrl: 'https://luvirosapi.com:1880/loadgistix/api/',
     apiUrlLunkulu: 'https://luvirosapi.com:1880/api/lunkulu/',
     urlShort: 'http://localhost:4200/#/'

@@ -209,7 +209,7 @@ export class AuthService {
             localStorage.removeItem('accessToken');
             localStorage.removeItem('userId');
             localStorage.removeItem('user');
-            this._router.navigateByUrl('/home');
+            this._router.navigateByUrl('/sign-in');
             return of(false);
         }
 

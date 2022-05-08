@@ -66,7 +66,7 @@ export const appRoutes: Route[] = [
             layout: 'empty'
         },
         children: [
-            { path: 'home', loadChildren: () => import('app/modules/landing/home/home.module').then(m => m.LandingHomeModule) },
+            //{ path: 'home', loadChildren: () => import('app/modules/landing/home/home.module').then(m => m.LandingHomeModule) },
             { path: 'businessDirectory', loadChildren: () => import('app/modules/landing/businessDirectory/businessDirectory.module').then(m => m.BusinessDirectoryOpenModule) },
             { path: 'directoryDetails', loadChildren: () => import('app/modules/landing/directoryDetails/directoryDetails.module').then(m => m.DirectoryDetailsOpenModule) }
         ]
