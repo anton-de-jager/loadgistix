@@ -60,10 +60,11 @@ jobs:
           # Wait for app to stop
           sleep 10
           
-          # Upload all files (mirror)
+          # Upload all files (mirror) - skip chmod to avoid permission errors
           lftp -u "$FTP_USERNAME,$FTP_PASSWORD" sftp://$FTP_SERVER -e "
             set sftp:auto-confirm yes;
-            mirror -R --verbose --ignore-time --exclude app_offline.htm . /wwwroot;
+            set mirror:set-permissions no;
+            mirror -R --verbose --ignore-time --no-perms --exclude app_offline.htm . /wwwroot;
             bye
           "
           
