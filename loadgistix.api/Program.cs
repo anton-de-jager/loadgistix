@@ -129,11 +129,16 @@ app.UseAuthorization();
 
 app.UseCors("AllowOrigin");
 
-app.UseStaticFiles(new StaticFileOptions()
+// Only configure static files for Images if the folder exists
+var imagesPath = Path.Combine(System.IO.Directory.GetCurrentDirectory(), @"Images");
+if (Directory.Exists(imagesPath))
 {
-    FileProvider = new PhysicalFileProvider(Path.Combine(System.IO.Directory.GetCurrentDirectory(), @"Images")),
-    RequestPath = new PathString("/Images")
-});
+    app.UseStaticFiles(new StaticFileOptions()
+    {
+        FileProvider = new PhysicalFileProvider(imagesPath),
+        RequestPath = new PathString("/Images")
+    });
+}
 
 app.UseEndpoints(endpoints =>
 {
@@ -172,5 +177,8 @@ app.UseEndpoints(endpoints =>
 });
 
 app.MapControllers();
+
+// Simple health check endpoint
+app.MapGet("/health", () => Results.Ok(new { status = "healthy", timestamp = DateTime.UtcNow }));
 
 app.Run();
