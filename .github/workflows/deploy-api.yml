@@ -35,9 +35,6 @@ jobs:
         working-directory: loadgistix.api
         run: dotnet publish --configuration Release --no-build --output ./publish
 
-      - name: Create app_offline.htm
-        run: echo '<!DOCTYPE html><html><body><h1>Site is being updated...</h1></body></html>' > ./loadgistix.api/publish/app_offline.htm
-
       - name: Install lftp
         run: sudo apt-get update && sudo apt-get install -y lftp
 
@@ -49,29 +46,29 @@ jobs:
         run: |
           cd loadgistix.api/publish
           
-          # First, upload app_offline.htm to stop the app
-          lftp -u "$FTP_USERNAME,$FTP_PASSWORD" sftp://$FTP_SERVER -e "
-            set sftp:auto-confirm yes;
-            cd /wwwroot;
-            put app_offline.htm;
-            bye
-          "
-          
-          # Wait for app to stop
-          sleep 10
+          # Remove app_offline.htm from publish folder - we don't want to upload it
+          rm -f app_offline.htm
           
           # Upload all files (mirror) - skip chmod to avoid permission errors
           lftp -u "$FTP_USERNAME,$FTP_PASSWORD" sftp://$FTP_SERVER -e "
             set sftp:auto-confirm yes;
             set mirror:set-permissions no;
-            mirror -R --verbose --ignore-time --no-perms --exclude app_offline.htm . /wwwroot;
+            mirror -R --verbose --ignore-time --no-perms . /wwwroot;
             bye
           "
           
-          # Remove app_offline.htm to restart the app
+          # Explicitly remove app_offline.htm if it exists on server
           lftp -u "$FTP_USERNAME,$FTP_PASSWORD" sftp://$FTP_SERVER -e "
             set sftp:auto-confirm yes;
             cd /wwwroot;
-            rm -f app_offline.htm;
+            rm -f app_offline.htm || true;
+            bye
+          " || echo "app_offline.htm removal completed (may not have existed)"
+          
+          # List files to verify deployment
+          lftp -u "$FTP_USERNAME,$FTP_PASSWORD" sftp://$FTP_SERVER -e "
+            set sftp:auto-confirm yes;
+            cd /wwwroot;
+            ls -la;
             bye
           "
