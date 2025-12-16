@@ -1,0 +1,47 @@
+import { Guid } from "guid-typescript";
+
+export class bid {
+    id: Guid;
+    userId?: string;
+    userDescription?: string;
+    loadId?: Guid;
+    loadDescription?: string;
+    loadTypeId?: Guid;
+    loadTypeDescription?: string;
+    vehicleId?: Guid;
+    vehicleDescription?: string;
+    vehicleCategoryId?: Guid;
+    vehicleCategoryDescription?: string;
+    vehicleTypeId?: Guid;
+    vehicleTypeDescription?: string;
+    driverId?: Guid;
+    driverDescription?: string;
+    price?: number;
+    dateOut?: Date;
+    dateIn?: Date;
+    fridgeHours?: number;
+    kgsLoaded?: number;
+    customerLoadedForm?: string;
+    status?: string;
+    createdOn?: Date;
+    changedOn?: Date;
+    loadDestinationId?: Guid;
+    originatingAddressLabel?: string;
+    originatingAddressLat?: number;
+    originatingAddressLon?: number;
+    destinationAddressLabel?: string;
+    destinationAddressLat?: number;
+    destinationAddressLon?: number;
+    route?: string;
+    meters?: number;
+    minutes?: number;
+    odoStart?: number;
+    odoEnd?: number;
+    destinationCount?: number;
+    destinationDelivered?: number;
+    statusLoad?: string;
+    reviewAverageLoad?: number;
+    reviewCountLoad?: number;
+    reviewAverageDriver?: number;
+    reviewCountDriver?: number;
+}

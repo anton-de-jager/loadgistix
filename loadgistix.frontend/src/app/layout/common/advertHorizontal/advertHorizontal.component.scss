@@ -1,0 +1,63 @@
+// Utility classes
+.mb-32 {
+    margin-bottom: 120px !important;
+}
+
+.mb-40 {
+    margin-bottom: 140px !important;
+}
+
+// Line clamp utility for text truncation
+.line-clamp-4 {
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+// Custom menu styling
+::ng-deep .advert-menu {
+    .mat-mdc-menu-content {
+        padding: 8px 0;
+    }
+
+    .mat-mdc-menu-item {
+        min-height: 48px;
+        
+        .mat-icon {
+            margin-right: 0;
+        }
+    }
+}
+
+// Animation for cards
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+// Smooth transitions
+* {
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+// Ensure images maintain aspect ratio
+img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+// Hover effects for interactive elements
+button, a {
+    &:active {
+        transform: scale(0.98);
+    }
+}

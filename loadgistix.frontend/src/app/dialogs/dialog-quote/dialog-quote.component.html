@@ -1,0 +1,290 @@
+<div class="fixed inset-0 sm:relative flex flex-col min-w-0 bg-card dark:bg-gray-800">
+    <div class="flex flex-0 items-center justify-between h-16 pr-3 sm:pr-5 pl-6 sm:pl-8 bg-primary text-on-primary">
+        <div class="text-lg font-medium">Get a Quote</div>
+        <button (click)="onNoClick()" mat-icon-button [tabIndex]="-1">
+            <mat-icon class="text-on-primary">close</mat-icon>
+        </button>
+    </div>
+    <mat-stepper class="example-stepper" [linear]="true" [orientation]="(stepperOrientation | async)!"
+        (selectionChange)="next($event)">
+        <mat-step [stepControl]="formGroup1" label="Contact Details">
+            <mat-dialog-content
+                class="flex flex-col flex-auto mat-typography bg-card dark:bg-gray-800 h-fit max-h-max sm:max-h-[65vh]">
+                <form [formGroup]="formGroup1"><mat-form-field fxFlex appearance="outline"
+                        [ngClass]="loading?'w-full sm:w-2/4 pl-2 pr-2 mat-form-field-loading':'w-full sm:w-2/4 pl-2 pr-2'">
+                        <mat-label>First Name</mat-label>
+                        <input matInput placeholder="First name" formControlName="nameFirst" class="w-full h-full"
+                            type="text" required>
+                    </mat-form-field><mat-form-field fxFlex appearance="outline"
+                        [ngClass]="loading?'w-full sm:w-2/4 pl-2 pr-2 mat-form-field-loading':'w-full sm:w-2/4 pl-2 pr-2'">
+                        <mat-label>Last Name</mat-label>
+                        <input matInput placeholder="Last name" formControlName="nameLast" class="w-full h-full"
+                            type="text" required>
+                    </mat-form-field><mat-form-field fxFlex appearance="outline"
+                        [ngClass]="loading?'w-full sm:w-2/4 pl-2 pr-2 mat-form-field-loading':'w-full sm:w-2/4 pl-2 pr-2'">
+                        <mat-label>Email</mat-label>
+                        <input matInput placeholder="Email" formControlName="email" class="w-full h-full" type="email"
+                            required>
+                    </mat-form-field><mat-form-field fxFlex appearance="outline"
+                        [ngClass]="loading?'w-full sm:w-2/4 pl-2 pr-2 mat-form-field-loading':'w-full sm:w-2/4 pl-2 pr-2'">
+                        <mat-label>Mobile Number</mat-label>
+                        <input matInput placeholder="Mobile Number" formControlName="mobileNumber" class="w-full h-full"
+                            type="text" required>
+                    </mat-form-field>
+                </form>
+
+            </mat-dialog-content>
+            <mat-dialog-actions
+                class="flex items-end flex-row items-center justify-between bg-gray-200 dark:bg-gray-600">
+                <div>
+                    <button mat-icon-button [color]="'warn'" (click)="onNoClick()">
+                        <ng-container *ngIf="!loading; else spinnerTemplate">
+                            <mat-icon>close</mat-icon>
+                        </ng-container>
+                        <ng-template #spinnerTemplate>
+                            <mat-spinner [diameter]="24" [color]="'warn'"></mat-spinner>
+                        </ng-template>
+                    </button>
+                </div>
+                <div>
+                    <button mat-button matStepperNext [disabled]="!formGroup1.valid">Next</button>
+                </div>
+                <!-- <button mat-icon-button class="bg-primary" [disabled]="!form.valid" (click)="onYesClick()">
+                        <ng-container *ngIf="!loading; else spinnerTemplate">
+                            <mat-icon class="text-on-primary">check</mat-icon>
+                        </ng-container>
+                        <ng-template #spinnerTemplate>
+                            <mat-spinner [diameter]="24" [color]="'primary'" class="text-on-primary"></mat-spinner>
+                        </ng-template>
+                    </button> -->
+            </mat-dialog-actions>
+        </mat-step>
+        <mat-step [stepControl]="formGroup2" label="Business Details">,
+            <mat-dialog-content
+                class="flex flex-col flex-auto mat-typography bg-card dark:bg-gray-800 h-fit max-h-max sm:max-h-[65vh]">
+                <form [formGroup]="formGroup2">
+                    <mat-form-field fxFlex appearance="outline"
+                        [ngClass]="loading?'w-full sm:w-2/4 pl-2 pr-2 mat-form-field-loading':'w-full sm:w-2/4 pl-2 pr-2'">
+                        <mat-label>Company Name</mat-label>
+                        <input matInput placeholder="Company Name" formControlName="company" class="w-full h-full"
+                            type="text" required>
+                    </mat-form-field>
+
+                    <mat-form-field fxFlex appearance="outline"
+                        [ngClass]="loading?'w-full sm:w-2/4 pl-2 pr-2 mat-form-field-loading':'w-full sm:w-2/4 pl-2 pr-2'">
+                        <mat-label>Business Description</mat-label>
+                        <mat-select placeholder="Business Description" formControlName="businessDescriptionId">
+                            <mat-option
+                                *ngFor="let businessDescriptionItem of businessDescriptionList | order_by: 'description'"
+                                [value]="businessDescriptionItem.id">
+                                {{ businessDescriptionItem.description }}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error>Business Description is required</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field fxFlex appearance="outline"
+                        [ngClass]="loading?'w-full sm:w-2/4 pl-2 pr-2 mat-form-field-loading':'w-full sm:w-2/4 pl-2 pr-2'">
+                        <mat-label>Are the Vehicles Owned or Rented</mat-label>
+                        <mat-select placeholder="Owned / Rented" formControlName="ownedRentedId">
+                            <mat-option *ngFor="let ownedRentedItem of ownedRentedList | order_by: 'description'"
+                                [value]="ownedRentedItem.id">
+                                {{ ownedRentedItem.description }}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error>Owned / Rented is required</mat-error>
+                    </mat-form-field>
+                </form>
+
+            </mat-dialog-content>
+            <mat-dialog-actions
+                class="flex items-end flex-row items-center justify-between bg-gray-200 dark:bg-gray-600">
+                <div>
+                    <button mat-icon-button [color]="'warn'" (click)="onNoClick()">
+                        <ng-container *ngIf="!loading; else spinnerTemplate">
+                            <mat-icon>close</mat-icon>
+                        </ng-container>
+                        <ng-template #spinnerTemplate>
+                            <mat-spinner [diameter]="24" [color]="'warn'"></mat-spinner>
+                        </ng-template>
+                    </button>
+                </div>
+                <div>
+                    <button mat-button matStepperNext [disabled]="!formGroup2.valid">Next</button>
+                </div>
+                <!-- <button mat-icon-button class="bg-primary" [disabled]="!form.valid" (click)="onYesClick()">
+                        <ng-container *ngIf="!loading; else spinnerTemplate">
+                            <mat-icon class="text-on-primary">check</mat-icon>
+                        </ng-container>
+                        <ng-template #spinnerTemplate>
+                            <mat-spinner [diameter]="24" [color]="'primary'" class="text-on-primary"></mat-spinner>
+                        </ng-template>
+                    </button> -->
+            </mat-dialog-actions>
+        </mat-step>
+        <mat-step label="Vehicle Details">
+            <mat-dialog-content
+                class="flex flex-col flex-auto mat-typography bg-card dark:bg-gray-800 h-fit max-h-max sm:max-h-[65vh]">
+                <form [formGroup]="formGroup3">
+                    <mat-form-field fxFlex appearance="outline"
+                        [ngClass]="loading?'w-full sm:w-2/4 pl-2 pr-2 mat-form-field-loading':'w-full sm:w-2/4 pl-2 pr-2'">
+                        <mat-label>Truck Make</mat-label>
+                        <input matInput placeholder="Truck Make" formControlName="make" class="w-full h-full"
+                            type="text" required>
+                    </mat-form-field>
+
+                    <mat-form-field fxFlex appearance="outline"
+                        [ngClass]="loading?'w-full sm:w-2/4 pl-2 pr-2 mat-form-field-loading':'w-full sm:w-2/4 pl-2 pr-2'">
+                        <mat-label>Truck Model</mat-label>
+                        <input matInput placeholder="Truck Model" formControlName="model" class="w-full h-full"
+                            type="text" required>
+                    </mat-form-field>
+
+                    <mat-form-field fxFlex appearance="outline"
+                        [ngClass]="loading?'w-full sm:w-2/4 pl-2 pr-2 mat-form-field-loading':'w-full sm:w-2/4 pl-2 pr-2'">
+                        <mat-label>Truck Year</mat-label>
+                        <input matInput placeholder="Truck Year" formControlName="year" class="w-full h-full"
+                            type="number" required>
+                    </mat-form-field>
+
+                    <mat-form-field fxFlex appearance="outline"
+                        [ngClass]="loading?'w-full sm:w-2/4 pl-2 pr-2 mat-form-field-loading':'w-full sm:w-2/4 pl-2 pr-2'">
+                        <mat-label>Truck Value</mat-label>
+                        <input matInput placeholder="Truck Value" formControlName="value" class="w-full h-full"
+                            type="number" required>
+                    </mat-form-field>
+                </form>
+
+                <div class="flex items-end flex-row items-center justify-between">
+                    <div></div>
+                    <button mat-flat-button color="primary" [disabled]="!formGroup3.valid"
+                        (click)="addTruck()">
+                        Add Truck
+                    </button>
+                </div>
+
+            </mat-dialog-content>
+            <mat-dialog-actions
+                class="flex items-end flex-row items-center justify-between bg-gray-200 dark:bg-gray-600">
+                <div>
+                    <button mat-icon-button [color]="'warn'" (click)="onNoClick()">
+                        <ng-container *ngIf="!loading; else spinnerTemplate">
+                            <mat-icon>close</mat-icon>
+                        </ng-container>
+                        <ng-template #spinnerTemplate>
+                            <mat-spinner [diameter]="24" [color]="'warn'"></mat-spinner>
+                        </ng-template>
+                    </button>
+                </div>
+                <div>
+                    <button mat-button matStepperNext>Next</button>
+                </div>
+                <!-- <button mat-icon-button class="bg-primary" [disabled]="!form.valid" (click)="onYesClick()">
+                                <ng-container *ngIf="!loading; else spinnerTemplate">
+                                    <mat-icon class="text-on-primary">check</mat-icon>
+                                </ng-container>
+                                <ng-template #spinnerTemplate>
+                                    <mat-spinner [diameter]="24" [color]="'primary'" class="text-on-primary"></mat-spinner>
+                                </ng-template>
+                            </button> -->
+            </mat-dialog-actions>
+        </mat-step>
+        <mat-step label="Trailer Details">
+            <mat-dialog-content
+                class="flex flex-col flex-auto mat-typography bg-card dark:bg-gray-800 h-fit max-h-max sm:max-h-[65vh]">
+
+                <form [formGroup]="formGroup4">
+                    <mat-form-field fxFlex appearance="outline"
+                        [ngClass]="loading?'w-full sm:w-2/4 pl-2 pr-2 mat-form-field-loading':'w-full sm:w-2/4 pl-2 pr-2'">
+                        <mat-label>Trailer Make</mat-label>
+                        <input matInput placeholder="Trailer Make" formControlName="make" class="w-full h-full"
+                            type="text" required>
+                    </mat-form-field>
+
+                    <mat-form-field fxFlex appearance="outline"
+                        [ngClass]="loading?'w-full sm:w-2/4 pl-2 pr-2 mat-form-field-loading':'w-full sm:w-2/4 pl-2 pr-2'">
+                        <mat-label>Trailer Type</mat-label>
+                        <input matInput placeholder="Trailer Type" formControlName="model" class="w-full h-full"
+                            type="text" required>
+                    </mat-form-field>
+
+                    <mat-form-field fxFlex appearance="outline"
+                        [ngClass]="loading?'w-full sm:w-2/4 pl-2 pr-2 mat-form-field-loading':'w-full sm:w-2/4 pl-2 pr-2'">
+                        <mat-label>Trailer Year</mat-label>
+                        <input matInput placeholder="Trailer Year" formControlName="year" class="w-full h-full"
+                            type="number" required>
+                    </mat-form-field>
+
+                    <mat-form-field fxFlex appearance="outline"
+                        [ngClass]="loading?'w-full sm:w-2/4 pl-2 pr-2 mat-form-field-loading':'w-full sm:w-2/4 pl-2 pr-2'">
+                        <mat-label>Trailer Value</mat-label>
+                        <input matInput placeholder="Trailer Value" formControlName="value" class="w-full h-full"
+                            type="number" required>
+                    </mat-form-field>
+                </form>
+
+                <div class="flex items-end flex-row items-center justify-between">
+                    <div></div>
+                    <button mat-flat-button color="primary" [disabled]="!formGroup4.valid" (click)="addTrailer()">
+                        Add Trailer
+                    </button>
+                </div>
+
+            </mat-dialog-content>
+            <mat-dialog-actions
+                class="flex items-end flex-row items-center justify-between bg-gray-200 dark:bg-gray-600">
+                <div>
+                    <button mat-icon-button [color]="'warn'" (click)="onNoClick()">
+                        <ng-container *ngIf="!loading; else spinnerTemplate">
+                            <mat-icon>close</mat-icon>
+                        </ng-container>
+                        <ng-template #spinnerTemplate>
+                            <mat-spinner [diameter]="24" [color]="'warn'"></mat-spinner>
+                        </ng-template>
+                    </button>
+                </div>
+                <div>
+                    <button mat-button matStepperNext>Next</button>
+                </div>
+                <!-- <button mat-icon-button class="bg-primary" [disabled]="!form.valid" (click)="onYesClick()">
+                                <ng-container *ngIf="!loading; else spinnerTemplate">
+                                    <mat-icon class="text-on-primary">check</mat-icon>
+                                </ng-container>
+                                <ng-template #spinnerTemplate>
+                                    <mat-spinner [diameter]="24" [color]="'primary'" class="text-on-primary"></mat-spinner>
+                                </ng-template>
+                            </button> -->
+            </mat-dialog-actions>
+        </mat-step>
+        <mat-step label="Final Stage">
+            <mat-dialog-content
+                class="flex flex-col flex-auto mat-typography bg-card dark:bg-gray-800 h-fit max-h-max sm:max-h-[65vh]">
+                <ng-template matStepLabel>Done</ng-template>
+                <p>Your information has successfully been submitted.</p>
+                <p>Please check your email for your quote.</p>
+
+            </mat-dialog-content>
+            <mat-dialog-actions
+                class="flex items-end flex-row items-center justify-between bg-gray-200 dark:bg-gray-600">
+                <div>
+                    <button mat-icon-button [color]="'warn'" (click)="onNoClick()">
+                        <ng-container *ngIf="!loading; else spinnerTemplate">
+                            <mat-icon>close</mat-icon>
+                        </ng-container>
+                        <ng-template #spinnerTemplate>
+                            <mat-spinner [diameter]="24" [color]="'warn'"></mat-spinner>
+                        </ng-template>
+                    </button>
+                </div>
+                <button mat-icon-button class="bg-primary" (click)="onYesClick()">
+                    <ng-container *ngIf="!loading; else spinnerTemplate">
+                        <mat-icon class="text-on-primary">check</mat-icon>
+                    </ng-container>
+                    <ng-template #spinnerTemplate>
+                        <mat-spinner [diameter]="24" [color]="'primary'" class="text-on-primary"></mat-spinner>
+                    </ng-template>
+                </button>
+            </mat-dialog-actions>
+        </mat-step>
+    </mat-stepper>
+</div>

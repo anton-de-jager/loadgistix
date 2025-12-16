@@ -1,0 +1,7 @@
+<span class="h-full flex flex-col flex-auto ml-2 mr-2">
+    <div class="flex flex-col flex-auto gap-[16px]">
+        <div *ngFor="let directoryItem of directoryItems" class="relative">
+            <directory-item [directoryItem]="directoryItem"></directory-item>
+        </div>
+    </div>
+</span>

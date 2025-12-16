@@ -1,0 +1,171 @@
+<!-- eslint-disable @angular-eslint/template/interactive-supports-focus -->
+<div class="fixed inset-0 sm:relative flex flex-col min-w-0 bg-card dark:bg-gray-800">
+    <div class="flex flex-0 items-center justify-between h-16 pr-3 sm:pr-5 pl-6 sm:pl-8 bg-primary text-on-primary">
+        <div class="text-lg font-medium">{{data.title}} Driver</div>
+        <button (click)="onNoClick()" mat-icon-button [tabIndex]="-1">
+            <mat-icon class="text-on-primary">close</mat-icon>
+        </button>
+    </div>
+    <mat-dialog-content
+        class="flex flex-col flex-auto mat-typography bg-card dark:bg-gray-800 pl-0 pr-0 h-fit max-h-max sm:max-h-[65vh]">
+        <form class="flex flex-col flex-auto" name="form" [formGroup]="form" novalidate class="w-full">
+
+            <mat-form-field fxFlex appearance="outline"
+                [ngClass]="loading?'w-full sm:w-2/4 pl-2 pr-2 mat-form-field-loading':'w-full sm:w-2/4 pl-2 pr-2'">
+                <mat-label>First Name</mat-label><input matInput placeholder="FirstName" formControlName="firstName">
+                <mat-error *ngIf="hasError('firstName', 'required')">First Name is
+                    required</mat-error>
+            </mat-form-field>
+
+            <mat-form-field fxFlex appearance="outline"
+                [ngClass]="loading?'w-full sm:w-2/4 pl-2 pr-2 mat-form-field-loading':'w-full sm:w-2/4 pl-2 pr-2'">
+                <mat-label>Last Name</mat-label><input matInput placeholder="LastName" formControlName="lastName">
+                <mat-error *ngIf="hasError('lastName', 'required')">Last Name is
+                    required</mat-error>
+            </mat-form-field>
+
+            <mat-form-field fxFlex appearance="outline"
+                [ngClass]="loading?'w-full sm:w-2/4 pl-2 pr-2 mat-form-field-loading':'w-full sm:w-2/4 pl-2 pr-2'">
+                <mat-label>ID Number</mat-label><input matInput placeholder="IdNumber" formControlName="idNumber">
+                <mat-error *ngIf="hasError('idNumber', 'required')">ID Number is
+                    required</mat-error>
+            </mat-form-field>
+
+            <mat-form-field fxFlex appearance="outline"
+                [ngClass]="loading?'w-full sm:w-2/4 pl-2 pr-2 mat-form-field-loading':'w-full sm:w-2/4 pl-2 pr-2'">
+                <mat-label>Phone</mat-label><input matInput placeholder="Phone" formControlName="phone">
+                <mat-error *ngIf="hasError('phone', 'required')">Phone is required</mat-error>
+            </mat-form-field>
+
+            <mat-form-field fxFlex appearance="outline"
+                [ngClass]="loading?'w-full sm:w-2/4 pl-2 pr-2 mat-form-field-loading':'w-full sm:w-2/4 pl-2 pr-2'">
+                <mat-label>Email</mat-label><input matInput placeholder="Email" formControlName="email" id="email">
+                <mat-error *ngIf="hasError('email', 'required')">Email is required</mat-error>
+            </mat-form-field>
+
+            <mat-form-field fxFlex appearance="outline"
+                [ngClass]="loading?'w-full sm:w-2/4 pl-2 pr-2 mat-form-field-loading':'w-full sm:w-2/4 pl-2 pr-2'">
+                <mat-label>Password</mat-label><input matInput placeholder="Password" formControlName="password"
+                    type="password" id="password">
+            </mat-form-field>
+
+            <mat-form-field fxFlex appearance="outline"
+                [ngClass]="loading?'w-full sm:w-2/4 pl-2 pr-2 mat-form-field-loading':'w-full sm:w-2/4 pl-2 pr-2'">
+                <mat-label>Date Of Birth</mat-label><input matInput readonly [matDatepicker]="picker_dateOfBirth"
+                    formControlName="dateOfBirth">
+                <mat-datepicker-toggle matSuffix [for]="$any(picker_dateOfBirth)"></mat-datepicker-toggle>
+                <mat-datepicker #picker_dateOfBirth></mat-datepicker>
+                <mat-error>Date Of Birth is required</mat-error>
+            </mat-form-field>
+
+            <mat-form-field fxFlex appearance="outline"
+                [ngClass]="loading?'w-full sm:w-2/4 pl-2 pr-2 mat-form-field-loading':'w-full sm:w-2/4 pl-2 pr-2'">
+                <mat-label>Licence Type</mat-label>
+                <mat-select placeholder="LicenceTypeId" formControlName="licenceTypeId"
+                    (selectionChange)="licenceTypeChanged()">
+                    <mat-option *ngFor="let licenceTypeItem of data.licenceTypeList | order_by: 'code'"
+                        [value]="licenceTypeItem.id ? licenceTypeItem.id : licenceTypeItem.id">{{licenceTypeItem.code}}</mat-option>
+                </mat-select>
+                <mat-error>Licence Type is required</mat-error>
+            </mat-form-field>
+
+            <mat-form-field fxFlex appearance="outline"
+                [ngClass]="loading?'w-full sm:w-2/4 pl-2 pr-2 mat-form-field-loading':'w-full sm:w-2/4 pl-2 pr-2'">
+                <mat-label>Licence Expiry Date</mat-label>
+                <input matInput readonly [matDatepicker]="picker_licenceExpiryDate" formControlName="licenceExpiryDate">
+                <mat-datepicker-toggle matSuffix [for]="$any(picker_licenceExpiryDate)"></mat-datepicker-toggle>
+                <mat-datepicker #picker_licenceExpiryDate></mat-datepicker>
+                <mat-error>Licence Expiry Date is required</mat-error>
+            </mat-form-field>
+
+            <mat-form-field fxFlex appearance="outline"
+                [ngClass]="loading?'w-full sm:w-2/4 pl-2 pr-2 mat-form-field-loading':'w-full sm:w-2/4 pl-2 pr-2'">
+                <mat-label>Public Driver Permit</mat-label>
+                <!-- <mat-select placeholder="PDP" formControlName="pdpId" (selectionChange)="pdpChanged()">
+                    <mat-option *ngFor="let pdpItem of data.pdpList | order_by: 'description'"
+                        [value]="pdpItem.id ? pdpItem.id : pdpItem.id">{{pdpItem.description}}</mat-option>
+                </mat-select> -->
+                <!-- <mat-select placeholder="PDP" formControlName="pdpId" (selectionChange)="pdpChanged()">
+                    @for (group of data.pdpGroupedList; track group) {
+                        <mat-optgroup [label]="group.pdpGroupDescription" [disabled]="group.disabled">
+                            @for (pdpItem of group.pdpItems; track pdpItem) {
+                                <mat-option [value]="pdpItem.id">{{pdpItem.description}}</mat-option>
+                            }
+                        </mat-optgroup>
+                    }
+                </mat-select> -->
+                <mat-select placeholder="PDP" formControlName="pdpId" multiple>
+                    <ng-container *ngFor="let group of data.pdpGroupedList; trackBy: trackGroup">
+                        <mat-optgroup [label]="group.pdpGroupDescription" [disabled]="group.disabled">
+                            <ng-container *ngFor="let pdpItem of group.pdpItems; trackBy: trackPdpItem">
+                                <mat-option [value]="pdpItem.id">{{ pdpItem.description }}</mat-option>
+                            </ng-container>
+                        </mat-optgroup>
+                    </ng-container>
+                </mat-select>
+                <mat-error>PDP is required</mat-error>
+            </mat-form-field>
+
+            <mat-form-field fxFlex appearance="outline"
+                [ngClass]="loading?'w-full sm:w-2/4 pl-2 pr-2 mat-form-field-loading':'w-full sm:w-2/4 pl-2 pr-2'">
+                <mat-label>PDP Expiry Date</mat-label>
+                <input matInput readonly [matDatepicker]="picker_pdpExpiryDate" formControlName="pdpExpiryDate">
+                <mat-datepicker-toggle matSuffix [for]="$any(picker_pdpExpiryDate)"></mat-datepicker-toggle>
+                <mat-datepicker #picker_pdpExpiryDate></mat-datepicker>
+                <mat-error>PDP Expiry Date is required</mat-error>
+            </mat-form-field>
+            <mat-card
+                [ngClass]="loading?'p-6 bg-card shadow rounded-2xl overflow-hiddenmat-elevation-z5 w-full sm:w-2/4 pl-2 pr-2 mat-form-field-loading':'p-6 bg-card shadow rounded-2xl overflow-hiddenmat-elevation-z5 w-full sm:w-2/4 pl-2 pr-2'"
+                style="padding: 4px!important;margin-bottom: 12px;">
+                <mat-card-header>
+                    Driver Image
+                </mat-card-header>
+                <mat-card-content>
+                    <div class="w-full z-10 relative flex flex-col items-center">
+                        <img fxFlex class="cursor-pointer shadow-inner shadow-xl rounded-lg w-36"
+                            onerror="this.src='assets/images/no-image.jpg';"
+                            [src]="avatarChanged ? fileToUpload : form.value.avatar ? imagesFolder + 'Drivers/' + form.value.id + form.value.avatar + '?t=' + this.timestamp : 'assets/images/no-image.png'"
+                            alt="User avatar" (click)="uploadImage($event)" />
+                    </div>
+                </mat-card-content>
+            </mat-card>
+            <mat-card
+                [ngClass]="loading?'p-6 bg-card shadow rounded-2xl overflow-hiddenmat-elevation-z5 w-full sm:w-2/4 pl-2 pr-2 mat-form-field-loading':'p-6 bg-card shadow rounded-2xl overflow-hiddenmat-elevation-z5 w-full sm:w-2/4 pl-2 pr-2'"
+                style="padding: 4px!important;margin-bottom: 12px;">
+                <mat-card-header>
+                    PDP
+                </mat-card-header>
+                <mat-card-content>
+                    <div class="w-full z-10 relative flex flex-col items-center">
+                        <img fxFlex class="cursor-pointer shadow-inner shadow-xl rounded-lg w-36"
+                            onerror="this.src='assets/images/no-image.jpg';"
+                            [src]="avatarChangedPdp ? fileToUploadPdp : form.value.avatarPdp ? imagesFolder + 'Pdps/' + form.value.id + form.value.avatarPdp + '?t=' + this.timestamp : 'assets/images/no-image.png'"
+                            alt="User avatar" (click)="uploadImagePdp($event)" />
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </form>
+        <!-- <div class="max-h-max visible sm:invisible"></div> -->
+    </mat-dialog-content>
+    <mat-dialog-actions class="flex items-end flex-row items-center justify-between bg-gray-200 dark:bg-gray-600">
+        <!-- <button mat-mini-fab (click)="onNoClick()"><mat-icon>close</mat-icon></button> -->
+        <div>
+            <button *ngIf="id" mat-icon-button [color]="'warn'" (click)="onDeleteClick()">
+                <ng-container *ngIf="!loading; else spinnerTemplate">
+                    <mat-icon>delete</mat-icon>
+                </ng-container>
+                <ng-template #spinnerTemplate>
+                    <mat-spinner [diameter]="24" [color]="'warn'"></mat-spinner>
+                </ng-template>
+            </button>
+        </div>
+        <button mat-icon-button class="bg-primary" [disabled]="!form.valid" (click)="onYesClick()">
+            <ng-container *ngIf="!loading; else spinnerTemplate">
+                <mat-icon class="text-on-primary">check</mat-icon>
+            </ng-container>
+            <ng-template #spinnerTemplate>
+                <mat-spinner [diameter]="24" [color]="'primary'" class="text-on-primary"></mat-spinner>
+            </ng-template>
+        </button>
+    </mat-dialog-actions>
+</div>

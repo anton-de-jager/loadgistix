@@ -1,0 +1,228 @@
+<div
+    class="absolute inset-0 flex flex-col flex-auto min-w-0 sm:overflow-hidden bg-card dark:bg-gray-800 sticky" [style.margin-right]="showAdverts?'208px':'0px'">
+
+    <mat-form-field class="mt-0 -mb-5 sticky">
+        <input matInput (keyup)="applyFilter($event)"
+            placeholder="Filter">
+    </mat-form-field>
+    <div class="flex flex-auto flex-col overflow-x-auto">
+        <table *ngIf="dataSource" mat-table [dataSource]="dataSource" matSort>
+            <ng-container matColumnDef="userId">
+                <th mat-header-cell class='table-header-column bg-primary text-on-primary' *matHeaderCellDef>
+                    <p class='table-header-column bg-primary text-on-primary' mat-sort-header="userId">UserId</p>
+                </th>
+                <td mat-cell *matCellDef="let row"
+                    class="selectable"
+                    (click)="initUpsert(row)">
+                    {{row.userId}}
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="loadTypeId">
+                <th mat-header-cell class='table-header-column bg-primary text-on-primary' *matHeaderCellDef>
+                    <p class='table-header-column bg-primary text-on-primary' mat-sort-header="loadTypeDescription">Type</p>
+                </th>
+                <td mat-cell *matCellDef="let row"
+                    class="selectable"
+                    (click)="initUpsert(row)">
+                    {{row.loadTypeDescription}}
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="description">
+                <th mat-header-cell class='table-header-column bg-primary text-on-primary' *matHeaderCellDef>
+                    <p class='table-header-column bg-primary text-on-primary' mat-sort-header="description">Description</p>
+                </th>
+                <td mat-cell *matCellDef="let row"
+                    class="selectable"
+                    (click)="initUpsert(row)">
+                    {{row.description}}
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="note">
+                <th mat-header-cell class='table-header-column bg-primary text-on-primary' *matHeaderCellDef>
+                    <p class='table-header-column bg-primary text-on-primary' mat-sort-header="note">Note</p>
+                </th>
+                <td mat-cell *matCellDef="let row"
+                    class="selectable"
+                    (click)="initUpsert(row)">
+                    {{row.note}} </td>
+            </ng-container>
+            <ng-container matColumnDef="price">
+                <th mat-header-cell class='table-header-column bg-primary text-on-primary' *matHeaderCellDef>
+                    <p class='table-header-column bg-primary text-on-primary' mat-sort-header="price">Price</p>
+                </th>
+                <td mat-cell *matCellDef="let row"
+                    class="selectable"
+                    (click)="initUpsert(row)">
+                    R{{row.price | number:'1.0-0'}}
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="originatingAddressLabel">
+                <th mat-header-cell class='table-header-column bg-primary text-on-primary' *matHeaderCellDef>
+                    <p class='table-header-column bg-primary text-on-primary'
+                        mat-sort-header="originatingAddressLabel">Originating
+                        Address
+                    </p>
+                </th>
+                <td mat-cell *matCellDef="let row"
+                    class="selectable"
+                    (click)="initUpsert(row)">
+                    {{row.originatingAddressLabel | addressLabel: ','}} </td>
+            </ng-container>
+            <ng-container matColumnDef="destinationAddressLabel">
+                <th mat-header-cell class='table-header-column bg-primary text-on-primary' *matHeaderCellDef>
+                    <p class='table-header-column bg-primary text-on-primary'
+                        mat-sort-header="destinationAddressLabel">Destination
+                        Address
+                    </p>
+                </th>
+                <td mat-cell *matCellDef="let row"
+                    class="selectable"
+                    (click)="initUpsert(row)">
+                    {{row.destinationAddressLabel | addressLabel: ','}} </td>
+            </ng-container>
+            <ng-container matColumnDef="itemCount">
+                <th mat-header-cell class='table-header-column bg-primary text-on-primary' *matHeaderCellDef>
+                    <p class='table-header-column bg-primary text-on-primary' mat-sort-header="itemCount">Item Count</p>
+                </th>
+                <td mat-cell *matCellDef="let row"
+                    class="selectable"
+                    (click)="initUpsert(row)">
+                    {{row.itemCount |
+                    number}}
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="liquid">
+                <th mat-header-cell class='table-header-column bg-primary text-on-primary' *matHeaderCellDef>
+                    <p class='table-header-column bg-primary text-on-primary' mat-sort-header="liquid">Liquid</p>
+                </th>
+                <td mat-cell *matCellDef="let row" class="selectable" (click)="initUpsert(row)">
+                    <mat-slide-toggle [disabled]="true" [checked]="row.liquid"></mat-slide-toggle>
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="weight">
+                <th mat-header-cell class='table-header-column bg-primary text-on-primary' *matHeaderCellDef>
+                    <p class='table-header-column bg-primary text-on-primary' mat-sort-header="weight">Weight (kg)</p>
+                </th>
+                <td mat-cell *matCellDef="let row"
+                    class="selectable"
+                    (click)="initUpsert(row)">
+                    {{row.weight | number}}
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="length">
+                <th mat-header-cell class='table-header-column bg-primary text-on-primary' *matHeaderCellDef>
+                    <p class='table-header-column bg-primary text-on-primary' mat-sort-header="length">Length (cm)</p>
+                </th>
+                <td mat-cell *matCellDef="let row"
+                    class="selectable"
+                    (click)="initUpsert(row)">
+                    {{row.length | number}}
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="width">
+                <th mat-header-cell class='table-header-column bg-primary text-on-primary' *matHeaderCellDef>
+                    <p class='table-header-column bg-primary text-on-primary' mat-sort-header="width">Width (cm)</p>
+                </th>
+                <td mat-cell *matCellDef="let row"
+                    class="selectable"
+                    (click)="initUpsert(row)">
+                    {{row.width | number}}
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="height">
+                <th mat-header-cell class='table-header-column bg-primary text-on-primary' *matHeaderCellDef>
+                    <p class='table-header-column bg-primary text-on-primary' mat-sort-header="height">Height (cm)</p>
+                </th>
+                <td mat-cell *matCellDef="let row"
+                    class="selectable"
+                    (click)="initUpsert(row)">
+                    {{row.height | number}}
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="totalValue">
+                <th mat-header-cell class='table-header-column bg-primary text-on-primary' *matHeaderCellDef>
+                    <p class='table-header-column bg-primary text-on-primary' mat-sort-header="totalValue">Total Value</p>
+                </th>
+                <td mat-cell *matCellDef="let row"
+                    class="selectable"
+                    (click)="initUpsert(row)">
+                    {{row.totalValue |
+                    number}}
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="dateOut">
+                <th mat-header-cell class='table-header-column bg-primary text-on-primary' *matHeaderCellDef>
+                    <p class='table-header-column bg-primary text-on-primary' mat-sort-header="dateOut">Departure Date</p>
+                </th>
+                <td mat-cell *matCellDef="let row"
+                    class="selectable"
+                    (click)="initUpsert(row)">
+                    {{row.dateOut |
+                    date:'yyyy-MM-dd'}} </td>
+            </ng-container>
+            <ng-container matColumnDef="dateIn">
+                <th mat-header-cell class='table-header-column bg-primary text-on-primary' *matHeaderCellDef>
+                    <p class='table-header-column bg-primary text-on-primary' mat-sort-header="dateIn">Delivery Date</p>
+                </th>
+                <td mat-cell *matCellDef="let row"
+                    class="selectable"
+                    (click)="initUpsert(row)">
+                    {{row.dateIn |
+                    date:'yyyy-MM-dd'}} </td>
+            </ng-container>
+            <ng-container matColumnDef="dateBidEnd">
+                <th mat-header-cell class='table-header-column bg-primary text-on-primary' *matHeaderCellDef>
+                    <p class='table-header-column bg-primary text-on-primary' mat-sort-header="dateBidEnd">Bid Close
+                        Date</p>
+                </th>
+                <td mat-cell *matCellDef="let row"
+                    class="selectable"
+                    (click)="initUpsert(row)">
+                    {{row.dateBidEnd |
+                    date:'yyyy-MM-dd'}} </td>
+            </ng-container>
+            <ng-container matColumnDef="bidCount">
+                <th mat-header-cell class='table-header-column bg-primary text-on-primary' *matHeaderCellDef>
+                    <p class="table-header pl-4" mat-sort-header="bidCount">Bids</p>
+                </th>
+                <td mat-cell *matCellDef="let row"
+                    class="selectable pl-4 w-24">
+                    <button *ngIf="(row.status==='Open'||row.status==='Bid(s) Placed')&&row.bidCount>0"
+                        mat-stroked-button (click)="viewBids(row)"
+                        matTooltip="View Bids" class="-ml-4">
+                        {{row.bidCount}}
+                    </button>
+                    <span *ngIf="(row.status==='Open'||row.status==='Bid(s) Placed') && row.bidCount === 0">0</span>
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="status">
+                <th mat-header-cell class='table-header-column bg-primary text-on-primary' *matHeaderCellDef>
+                    <p class='table-header-column bg-primary text-on-primary' mat-sort-header="status">Status</p>
+                </th>
+                <td mat-cell *matCellDef="let row" [style.background-color]="getColor(row.status, row.bidCount)"
+                    class="selectable pl-4" (click)="initUpsert(row)"> {{row.status}}
+                </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="loading || !dataSource?'table-row-loading':'hover:animate-pulse hover:backdrop-blur-lg'"></tr>
+        </table>
+    </div>
+    <div
+        class="flex items-end flex-row items-center border-t bg-primary text-on-primary dark:bg-gray-800 dark:text-primary justify-between pl-4 pr-4">
+        <mat-paginator [pageSize]="10" [hidePageSize]="true"
+            [disabled]="loading || !dataSource"
+            class="bg-primary text-on-primary dark:bg-gray-800 dark:text-primary"></mat-paginator>
+        <div class="flex items-center">
+            <button mat-icon-button class="bg-primary w-7 h-7 min-w-7 min-h-7 -mt-1"
+                (click)="initUpsert(null)">
+                <ng-container *ngIf="!loading && dataSource; else spinnerTemplate">
+                    <mat-icon class="text-on-primary">add</mat-icon>
+                </ng-container>
+                <ng-template #spinnerTemplate>
+                    <mat-spinner [diameter]="24" [color]="'primary'" class="text-on-primary"></mat-spinner>
+                </ng-template>
+            </button>
+        </div>
+
+    </div>
+</div>

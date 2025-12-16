@@ -1,0 +1,46 @@
+import { Guid } from "guid-typescript";
+
+export class load {
+    id: Guid;
+    userId?: string;
+    userDescription?: string;
+    loadTypeId?: Guid;
+    loadTypeDescription?: string;
+    liquid?: boolean;
+    description?: string;
+    note?: string;
+    price?: number;
+    itemCount?: number;
+    weight?: number;
+    length?: number;
+    width?: number;
+    height?: number;
+    volume?: number;
+    totalValue?: number;
+    dateOut?: Date;
+    dateIn?: Date;
+    dateBidEnd?: Date;
+    fridgeHours?: number;
+    kgsLoaded?: number;
+    customerLoadedForm?: string;
+    reviewAverageLoad?: number;
+    reviewCountLoad?: number;
+    bidCount?: number;
+    loadDestinationId?: Guid;
+    originatingAddressLabel?: string;
+    originatingAddressLat?: number;
+    originatingAddressLon?: number;
+    destinationAddressLabel?: string;
+    destinationAddressLat?: number;
+    destinationAddressLon?: number;
+    route?: string;
+    meters?: number;
+    minutes?: number;
+    odoStart?: number;
+    odoEnd?: number;
+    destinationCount?: number;
+    destinationDelivered?: number;
+    createdOn?: Date;
+    changedOn?: Date;
+    status?: string;
+}

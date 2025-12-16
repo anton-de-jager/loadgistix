@@ -1,0 +1,135 @@
+<div class="absolute inset-0 flex flex-col flex-auto min-w-0 sm:overflow-hidden bg-card dark:bg-gray-800 sticky"
+    [style.margin-right]="showAdverts?'208px':'0px'">
+
+    <div class="flex flex-col w-full h-full no-overflow">
+        <div id="map" class="w-full h-full z-10"></div>
+        <div class="map-shadow z-20"></div>
+    </div>
+
+    <div fxFlex
+        class="absolute top-4 right-4 z-40">
+        <button mat-fab [matMenuTriggerFor]="menuMap" class="bg-primary">
+            <ng-container *ngIf="!loading; else spinnerTemplate">
+                <mat-icon class="text-on-primary">tune</mat-icon>
+            </ng-container>
+            <ng-template #spinnerTemplate>
+                <mat-spinner [diameter]="24" [color]="'primary'"
+                    class="text-on-primary"></mat-spinner>
+            </ng-template>
+        </button>
+    </div>
+    <mat-menu #menuMap="matMenu"
+        fxLayoutAlign="center stretch" class="flex flex-col w-60 p-2"
+        (click)="$event.stopPropagation()"
+        (open)="$event.stopPropagation()">
+        <mat-form-field appearance="outline" class="w-full"
+            (click)="$event.stopPropagation()">
+            <mat-label>Within</mat-label>
+            <mat-select [(ngModel)]="range" placeholder="Within Range"
+                (click)="$event.stopPropagation()">
+                <mat-option *ngFor="let rangeItem of rangeItems | order_by:'value'"
+                    [value]="rangeItem.value">
+                    {{rangeItem.description}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <div class="flex items-center justify-between">
+            <div
+                class="flex-auto cursor-pointer"
+                (click)="$event.stopPropagation();rangeTargetOrigin=!rangeTargetOrigin">
+                <div class="leading-6 font-medium">Origin within Range</div>
+            </div>
+            <mat-slide-toggle
+                (click)="$event.stopPropagation()"
+                class="ml-2"
+                [color]="'primary'"
+                [(ngModel)]="rangeTargetOrigin">
+            </mat-slide-toggle>
+        </div>
+        <div class="flex items-center justify-between">
+            <div
+                class="flex-auto cursor-pointer"
+                (click)="$event.stopPropagation();rangeTargetDestination=!rangeTargetDestination">
+                <div class="leading-6 font-medium">Destination within Range</div>
+            </div>
+            <mat-slide-toggle
+                (click)="$event.stopPropagation()"
+                class="ml-2"
+                [color]="'primary'"
+                [(ngModel)]="rangeTargetDestination">
+            </mat-slide-toggle>
+        </div>
+        <mat-divider class="my-4"></mat-divider>
+        <fuse-alert [type]="'warn'"
+            *ngIf="!rangeTargetOrigin && !rangeTargetDestination">
+            <span fuseAlertTitle>Route Selection</span>
+            Select at least one of Origin/Destination
+        </fuse-alert>
+        <mat-divider class="my-4"
+            *ngIf="!rangeTargetOrigin && !rangeTargetDestination"></mat-divider>
+
+        <mat-form-field appearance="outline" class="w-full"
+            (click)="$event.stopPropagation()">
+            <mat-label>Max Weight (kg)</mat-label>
+            <input matInput type="number" placeholder="Max Weight (kg)"
+                [(ngModel)]="weight"
+                (click)="$event.stopPropagation()">
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="w-full"
+            (click)="$event.stopPropagation()">
+            <mat-label>Max Volume (metres) | W x H x L</mat-label>
+            <input matInput type="number"
+                placeholder="Max Volume (meters | W x H x L)"
+                [(ngModel)]="volumeCm"
+                (click)="$event.stopPropagation()">
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="w-full"
+            (click)="$event.stopPropagation()">
+            <mat-label>Max Volume (litres)</mat-label>
+            <input matInput type="number"
+                placeholder="Max Volume (litres)"
+                [(ngModel)]="volumeLt"
+                (click)="$event.stopPropagation()">
+        </mat-form-field>
+        <button fxFlex mat-raised-button class="w-full" color="primary"
+            (click)="updateLoads()" matTooltip="Filter"
+            [disabled]="!rangeTargetOrigin && !rangeTargetDestination">
+            <mat-icon class="fab-icon">search</mat-icon>&nbsp;Filter
+        </button>
+    </mat-menu>
+
+    <div class="flex flex-col w-40 absolute bottom-4 left-4 z-40">
+        <div class="h-5 border-1 border-gray-400">
+            <div class="w-40 text-center bg-gray-300 font-bold">Legend</div>
+        </div>
+        <div class="flex flex-row h-5 border-1 border-gray-400">
+            <div class="w-5 map-legend-open border-r-1 bg-blue-400">&nbsp;</div>
+            <div class="w-full bg-gray-800/50 text-white">&nbsp;Open</div>
+        </div>
+        <div class="flex flex-row border-1 border-gray-400">
+            <div class="w-5 map-legend-bids border-r-1 bg-orange-300">&nbsp;</div>
+            <div class="w-full bg-gray-800/50 text-white">&nbsp;Bid(s) Placed</div>
+        </div>
+        <div class="flex flex-row border-1 border-gray-400">
+            <div class="w-5 map-legend-accepted border-r-1 bg-green-400">&nbsp;</div>
+            <div class="w-full bg-gray-800/50 text-white">&nbsp;Accepted</div>
+        </div>
+        <div class="flex flex-row border-1 border-gray-400">
+            <div class="w-5 map-legend-loaded border-r-1 bg-pink-200">&nbsp;</div>
+            <div class="w-full bg-gray-800/50 text-white">&nbsp;Loaded</div>
+        </div>
+        <div class="flex flex-row border-1 border-gray-400">
+            <div class="w-5 map-legend-loaded-confirmed border-r-1 bg-pink-600">&nbsp;</div>
+            <div class="w-full bg-gray-800/50 text-white">&nbsp;Loaded Confirmed</div>
+        </div>
+        <div class="flex flex-row border-1 border-gray-400">
+            <div class="w-5 map-legend-delivered border-r-1 bg-gray-300">&nbsp;</div>
+            <div class="w-full bg-gray-800/50 text-white">&nbsp;Delivered</div>
+        </div>
+        <div class="flex flex-row border-1 border-gray-400">
+            <div
+                class="w-5 map-legend-delivered-confirmed border-r-1 bg-gray-600">&nbsp;</div>
+            <div class="w-full bg-gray-800/50 text-white">&nbsp;Delivered Confirmed</div>
+        </div>
+    </div>
+
+</div>

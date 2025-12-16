@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Insurance Request</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 20mm;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 10px;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            position: relative;
+            min-height: 100%;
+            box-sizing: border-box;
+        }
+        h2 {
+            background-color: #f2f2f2;
+            padding: 5px;
+            border: 1px solid #ddd;
+            margin: 0;
+            font-size: 1.1em;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 10px;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 5px;
+            text-align: left;
+        }
+        .section {
+            margin-bottom: 10px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .header img {
+            max-width: 100%;
+            height: auto;
+        }
+        .header-title {
+            font-size: 16px;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+        .half-width td {
+            width: 50%;
+        }
+        .quarter-width th,
+        .quarter-width td {
+            width: 25%;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <img src="loadgistix.png" alt="Loadgistix Logo">
+        <div class="header-title">INSURANCE REQUEST FORM</div>
+    </div>
+    <div class="section">
+        <h2>QUOTE DETAILS</h2>
+        <table class="half-width">
+            <tr>
+                <td>Reference Number</td>
+                <td>!*id*!</td>
+            </tr>
+            <tr>
+                <td>Created On</td>
+                <td>!*createdOn*!</td>
+            </tr>
+        </table>
+    </div>
+    <div class="section">
+        <h2>CONTACT DETAILS</h2>
+        <table class="quarter-width">
+            <tr>
+                <td>First Name</td>
+                <td>!*nameFirst*!</td>
+                <td>Last Name</td>
+                <td>!*nameLast*!</td>
+            </tr>
+            <tr>
+                <td>E-mail address</td>
+                <td>!*email*!</td>
+                <td>Mobile no.</td>
+                <td>!*mobileNumber*!</td>
+            </tr>
+        </table>
+    </div>
+    <div class="section">
+        <h2>BUSINESS DETAILS</h2>
+        <table class="half-width">
+            <tr>
+                <td>Company Name</td>
+                <td>!*company*!</td>
+            </tr>
+            <tr>
+                <td>Business Description</td>
+                <td>!*businessDescription*!</td>
+            </tr>
+            <tr>
+                <td>Are the Vehicles Owned or Rented</td>
+                <td>!*ownedRentedDescription*!</td>
+            </tr>
+        </table>
+    </div>
+    <div class="section">
+        <h2>VEHICLE DETAILS</h2>
+        <table class="quarter-width">
+            <tr>
+                <th>Truck Make</th>
+                <th>Truck Model</th>
+                <th>Truck Year</th>
+                <th>Truck Value</th>
+            </tr>
+            <tr>
+                <td>!*makeTruck1*!</td>
+                <td>!*modelTruck1*!</td>
+                <td>!*yearTruck1*!</td>
+                <td>!*valueTruck1*!</td>
+            </tr>
+            <tr>
+                <td>!*makeTruck2*!</td>
+                <td>!*modelTruck2*!</td>
+                <td>!*yearTruck2*!</td>
+                <td>!*valueTruck2*!</td>
+            </tr>
+            <tr>
+                <td>!*makeTruck3*!</td>
+                <td>!*modelTruck3*!</td>
+                <td>!*yearTruck3*!</td>
+                <td>!*valueTruck3*!</td>
+            </tr>
+            <tr>
+                <td>!*makeTruck4*!</td>
+                <td>!*modelTruck4*!</td>
+                <td>!*yearTruck4*!</td>
+                <td>!*valueTruck4*!</td>
+            </tr>
+            <tr>
+                <td>!*makeTruck5*!</td>
+                <td>!*modelTruck5*!</td>
+                <td>!*yearTruck5*!</td>
+                <td>!*valueTruck5*!</td>
+            </tr>
+        </table>
+    </div>
+    <div class="section">
+        <h2>TRAILER DETAILS</h2>
+        <table class="quarter-width">
+            <tr>
+                <th>Truck Make</th>
+                <th>Truck Model</th>
+                <th>Truck Year</th>
+                <th>Truck Value</th>
+            </tr>
+            <tr>
+                <td>!*makeTrailer1*!</td>
+                <td>!*modelTrailer1*!</td>
+                <td>!*yearTrailer1*!</td>
+                <td>!*valueTrailer1*!</td>
+            </tr>
+            <tr>
+                <td>!*makeTrailer2*!</td>
+                <td>!*modelTrailer2*!</td>
+                <td>!*yearTrailer2*!</td>
+                <td>!*valueTrailer2*!</td>
+            </tr>
+            <tr>
+                <td>!*makeTrailer3*!</td>
+                <td>!*modelTrailer3*!</td>
+                <td>!*yearTrailer3*!</td>
+                <td>!*valueTrailer3*!</td>
+            </tr>
+            <tr>
+                <td>!*makeTrailer4*!</td>
+                <td>!*modelTrailer4*!</td>
+                <td>!*yearTrailer4*!</td>
+                <td>!*valueTrailer4*!</td>
+            </tr>
+            <tr>
+                <td>!*makeTrailer5*!</td>
+                <td>!*modelTrailer5*!</td>
+                <td>!*yearTrailer5*!</td>
+                <td>!*valueTrailer5*!</td>
+            </tr>
+        </table>
+    </div>
+    <div class="footer">
+        <p>!*createdOn*!</p>
+    </div>
+</body>
+</html>

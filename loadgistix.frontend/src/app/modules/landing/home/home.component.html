@@ -1,0 +1,513 @@
+<!-- Modern Hero Section -->
+<div class="flex flex-col flex-auto min-h-screen">
+    
+    <!-- Hero Section with Brand Background -->
+    <section class="relative min-h-screen flex items-center justify-center overflow-hidden" style="background: linear-gradient(135deg, #1976D2 0%, #2196F3 50%, #42A5F5 100%);">
+        <!-- Animated Network Pattern -->
+        <div class="absolute inset-0 opacity-5">
+            <div class="absolute inset-0" style="background-image: url('/assets/images/icon.png'); background-size: 80px; background-position: center; background-repeat: repeat; opacity: 0.3;"></div>
+        </div>
+
+        <!-- Floating Animated Elements -->
+        <div class="absolute inset-0 overflow-hidden pointer-events-none">
+            <!-- Floating Trucks -->
+            <div class="floating-truck absolute top-20 left-10 opacity-20">
+                <mat-icon class="!w-16 !h-16 !text-6xl text-white" svgIcon="heroicons_outline:truck"></mat-icon>
+            </div>
+            <div class="floating-truck-slow absolute top-40 right-20 opacity-15">
+                <mat-icon class="!w-20 !h-20 !text-7xl text-white" svgIcon="heroicons_outline:cube"></mat-icon>
+            </div>
+            <div class="floating-truck-reverse absolute bottom-32 left-1/4 opacity-20">
+                <mat-icon class="!w-14 !h-14 !text-5xl text-white" svgIcon="heroicons_outline:map"></mat-icon>
+            </div>
+            <div class="floating-truck absolute bottom-20 right-1/3 opacity-15">
+                <mat-icon class="!w-16 !h-16 !text-6xl text-white" svgIcon="heroicons_outline:building-office"></mat-icon>
+            </div>
+            
+            <!-- Animated Connection Lines -->
+            <svg class="absolute inset-0 w-full h-full opacity-10">
+                <line x1="10%" y1="20%" x2="90%" y2="80%" stroke="white" stroke-width="2" class="connection-line" />
+                <line x1="80%" y1="30%" x2="20%" y2="70%" stroke="white" stroke-width="2" class="connection-line-slow" />
+                <line x1="50%" y1="10%" x2="50%" y2="90%" stroke="white" stroke-width="2" class="connection-line-reverse" />
+            </svg>
+        </div>
+
+        <!-- Particle Effect Background -->
+        <div class="absolute inset-0 overflow-hidden pointer-events-none">
+            <div class="particle particle-1"></div>
+            <div class="particle particle-2"></div>
+            <div class="particle particle-3"></div>
+            <div class="particle particle-4"></div>
+            <div class="particle particle-5"></div>
+            <div class="particle particle-6"></div>
+            <div class="particle particle-7"></div>
+            <div class="particle particle-8"></div>
+        </div>
+
+        <!-- Hero Content with Better Padding -->
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center py-20 sm:py-24 lg:py-32">
+            <!-- Live Activity Badge with Enhanced Animation -->
+            <div class="mb-8 animate-fade-in flex justify-center">
+                <div class="inline-flex items-center gap-3 bg-gradient-to-r from-white/25 to-white/15 backdrop-blur-md px-8 py-4 rounded-full border-2 border-white/40 shadow-2xl pulse-glow-strong hover:scale-105 transition-transform cursor-pointer">
+                    <span class="relative flex h-4 w-4">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-4 w-4 bg-green-500 shadow-lg"></span>
+                    </span>
+                    <span class="text-white font-extrabold text-base tracking-wide">🔥 {{loadCountNew}} NEW LOADS TODAY</span>
+                    <span class="text-yellow-300 font-bold animate-pulse">•</span>
+                    <span class="text-white/90 font-semibold text-sm">LIVE</span>
+                </div>
+            </div>
+
+            <!-- Logo with Enhanced Animation -->
+            <div class="mb-10 animate-fade-in flex flex-col items-center">
+                <div class="relative">
+                    <!-- Glow effect behind logo -->
+                    <div class="absolute inset-0 bg-white/20 blur-3xl rounded-full scale-150"></div>
+                    <img src="/assets/images/iconWhite.png" alt="LoadGistix Icon" class="relative h-36 w-36 mb-6 drop-shadow-2xl logo-spin-hover">
+                </div>
+                <img src="/assets/images/logo-text-on-dark.png" alt="LoadGistix" class="max-h-24 w-auto drop-shadow-2xl px-4">
+            </div>
+
+            <!-- Main Headline with Enhanced Gradient Text -->
+            <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-black text-white mb-8 animate-slide-up drop-shadow-2xl leading-tight">
+                <span class="block mb-2">Smart Logistics Management</span>
+                <span class="block mt-4 bg-gradient-to-r from-yellow-200 via-white to-yellow-200 bg-clip-text text-transparent animate-gradient text-glow">
+                    Powered by Innovation
+                </span>
+            </h1>
+
+            <!-- Subheadline with Better Spacing -->
+            <p class="text-xl sm:text-2xl lg:text-3xl text-white/95 mb-16 max-w-4xl mx-auto animate-slide-up-delay drop-shadow-lg font-light leading-relaxed">
+                Connect loads with vehicles, manage your fleet, and grow your logistics business—all in one powerful platform.
+            </p>
+
+            <!-- CTA Buttons with MEGA Effects -->
+            <div class="flex flex-col sm:flex-row gap-6 justify-center items-center mb-20 animate-slide-up-delay-2">
+                <button mat-flat-button class="cta-mega !bg-white !text-[#2196F3] !px-12 !py-8 !text-2xl !font-black !rounded-full hover:!bg-blue-50 !shadow-2xl transform hover:scale-110 transition-all relative overflow-hidden group" (click)="signUp()">
+                    <span class="relative z-10 flex items-center gap-3">
+                        <mat-icon class="!w-8 !h-8 !text-3xl animate-bounce-slow" svgIcon="heroicons_outline:rocket-launch"></mat-icon>
+                        <span>Start Free Trial</span>
+                        <span class="inline-block bg-gradient-to-r from-orange-400 to-red-500 text-white text-xs px-3 py-1 rounded-full font-bold animate-pulse">FREE</span>
+                    </span>
+                    <span class="absolute inset-0 bg-gradient-to-r from-blue-400 to-blue-600 opacity-0 group-hover:opacity-20 transition-opacity"></span>
+                    <span class="absolute inset-0 shimmer"></span>
+                </button>
+                <button mat-stroked-button class="!border-white !border-3 !text-white !px-12 !py-8 !text-2xl !font-black !rounded-full hover:!bg-white hover:!text-[#2196F3] !shadow-2xl transform hover:scale-110 transition-all backdrop-blur-md bg-white/10" (click)="signIn()">
+                    <span class="flex items-center gap-2">
+                        <mat-icon class="!w-7 !h-7" svgIcon="heroicons_outline:arrow-right-on-rectangle"></mat-icon>
+                        Sign In
+                    </span>
+                </button>
+            </div>
+
+            <!-- Trust Indicators with Enhanced Animation & Better Spacing -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-5xl mx-auto text-white animate-fade-in-delay pt-8">
+                <div class="stat-card p-6 bg-gradient-to-br from-white/15 to-white/5 backdrop-blur-md rounded-2xl hover:from-white/25 hover:to-white/10 transition-all transform hover:scale-110 cursor-pointer border border-white/20 hover:border-white/40 shadow-xl hover:shadow-2xl">
+                    <mat-icon class="!w-12 !h-12 !text-5xl text-blue-200 mb-3 opacity-80" svgIcon="heroicons_outline:truck"></mat-icon>
+                    <div class="text-6xl font-black text-white drop-shadow-lg counter-animate mb-2">{{loadCountTotal}}</div>
+                    <div class="text-base text-blue-100 font-bold mb-2">Active Loads</div>
+                    <div class="flex items-center justify-center gap-2 mt-2 bg-green-500/20 rounded-full px-3 py-1">
+                        <mat-icon class="!w-4 !h-4 text-green-300" svgIcon="heroicons_outline:arrow-trending-up"></mat-icon>
+                        <span class="text-green-300 text-sm font-bold">{{loadCountNew}} this week</span>
+                    </div>
+                </div>
+                <div class="stat-card p-6 bg-gradient-to-br from-white/15 to-white/5 backdrop-blur-md rounded-2xl hover:from-white/25 hover:to-white/10 transition-all transform hover:scale-110 cursor-pointer border border-white/20 hover:border-white/40 shadow-xl hover:shadow-2xl">
+                    <mat-icon class="!w-12 !h-12 !text-5xl text-red-200 mb-3 opacity-80" svgIcon="heroicons_outline:cube"></mat-icon>
+                    <div class="text-6xl font-black text-white drop-shadow-lg counter-animate mb-2">{{vehicleCountTotal}}</div>
+                    <div class="text-base text-blue-100 font-bold mb-2">Registered Vehicles</div>
+                    <div class="flex items-center justify-center gap-2 mt-2 bg-green-500/20 rounded-full px-3 py-1">
+                        <mat-icon class="!w-4 !h-4 text-green-300" svgIcon="heroicons_outline:arrow-trending-up"></mat-icon>
+                        <span class="text-green-300 text-sm font-bold">{{vehicleCountNew}} this week</span>
+                    </div>
+                </div>
+                <div class="stat-card p-6 bg-gradient-to-br from-white/15 to-white/5 backdrop-blur-md rounded-2xl hover:from-white/25 hover:to-white/10 transition-all transform hover:scale-110 cursor-pointer border border-white/20 hover:border-white/40 shadow-xl hover:shadow-2xl">
+                    <mat-icon class="!w-12 !h-12 !text-5xl text-green-200 mb-3 opacity-80" svgIcon="heroicons_outline:building-office"></mat-icon>
+                    <div class="text-6xl font-black text-white drop-shadow-lg counter-animate mb-2">{{directoryCountTotal}}</div>
+                    <div class="text-base text-blue-100 font-bold mb-2">Business Partners</div>
+                    <div class="flex items-center justify-center gap-2 mt-2 bg-green-500/20 rounded-full px-3 py-1">
+                        <mat-icon class="!w-4 !h-4 text-green-300" svgIcon="heroicons_outline:arrow-trending-up"></mat-icon>
+                        <span class="text-green-300 text-sm font-bold">{{directoryCountNew}} this week</span>
+                    </div>
+                </div>
+                <div class="stat-card p-6 bg-gradient-to-br from-white/15 to-white/5 backdrop-blur-md rounded-2xl hover:from-white/25 hover:to-white/10 transition-all transform hover:scale-110 cursor-pointer border border-white/20 hover:border-white/40 shadow-xl hover:shadow-2xl">
+                    <mat-icon class="!w-12 !h-12 !text-5xl text-amber-200 mb-3 opacity-80" svgIcon="heroicons_outline:users"></mat-icon>
+                    <div class="text-6xl font-black text-white drop-shadow-lg counter-animate mb-2">{{userCountLoadTotal + userCountVehicleTotal}}</div>
+                    <div class="text-base text-blue-100 font-bold mb-2">Happy Users</div>
+                    <div class="flex items-center justify-center gap-2 mt-2 bg-green-500/20 rounded-full px-3 py-1">
+                        <mat-icon class="!w-4 !h-4 text-green-300" svgIcon="heroicons_outline:fire"></mat-icon>
+                        <span class="text-green-300 text-sm font-bold">Growing daily</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Scroll Indicator with Enhanced Animation -->
+            <div class="absolute bottom-12 left-1/2 transform -translate-x-1/2 animate-bounce-slow">
+                <div class="flex flex-col items-center gap-2">
+                    <span class="text-white/80 text-sm font-semibold tracking-wider">SCROLL TO EXPLORE</span>
+                    <div class="w-6 h-10 border-2 border-white/60 rounded-full flex items-start justify-center p-2">
+                        <div class="w-1.5 h-3 bg-white rounded-full animate-scroll-indicator"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Access Cards -->
+    <section class="py-16 bg-gray-50 dark:bg-gray-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+                    Everything You Need in One Place
+                </h2>
+                <p class="text-xl text-gray-600 dark:text-gray-400">
+                    Explore our platform features and find what you're looking for
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Loads Available Card -->
+                <div class="group bg-white dark:bg-gray-800 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden cursor-pointer transform hover:-translate-y-2" (click)="goTo('loads-available')">
+                    <div class="p-8">
+                        <div class="w-16 h-16 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform" style="background-color: rgba(33, 150, 243, 0.1);">
+                            <mat-icon class="!w-8 !h-8 !text-4xl" style="color: #2196F3;" svgIcon="heroicons_outline:truck"></mat-icon>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">Loads Available</h3>
+                        <div class="text-5xl font-bold mb-2" style="color: #2196F3;">{{loadCountTotal}}</div>
+                        <p class="text-gray-600 dark:text-gray-400 mb-4">Find loads that match your routes</p>
+                        <div class="flex items-center text-sm text-gray-500 dark:text-gray-500">
+                            <span class="inline-block w-2 h-2 bg-green-500 rounded-full mr-2"></span>
+                            {{loadCountNew}} new this week
+                        </div>
+                    </div>
+                    <div class="h-1 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left" style="background: linear-gradient(90deg, #2196F3 0%, #42A5F5 100%);"></div>
+                </div>
+
+                <!-- Vehicles Card -->
+                <div class="group bg-white dark:bg-gray-800 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden cursor-pointer transform hover:-translate-y-2" (click)="goTo('vehicles')">
+                    <div class="p-8">
+                        <div class="w-16 h-16 bg-red-100 dark:bg-red-900 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                            <mat-icon class="text-red-600 dark:text-red-400 !w-8 !h-8 !text-4xl" svgIcon="heroicons_outline:cube"></mat-icon>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">Vehicles</h3>
+                        <div class="text-5xl font-bold text-red-600 dark:text-red-400 mb-2">{{vehicleCountTotal}}</div>
+                        <p class="text-gray-600 dark:text-gray-400 mb-4">Browse available vehicles</p>
+                        <div class="flex items-center text-sm text-gray-500 dark:text-gray-500">
+                            <span class="inline-block w-2 h-2 bg-green-500 rounded-full mr-2"></span>
+                            {{vehicleCountNew}} new this week
+                        </div>
+                    </div>
+                    <div class="h-1 bg-gradient-to-r from-red-500 to-red-600 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></div>
+                </div>
+
+                <!-- Business Directory Card -->
+                <div class="group bg-white dark:bg-gray-800 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden cursor-pointer transform hover:-translate-y-2" (click)="goTo(currentUser !== null && currentUser !== undefined ? 'business-directory' : 'business-directory-open')">
+                    <div class="p-8">
+                        <div class="w-16 h-16 bg-green-100 dark:bg-green-900 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                            <mat-icon class="text-green-600 dark:text-green-400 !w-8 !h-8 !text-4xl" svgIcon="heroicons_outline:building-office"></mat-icon>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">Business Directory</h3>
+                        <div class="text-5xl font-bold text-green-600 dark:text-green-400 mb-2">{{directoryCountTotal}}</div>
+                        <p class="text-gray-600 dark:text-gray-400 mb-4">Connect with partners</p>
+                        <div class="flex items-center text-sm text-gray-500 dark:text-gray-500">
+                            <span class="inline-block w-2 h-2 bg-green-500 rounded-full mr-2"></span>
+                            {{directoryCountNew}} new this week
+                        </div>
+                    </div>
+                    <div class="h-1 bg-gradient-to-r from-green-500 to-green-600 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></div>
+                </div>
+
+                <!-- Insurance Quote Card -->
+                <div class="group bg-white dark:bg-gray-800 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden cursor-pointer transform hover:-translate-y-2" (click)="quote()">
+                    <div class="p-8">
+                        <div class="w-16 h-16 bg-amber-100 dark:bg-amber-900 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                            <mat-icon class="text-amber-600 dark:text-amber-400 !w-8 !h-8 !text-4xl" svgIcon="heroicons_outline:shield-check"></mat-icon>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">Insurance Quote</h3>
+                        <div class="text-3xl font-bold text-amber-600 dark:text-amber-400 mb-2">Instant</div>
+                        <p class="text-gray-600 dark:text-gray-400 mb-4">Get covered in minutes</p>
+                        <div class="flex items-center text-sm text-amber-600 dark:text-amber-400 font-medium">
+                            <mat-icon class="!w-4 !h-4 mr-1" svgIcon="heroicons_outline:arrow-right"></mat-icon>
+                            Get Quote Now
+                        </div>
+                    </div>
+                    <div class="h-1 bg-gradient-to-r from-amber-500 to-amber-600 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-20 bg-white dark:bg-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+                    Powerful Features for Modern Logistics
+                </h2>
+                <p class="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
+                    Everything you need to run your logistics business efficiently
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Fleet Management -->
+                <div class="p-8 rounded-xl bg-gray-50 dark:bg-gray-900 hover:shadow-lg transition-shadow">
+                    <div class="w-12 h-12 rounded-lg flex items-center justify-center mb-4" style="background-color: rgba(33, 150, 243, 0.1);">
+                        <mat-icon style="color: #2196F3;" svgIcon="heroicons_outline:truck"></mat-icon>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">Fleet Management</h3>
+                    <p class="text-gray-600 dark:text-gray-400">
+                        Manage your vehicles, drivers, and branches all in one place. Track maintenance, schedules, and performance.
+                    </p>
+                </div>
+
+                <!-- Load Matching -->
+                <div class="p-8 rounded-xl bg-gray-50 dark:bg-gray-900 hover:shadow-lg transition-shadow">
+                    <div class="w-12 h-12 bg-green-100 dark:bg-green-900 rounded-lg flex items-center justify-center mb-4">
+                        <mat-icon class="text-green-600 dark:text-green-400" svgIcon="heroicons_outline:map"></mat-icon>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">Smart Load Matching</h3>
+                    <p class="text-gray-600 dark:text-gray-400">
+                        AI-powered matching connects your vehicles with the right loads based on routes, capacity, and preferences.
+                    </p>
+                </div>
+
+                <!-- Real-time Tracking -->
+                <div class="p-8 rounded-xl bg-gray-50 dark:bg-gray-900 hover:shadow-lg transition-shadow">
+                    <div class="w-12 h-12 rounded-lg flex items-center justify-center mb-4" style="background-color: rgba(33, 150, 243, 0.1);">
+                        <mat-icon style="color: #2196F3;" svgIcon="heroicons_outline:map-pin"></mat-icon>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">Real-time Tracking</h3>
+                    <p class="text-gray-600 dark:text-gray-400">
+                        Monitor your loads and vehicles in real-time. Get instant updates on delivery status and location.
+                    </p>
+                </div>
+
+                <!-- Bidding System -->
+                <div class="p-8 rounded-xl bg-gray-50 dark:bg-gray-900 hover:shadow-lg transition-shadow">
+                    <div class="w-12 h-12 rounded-lg flex items-center justify-center mb-4" style="background-color: rgba(33, 150, 243, 0.1);">
+                        <mat-icon style="color: #2196F3;" svgIcon="heroicons_outline:currency-dollar"></mat-icon>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">Competitive Bidding</h3>
+                    <p class="text-gray-600 dark:text-gray-400">
+                        Place bids on loads or receive bids on your cargo. Get the best rates through transparent competition.
+                    </p>
+                </div>
+
+                <!-- Document Management -->
+                <div class="p-8 rounded-xl bg-gray-50 dark:bg-gray-900 hover:shadow-lg transition-shadow">
+                    <div class="w-12 h-12 rounded-lg flex items-center justify-center mb-4" style="background-color: rgba(33, 150, 243, 0.1);">
+                        <mat-icon style="color: #2196F3;" svgIcon="heroicons_outline:document-text"></mat-icon>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">Document Management</h3>
+                    <p class="text-gray-600 dark:text-gray-400">
+                        Store and manage all your logistics documents digitally. Access delivery notes, PODs, and invoices anytime.
+                    </p>
+                </div>
+
+                <!-- Analytics & Reports -->
+                <div class="p-8 rounded-xl bg-gray-50 dark:bg-gray-900 hover:shadow-lg transition-shadow">
+                    <div class="w-12 h-12 rounded-lg flex items-center justify-center mb-4" style="background-color: rgba(33, 150, 243, 0.1);">
+                        <mat-icon style="color: #2196F3;" svgIcon="heroicons_outline:chart-bar"></mat-icon>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">Analytics & Reports</h3>
+                    <p class="text-gray-600 dark:text-gray-400">
+                        Get insights into your business performance with detailed analytics and customizable reports.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="py-20 bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-gray-900 dark:to-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+                    How LoadGistix Works
+                </h2>
+                <p class="text-xl text-gray-600 dark:text-gray-400">
+                    Get started in three simple steps
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Step 1 -->
+                <div class="relative">
+                    <div class="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg">
+                        <div class="absolute -top-6 left-8 w-12 h-12 text-white rounded-full flex items-center justify-center text-2xl font-bold shadow-lg" style="background-color: #2196F3;">
+                            1
+                        </div>
+                        <div class="mt-6">
+                            <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">Sign Up Free</h3>
+                            <p class="text-gray-600 dark:text-gray-400 mb-4">
+                                Create your account in minutes. No credit card required to start.
+                            </p>
+                            <ul class="space-y-2 text-gray-600 dark:text-gray-400">
+                                <li class="flex items-start">
+                                    <mat-icon class="text-green-500 mr-2 !w-5 !h-5" svgIcon="heroicons_outline:check-circle"></mat-icon>
+                                    <span>Quick registration</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <mat-icon class="text-green-500 mr-2 !w-5 !h-5" svgIcon="heroicons_outline:check-circle"></mat-icon>
+                                    <span>No setup fees</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <mat-icon class="text-green-500 mr-2 !w-5 !h-5" svgIcon="heroicons_outline:check-circle"></mat-icon>
+                                    <span>Instant access</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- Arrow -->
+                    <div class="hidden md:block absolute top-1/2 -right-4 transform -translate-y-1/2 z-10">
+                        <mat-icon class="!w-8 !h-8 !text-4xl" style="color: #2196F3;" svgIcon="heroicons_outline:arrow-right"></mat-icon>
+                    </div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="relative">
+                    <div class="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg">
+                        <div class="absolute -top-6 left-8 w-12 h-12 text-white rounded-full flex items-center justify-center text-2xl font-bold shadow-lg" style="background-color: #2196F3;">
+                            2
+                        </div>
+                        <div class="mt-6">
+                            <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">Set Up Your Profile</h3>
+                            <p class="text-gray-600 dark:text-gray-400 mb-4">
+                                Add your vehicles, loads, or browse the directory.
+                            </p>
+                            <ul class="space-y-2 text-gray-600 dark:text-gray-400">
+                                <li class="flex items-start">
+                                    <mat-icon class="text-green-500 mr-2 !w-5 !h-5" svgIcon="heroicons_outline:check-circle"></mat-icon>
+                                    <span>Add fleet details</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <mat-icon class="text-green-500 mr-2 !w-5 !h-5" svgIcon="heroicons_outline:check-circle"></mat-icon>
+                                    <span>Post loads</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <mat-icon class="text-green-500 mr-2 !w-5 !h-5" svgIcon="heroicons_outline:check-circle"></mat-icon>
+                                    <span>Connect with partners</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- Arrow -->
+                    <div class="hidden md:block absolute top-1/2 -right-4 transform -translate-y-1/2 z-10">
+                        <mat-icon class="!w-8 !h-8 !text-4xl" style="color: #2196F3;" svgIcon="heroicons_outline:arrow-right"></mat-icon>
+                    </div>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="relative">
+                    <div class="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg">
+                        <div class="absolute -top-6 left-8 w-12 h-12 text-white rounded-full flex items-center justify-center text-2xl font-bold shadow-lg" style="background-color: #2196F3;">
+                            3
+                        </div>
+                        <div class="mt-6">
+                            <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">Start Growing</h3>
+                            <p class="text-gray-600 dark:text-gray-400 mb-4">
+                                Match loads, manage deliveries, and scale your business.
+                            </p>
+                            <ul class="space-y-2 text-gray-600 dark:text-gray-400">
+                                <li class="flex items-start">
+                                    <mat-icon class="text-green-500 mr-2 !w-5 !h-5" svgIcon="heroicons_outline:check-circle"></mat-icon>
+                                    <span>Find perfect matches</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <mat-icon class="text-green-500 mr-2 !w-5 !h-5" svgIcon="heroicons_outline:check-circle"></mat-icon>
+                                    <span>Track in real-time</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <mat-icon class="text-green-500 mr-2 !w-5 !h-5" svgIcon="heroicons_outline:check-circle"></mat-icon>
+                                    <span>Grow revenue</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonial / Stats Section -->
+    <section class="py-20 bg-white dark:bg-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="rounded-3xl p-12 md:p-16 text-center shadow-2xl" style="background: linear-gradient(135deg, #1976D2 0%, #2196F3 50%, #42A5F5 100%);">
+                <h2 class="text-3xl sm:text-4xl font-bold text-white mb-6 drop-shadow-lg">
+                    Join the LoadGistix Community
+                </h2>
+                <p class="text-xl text-white mb-12 max-w-3xl mx-auto drop-shadow-md">
+                    Thousands of logistics professionals trust LoadGistix to power their business
+                </p>
+                
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
+                    <div>
+                        <div class="text-5xl font-bold text-white mb-2 drop-shadow-md">{{loadCountTotal}}</div>
+                        <div class="text-white opacity-90">Active Loads</div>
+                    </div>
+                    <div>
+                        <div class="text-5xl font-bold text-white mb-2 drop-shadow-md">{{vehicleCountTotal}}</div>
+                        <div class="text-white opacity-90">Vehicles</div>
+                    </div>
+                    <div>
+                        <div class="text-5xl font-bold text-white mb-2 drop-shadow-md">{{userCountLoadTotal + userCountVehicleTotal}}</div>
+                        <div class="text-white opacity-90">Active Users</div>
+                    </div>
+                    <div>
+                        <div class="text-5xl font-bold text-white mb-2 drop-shadow-md">{{directoryCountTotal}}</div>
+                        <div class="text-white opacity-90">Partners</div>
+                    </div>
+                </div>
+
+                <button mat-flat-button class="!bg-white !px-10 !py-6 !text-lg !font-semibold !rounded-full hover:!bg-blue-50 !shadow-xl transform hover:scale-105 transition-all" style="color: #2196F3;" (click)="signUp()">
+                    Start Your Free Trial Today
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 bg-gradient-to-br from-gray-900 to-gray-800 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl sm:text-4xl font-bold mb-6">
+                Ready to Transform Your Logistics Business?
+            </h2>
+            <p class="text-xl text-gray-300 mb-12 max-w-3xl mx-auto">
+                No credit card required. Start free and upgrade as you grow.
+            </p>
+            
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
+                <button mat-flat-button class="!text-white !px-10 !py-6 !text-lg !font-semibold !rounded-full !shadow-xl transform hover:scale-105 transition-all" style="background-color: #2196F3;" (click)="signUp()">
+                    Get Started Free
+                </button>
+                <button mat-stroked-button class="!border-white !border-2 !text-white !px-10 !py-6 !text-lg !font-semibold !rounded-full hover:!bg-white hover:!text-gray-900 !shadow-xl transform hover:scale-105 transition-all" (click)="goTo('business-directory-open')">
+                    Browse Directory
+                </button>
+            </div>
+
+            <p class="text-gray-400 text-sm">
+                Join {{userCountLoadTotal + userCountVehicleTotal}}+ logistics professionals already using LoadGistix
+            </p>
+        </div>
+    </section>
+
+    <!-- Adverts Section -->
+    <app-advertHorizontal id="targetElement" #targetElement class="bg-gray-50 dark:bg-gray-900"></app-advertHorizontal>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-400 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0 flex items-center gap-3">
+                    <img src="/assets/images/icon.png" alt="LoadGistix Icon" class="h-10 w-10">
+                    <img src="/assets/images/logo-text-on-dark.png" alt="LoadGistix" class="h-8">
+                </div>
+                <div class="text-center md:text-right">
+                    <p class="text-sm">© 2024 LoadGistix. All rights reserved.</p>
+                    <p class="text-xs mt-2">Boldly Connecting The Dots, Like No One Ever Dared</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+</div>

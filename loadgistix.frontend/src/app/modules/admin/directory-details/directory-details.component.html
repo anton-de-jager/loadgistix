@@ -1,0 +1,124 @@
+<div *ngIf="currentUser; else loadingTemplate" fxFlex fxLayout="column" class="w-full">
+
+    <div class="bg-card">
+        <div class="flex flex-col w-full max-w-screen-xl mx-auto px-6 sm:px-8">
+            <div class="flex flex-col sm:flex-row flex-auto sm:items-center min-w-0 my-2 sm:my-2">
+                <div class="flex flex-auto items-center min-w-0">
+                    <div class="flex flex-col min-w-0 ml-4">
+                        <ng-container>
+                            <div
+                                class="text-2xl md:text-5xl font-semibold tracking-tight leading-7 md:leading-snug truncate">
+                                {{directoryCategoryDescription}}</div>
+                        </ng-container>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="page-layout blank p-4" fusePerfectScrollbar>
+        <div class="grid grid-cols-1 sm:grid-cols-6 gap-6 w-full min-w-0">
+            <div class="sm:col-span-6 lg:col-span-6 flex flex-col flex-auto p-6 overflow-hidden"
+                style="padding: 0!important">
+                <div class="flex-row" fxLayoutAlign="space-between center" class="mb-4">
+                    <div class="text-xl md:text-2xl font-semibold tracking-tight leading-7 md:leading-snug truncate">
+                        {{directoryCategoryDescription}}</div>
+                    <button mat-raised-button (click)="back()">
+                        <mat-icon>arrow_back</mat-icon>
+                        &nbsp;Back
+                    </button>
+                </div>
+                <div ngClass="table-container-small bg-card shadow rounded-2xl"
+                    [ngClass.gt-sm]="'table-container bg-card shadow rounded-2xl'">
+                    <app-map *ngIf="directoryItems.length > 0" [directoryList]="directoryItems"
+                        (select)="showItem($event)">
+                    </app-map>
+                </div>
+                <br>
+                <ng-container *ngFor="let item of directoryItems; let i = index" [class.even]="i % 2 === 0"
+                    [class.odd]="i % 2 === 1">
+                    <ng-container *ngIf="i % 2 === 0">
+
+                    </ng-container>
+                    <ng-container *ngIf="i % 2 === 1">
+
+                    </ng-container>
+                </ng-container>
+                <mat-card *ngFor="let directoryItem of directoryItems"
+                    class="p-6 bg-card shadow rounded-2xl overflow-hiddenmat-elevation-z5"
+                    style="padding: 4px!important;margin-bottom: 12px;">
+                    <mat-card-content>
+                        <div class="wrapper-image" *ngIf="screenSize>500">
+                            <div>
+                                <img alt="" *ngIf="directoryItem.avatar" mat-card-md-image
+                                    onerror="this.src='assets/images/no-image.jpg';"
+                                    [src]="imagesFolder + 'Directories/' + directoryItem.id + directoryItem.avatar + '?t=' + this.timestamp">
+                                <img alt="" *ngIf="!directoryItem.avatar" mat-card-md-image
+                                    src="assets/images/no-image.jpg" onerror="this.src='assets/images/no-image.jpg';">
+                            </div>
+                            <div style="height: 100%;vertical-align: middle;">
+                                <fuse-alert [type]="'primary'" class="w-full">
+                                    <span fuseAlertTitle>{{directoryItem.companyName}}</span>
+                                    {{directoryItem.description}}<br>
+                                    <button mat-button extended style="margin-left: -55px;"
+                                        (click)="copyToClipboard(getAddressSubstring(directoryItem.addressLabel, ','))">
+                                        <mat-icon><img class="image-icon" src="assets/images/location.png"
+                                                alt=""></mat-icon>
+                                        {{getAddressSubstring(directoryItem.addressLabel, ',')}}
+                                    </button>
+                                </fuse-alert>
+                            </div>
+                        </div>
+                        <div *ngIf="screenSize<=500">
+                            <fuse-alert [type]="'primary'">
+                                <span fuseAlertTitle>{{directoryItem.companyName}}</span>
+                                {{directoryItem.description}}<br>
+                                <button mat-button extended style="margin-left: -55px;"
+                                    (click)="copyToClipboard(getAddressSubstring(directoryItem.addressLabel, ','))">
+                                    <mat-icon><img class="image-icon" src="assets/images/location.png"
+                                            alt=""></mat-icon>
+                                    {{getAddressSubstring(directoryItem.addressLabel, ',')}}
+                                </button>
+                            </fuse-alert>
+                        </div>
+                        <div style="display: block!important;" class="w-full">
+                            <button mat-button extended (click)="copyToClipboard(directoryItem.phone)">
+                                <mat-icon><img class="image-icon" src="assets/images/phone.png" alt=""></mat-icon>
+                                {{directoryItem.phone}}
+                            </button>
+                            <button mat-button extended (click)="copyToClipboard(directoryItem.email)">
+                                <mat-icon><img class="image-icon" src="assets/images/email.png" alt=""></mat-icon>
+                                {{directoryItem.email}}
+                            </button>
+                            <button mat-button extended (click)="copyToClipboard(directoryItem.website)">
+                                <mat-icon><img class="image-icon" src="assets/images/website.png" alt=""></mat-icon>
+                                {{directoryItem.website}}
+                            </button>
+                        </div>
+                        <div style="display: block!important;" class="w-full">
+                            <button mat-button extended (click)="copyToClipboard(directoryItem.facebook)">
+                                <mat-icon><img class="image-icon" src="assets/images/facebook.png" alt=""></mat-icon>
+                                {{directoryItem.facebook.replace('https://www.facebook.com/','')}}
+                            </button>
+                            <button mat-button extended (click)="copyToClipboard(directoryItem.twitter)">
+                                <mat-icon><img class="image-icon" src="assets/images/twitter.png" alt=""></mat-icon>
+                                {{directoryItem.twitter.replace('https://twitter.com/','')}}
+                            </button>
+                            <button mat-button extended (click)="copyToClipboard(directoryItem.instagram)">
+                                <mat-icon><img class="image-icon" src="assets/images/instagram.png" alt=""></mat-icon>
+                                {{directoryItem.instagram.replace('https://twitter.com/',
+                                '')}}
+                            </button>
+                        </div>
+                    </mat-card-content>
+                </mat-card>
+                <img alt="" [src]="loading ? '/assets/images/loaderBalls.gif' : ''" style="margin: 0 auto"
+                    *ngIf="loading">
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #loadingTemplate>
+    <div class="loading-template"></div>
+</ng-template>

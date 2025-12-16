@@ -1,0 +1,312 @@
+<div class="fixed inset-0 sm:relative flex flex-col min-w-0 bg-card dark:bg-gray-800">
+    <div class="flex flex-0 items-center justify-between h-16 pr-3 sm:pr-5 pl-6 sm:pl-8 bg-primary text-on-primary">
+        <div class="text-lg font-medium" (click)="getStatus()">{{data.title}} Vehicle</div>
+        <button (click)="onNoClick()" mat-icon-button [tabIndex]="-1">
+            <mat-icon class="text-on-primary">close</mat-icon>
+        </button>
+    </div>
+    <mat-dialog-content
+        class="flex flex-col flex-auto mat-typography bg-card dark:bg-gray-800 pl-0 pr-0 h-fit max-h-max sm:max-h-[65vh] overflow-x-hidden">
+        <form class="flex flex-row flex-wrap flex-auto w-full" name="form" [formGroup]="form" novalidate>
+            <mat-form-field fxFlex appearance="outline"
+                [ngClass]="loading?'w-full sm:w-2/4 pl-2 pr-2 mat-form-field-loading':'w-full sm:w-2/4 pl-2 pr-2'">
+                <mat-label>Branch</mat-label>
+                <mat-select placeholder="Select Branch" formControlName="branchId" (selectionChange)="branchChanged()">
+                    <mat-option *ngFor="let branchItem of data.branchList | order_by: 'description'"
+                        [value]="branchItem.id">
+                        {{ branchItem.description }}
+                    </mat-option>
+                </mat-select>
+                <mat-error>Branch is required</mat-error>
+            </mat-form-field>
+            <mat-form-field fxFlex appearance="outline"
+                [ngClass]="loading?'w-full sm:w-2/4 pl-2 pr-2 mat-form-field-loading':'w-full sm:w-2/4 pl-2 pr-2'">
+                <mat-label>Description</mat-label><input matInput placeholder="Description"
+                    formControlName="description" />
+                <mat-error *ngIf="hasError('description', 'required')">Description is
+                    required</mat-error>
+            </mat-form-field>
+
+            <mat-form-field fxFlex appearance="outline"
+                [ngClass]="loading?'w-full sm:w-2/4 pl-2 pr-2 mat-form-field-loading':'w-full sm:w-2/4 pl-2 pr-2'">
+                <mat-label>Vehicle Category</mat-label>
+                <mat-select placeholder="Select Vehicle Category" formControlName="vehicleCategoryId"
+                    (selectionChange)="vehicleCategoryChanged()">
+                    <mat-option *ngFor="let vehicleCategoryItem of data.vehicleCategoryList | order_by: 'description'"
+                        [value]="vehicleCategoryItem.id">
+                        {{ vehicleCategoryItem.description }}
+                    </mat-option>
+                </mat-select>
+                <mat-error>Vehicle Category is required</mat-error>
+            </mat-form-field>
+            <mat-form-field fxFlex appearance="outline"
+                [ngClass]="loading?'w-full sm:w-2/4 pl-2 pr-2 mat-form-field-loading':'w-full sm:w-2/4 pl-2 pr-2'">
+                <mat-label>Load Type</mat-label>
+                <mat-select placeholder="Select Load Type" formControlName="vehicleTypeId"
+                    (selectionChange)="vehicleTypeChanged()">
+                    <ng-container *ngFor="let vehicleTypeItem of data.vehicleTypeList | order_by: 'description'">
+                        <mat-option *ngIf="guidsEqual(vehicleTypeItem.vehicleCategoryId, form.value.vehicleCategoryId)"
+                            [value]="vehicleTypeItem.id">
+                            {{ vehicleTypeItem.description }}
+                        </mat-option>
+                    </ng-container>
+                </mat-select>
+                <mat-error>Load Type is required</mat-error>
+            </mat-form-field>
+
+            <!-- <mat-form-field fxFlex appearance="outline"
+                [ngClass]="loading?'w-full sm:w-2/4 pl-2 pr-2 mat-form-field-loading':'w-full sm:w-2/4 pl-2 pr-2'">
+                <mat-label>Vehicle Make</mat-label>
+                <div class="flex gap-4">
+                    <mat-select placeholder="Vehicle Make" formControlName="makeId" (selectionChange)="makeChanged()">
+                        <mat-option *ngFor="let makeItem of data.makeList | order_by: 'description'"
+                            [value]="makeItem.id">
+                            {{ makeItem.description }}
+                        </mat-option>
+                    </mat-select>
+                    <button mat-icon-button class="bg-primary" (click)="initAddMake($event)">
+                        <ng-container *ngIf="!loading; else spinnerTemplate">
+                            <mat-icon class="text-on-primary">add</mat-icon>
+                        </ng-container>
+                        <ng-template #spinnerTemplate>
+                            <mat-spinner [diameter]="24" [color]="'primary'" class="text-on-primary"></mat-spinner>
+                        </ng-template>
+                    </button>
+                </div>
+                <mat-error>Vehicle Make is required</mat-error>
+            </mat-form-field> -->
+            <div class="flex items-start w-full sm:w-2/4 pl-2 pr-2" [ngClass]="loading ? 'mat-form-field-loading' : ''">
+                <mat-form-field fxFlex appearance="outline" class="flex-1 min-w-0">
+                    <mat-label>Vehicle Make</mat-label>
+                    <mat-select placeholder="Select Vehicle Make" formControlName="makeId"
+                        (selectionChange)="makeChanged()">
+                        <mat-option>
+                            <ngx-mat-select-search 
+                                [formControl]="makeIdSearch"
+                                placeholderLabel="Search Make..." 
+                                noEntriesFoundLabel="No matching make found">
+                            </ngx-mat-select-search>
+                        </mat-option>
+                        <mat-option *ngFor="let makeItem of filteredMakeList | order_by: 'description'"
+                            [value]="makeItem.id">
+                            {{ makeItem.description }}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error>Vehicle Make is required</mat-error>
+                </mat-form-field>
+                <button mat-icon-button class="bg-primary add-btn flex-shrink-0" (click)="initAddMake($event)" type="button">
+                    <ng-container *ngIf="!loading; else spinnerTemplate">
+                        <mat-icon class="text-on-primary">add</mat-icon>
+                    </ng-container>
+                    <ng-template #spinnerTemplate>
+                        <mat-spinner [diameter]="24" [color]="'primary'" class="text-on-primary"></mat-spinner>
+                    </ng-template>
+                </button>
+            </div>
+
+            <div class="flex items-start w-full sm:w-2/4 pl-2 pr-2" [ngClass]="loading ? 'mat-form-field-loading' : ''">
+                <mat-form-field fxFlex appearance="outline" class="flex-1 min-w-0">
+                    <mat-label>Vehicle Model</mat-label>
+                    <mat-select placeholder="Select Vehicle Model" formControlName="modelId"
+                        (selectionChange)="modelChanged()">
+                        <mat-option>
+                            <ngx-mat-select-search 
+                                [formControl]="modelIdSearch"
+                                placeholderLabel="Search Model..." 
+                                noEntriesFoundLabel="No matching model found">
+                            </ngx-mat-select-search>
+                        </mat-option>
+                        <ng-container *ngFor="let modelItem of filteredModelList | order_by: 'description'">
+                            <mat-option *ngIf="guidsEqual(modelItem.makeId, form.value.makeId)" [value]="modelItem.id">
+                                {{ modelItem.description }}
+                            </mat-option>
+                        </ng-container>
+                    </mat-select>
+                    <mat-error>Vehicle Model is required</mat-error>
+                </mat-form-field>
+                <button mat-icon-button class="bg-primary add-btn flex-shrink-0" [disabled]="!form.value.makeId"
+                    (click)="initAddModel($event)" type="button">
+                    <ng-container *ngIf="!loading; else spinnerTemplate">
+                        <mat-icon class="text-on-primary">add</mat-icon>
+                    </ng-container>
+                    <ng-template #spinnerTemplate>
+                        <mat-spinner [diameter]="24" [color]="'primary'" class="text-on-primary"></mat-spinner>
+                    </ng-template>
+                </button>
+            </div>
+
+            <mat-form-field fxFlex appearance="outline"
+                [ngClass]="loading?'w-full sm:w-2/4 pl-2 pr-2 mat-form-field-loading':'w-full sm:w-2/4 pl-2 pr-2'">
+                <mat-label>Body Type</mat-label>
+                <mat-select placeholder="Body Type" formControlName="bodyTypeId" (selectionChange)="bodyTypeChanged()">
+                    <mat-option *ngFor="let bodyTypeItem of data.bodyTypeList | order_by: 'description'"
+                        [value]="bodyTypeItem.id">
+                        {{ bodyTypeItem.description }}
+                    </mat-option>
+                </mat-select>
+                <mat-error>Body Type is required</mat-error>
+            </mat-form-field>
+            <mat-form-field fxFlex appearance="outline"
+                [ngClass]="loading?'w-full sm:w-2/4 pl-2 pr-2 mat-form-field-loading':'w-full sm:w-2/4 pl-2 pr-2'">
+                <mat-label>Body Load</mat-label>
+                <mat-select placeholder="Body Load" formControlName="bodyLoadId" (selectionChange)="bodyLoadChanged()">
+                    <mat-option *ngFor="let bodyLoadItem of data.bodyLoadList | order_by: 'description'"
+                        [value]="bodyLoadItem.id">
+                        {{ bodyLoadItem.description }}
+                    </mat-option>
+                </mat-select>
+                <mat-error>Body Load is required</mat-error>
+            </mat-form-field>
+
+            <mat-form-field fxFlex appearance="outline"
+                [ngClass]="loading?'w-full sm:w-2/4 pl-2 pr-2 mat-form-field-loading':'w-full sm:w-2/4 pl-2 pr-2'">
+                <mat-label>Vehicle ID</mat-label>
+                <input matInput placeholder="Vehicle ID" formControlName="vehicleId" />
+            </mat-form-field>
+
+            <mat-form-field fxFlex appearance="outline"
+                [ngClass]="loading?'w-full sm:w-2/4 pl-2 pr-2 mat-form-field-loading':'w-full sm:w-2/4 pl-2 pr-2'">
+                <mat-label>Registration Number</mat-label><input matInput placeholder="Registration Number"
+                    formControlName="registrationNumber" />
+                <mat-error *ngIf="hasError('registrationNumber', 'required')">Registration
+                    Number is required
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field fxFlex appearance="outline"
+                [ngClass]="loading?'w-full sm:w-2/4 pl-2 pr-2 mat-form-field-loading':'w-full sm:w-2/4 pl-2 pr-2'">
+                <mat-label>Max Load Weight (kg)</mat-label><input matInput type="number" placeholder="Max Load Weight"
+                    formControlName="maxLoadWeight" id="maxLoadWeight" />
+                <mat-error *ngIf="hasError('maxLoadWeight', 'required')">Max Load Weight
+                    is required</mat-error>
+            </mat-form-field>
+            <mat-form-field *ngIf="form.value.liquid||isPowder()" appearance="outline"
+                [ngClass]="loading?'w-full sm:w-2/4 pl-2 pr-2 mat-form-field-loading':'w-full sm:w-2/4 pl-2 pr-2'">
+                <mat-label>Max Load Volume</mat-label><input matInput type="number" placeholder="Max Load Volume"
+                    formControlName="maxLoadVolume" id="maxLoadVolume" />
+                <mat-error *ngIf="hasError('maxLoadVolume', 'required')">Max Load Volume
+                    is required</mat-error>
+            </mat-form-field>
+            <mat-form-field *ngIf="!form.value.liquid&&!isPowder()" appearance="outline"
+                [ngClass]="loading?'w-full sm:w-2/4 pl-2 pr-2 mat-form-field-loading':'w-full sm:w-2/4 pl-2 pr-2'">
+                <mat-label>Max Load Height (cm)</mat-label><input matInput type="number" placeholder="Max Load Height"
+                    formControlName="maxLoadHeight" id="maxLoadHeight" />
+                <mat-error *ngIf="hasError('maxLoadHeight', 'required')">Max Load Height
+                    is required</mat-error>
+            </mat-form-field>
+
+            <mat-form-field *ngIf="!form.value.liquid&&!isPowder()" appearance="outline"
+                [ngClass]="loading?'w-full sm:w-2/4 pl-2 pr-2 mat-form-field-loading':'w-full sm:w-2/4 pl-2 pr-2'">
+                <mat-label>Max Load Width (cm)</mat-label><input matInput type="number" placeholder="Max Load Width"
+                    formControlName="maxLoadWidth" id="maxLoadWidth" />
+                <mat-error *ngIf="hasError('maxLoadWidth', 'required')">Max Load Width
+                    is required</mat-error>
+            </mat-form-field>
+            <mat-form-field *ngIf="!form.value.liquid&&!isPowder()" appearance="outline"
+                [ngClass]="loading?'w-full sm:w-2/4 pl-2 pr-2 mat-form-field-loading':'w-full sm:w-2/4 pl-2 pr-2'">
+                <mat-label>Max Load Length (cm)</mat-label><input matInput type="number" placeholder="Max Load Length"
+                    formControlName="maxLoadLength" id="maxLoadLength" />
+                <mat-error *ngIf="hasError('maxLoadLength', 'required')">Max Load Length
+                    is required</mat-error>
+            </mat-form-field>
+
+            <mat-form-field *ngIf="!form.value.liquid&&!isPowder()" appearance="outline"
+                [ngClass]="loading?'w-full sm:w-2/4 pl-2 pr-2 mat-form-field-loading':'w-full sm:w-2/4 pl-2 pr-2'">
+                <mat-label>Available Capacity (%)</mat-label><input matInput type="number"
+                    placeholder="AvailableCapacity" formControlName="availableCapacity" id="availableCapacity" />
+                <mat-error *ngIf="hasError('availableCapacity', 'required')">Available
+                    Capacity is required
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field fxFlex appearance="outline"
+                [ngClass]="loading?'w-full sm:w-2/4 pl-2 pr-2 mat-form-field-loading':'w-full sm:w-2/4 pl-2 pr-2'">
+                <mat-label>Select Availability</mat-label>
+                <mat-date-range-input [formGroup]="form" [rangePicker]="picker">
+                    <input matStartDate formControlName="availableFrom" placeholder="Available From" />
+                    <input matEndDate formControlName="availableTo" placeholder="Available To" />
+                </mat-date-range-input>
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-date-range-picker #picker></mat-date-range-picker>
+
+                <mat-error *ngIf="form.controls['availableFrom'].hasError('matStartDateInvalid')">Invalid
+                    start date</mat-error>
+                <mat-error *ngIf="form.controls['availableTo'].hasError('matEndDateInvalid')">Invalid
+                    end date</mat-error>
+            </mat-form-field>
+
+            <mat-form-field fxFlex appearance="outline"
+                [ngClass]="loading?'w-full sm:w-2/4 pl-2 pr-2 mat-form-field-loading':'w-full sm:w-2/4 pl-2 pr-2'">
+                <mat-label>Originating Address</mat-label>
+                <input matInput 
+                    id="pac-input-originating" 
+                    formControlName="originatingAddressLabel"
+                    class="w-full h-full" 
+                    type="text" 
+                    placeholder="Originating Address"
+                    (input)="onOriginatingInput($event)"
+                    [matAutocomplete]="autoOriginating">
+                <mat-autocomplete #autoOriginating="matAutocomplete" 
+                    (optionSelected)="onOriginatingSelected($event)">
+                    <mat-option *ngFor="let suggestion of originatingSuggestions" [value]="suggestion">
+                        {{ getFormattedOriginatingAddress(suggestion) }}
+                    </mat-option>
+                </mat-autocomplete>
+                <mat-error
+                    *ngIf="hasError('originatingAddressLabel', 'required')||hasError('originatingAddressLat', 'required')||hasError('originatingAddressLon', 'required')">
+                    Originating Address is required
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field fxFlex appearance="outline"
+                [ngClass]="loading?'w-full sm:w-2/4 pl-2 pr-2 mat-form-field-loading':'w-full sm:w-2/4 pl-2 pr-2'">
+                <mat-label>Destination Address</mat-label>
+                <input matInput 
+                    id="pac-input-destination" 
+                    formControlName="destinationAddressLabel"
+                    class="w-full h-full" 
+                    type="text" 
+                    placeholder="Destination Address"
+                    (input)="onDestinationInput($event)"
+                    [matAutocomplete]="autoDestination">
+                <mat-autocomplete #autoDestination="matAutocomplete" 
+                    (optionSelected)="onDestinationSelected($event)">
+                    <mat-option *ngFor="let suggestion of destinationSuggestions" [value]="suggestion">
+                        {{ getFormattedDestinationAddress(suggestion) }}
+                    </mat-option>
+                </mat-autocomplete>
+                <mat-error *ngIf="hasError('destinationAddressLabel', 'required')">
+                    Destination Address is required
+                </mat-error>
+            </mat-form-field>
+
+            <div class="w-full z-10 relative flex flex-col items-center">
+                <img fxFlex class="cursor-pointer shadow-inner shadow-xl rounded-lg w-36"
+                    onerror="this.src='assets/images/no-image.jpg';"
+                    [src]="avatarChanged ? fileToUpload : form.value.avatar ? imagesFolder + 'Vehicles/' + form.value.id + form.value.avatar + '?t=' + this.timestamp : 'assets/images/no-image.png'"
+                    alt="User avatar" (click)="uploadImage($event)" />
+            </div>
+        </form>
+    </mat-dialog-content>
+    <mat-dialog-actions (click)="getErrors()"
+        class="flex items-end flex-row items-center justify-between bg-gray-200 dark:bg-gray-600">
+        <!-- <button mat-mini-fab (click)="onNoClick()"><mat-icon>close</mat-icon></button> -->
+        <div>
+            <button *ngIf="id" mat-icon-button [color]="'warn'" (click)="onDeleteClick()">
+                <ng-container *ngIf="!loading; else spinnerTemplate">
+                    <mat-icon>delete</mat-icon>
+                </ng-container>
+                <ng-template #spinnerTemplate>
+                    <mat-spinner [diameter]="24" [color]="'warn'"></mat-spinner>
+                </ng-template>
+            </button>
+        </div>
+        <button mat-icon-button class="bg-primary" [disabled]="!form.valid" (click)="onYesClick()">
+            <ng-container *ngIf="!loading; else spinnerTemplate">
+                <mat-icon class="text-on-primary">check</mat-icon>
+            </ng-container>
+            <ng-template #spinnerTemplate>
+                <mat-spinner [diameter]="24" [color]="'primary'" class="text-on-primary"></mat-spinner>
+            </ng-template>
+        </button>
+    </mat-dialog-actions>
+</div>

@@ -1,0 +1,50 @@
+<div
+    class="fixed inset-0 sm:static sm:inset-auto flex flex-col sm:min-w-90 sm:w-auto  bg-card dark:bg-gray-800 sm:rounded-2xl overflow-hidden shadow-lg">
+    <div
+        class="flex flex-0 items-center justify-between h-16 pr-3 sm:pr-5 pl-6 sm:pl-8 bg-primary text-on-primary">
+        <div class="text-lg font-medium">{{title}}</div>
+        <button (click)="close()"
+            mat-icon-button
+            [tabIndex]="-1">
+            <mat-icon class="text-on-primary">close</mat-icon>
+        </button>
+    </div>
+    <mat-dialog-content fxLayoutAlign="start center"
+        class="flex flex-col bg-card dark:bg-gray-800 mat-typography">
+        <h2 fxFlex [innerHTML]="alertHeading"></h2>
+        <p fxFlex [innerHTML]="alertContent"></p>
+    </mat-dialog-content>
+    <mat-dialog-actions
+        class="flex flex-row items-center justify-between bg-gray-200 dark:bg-gray-600">
+        <div>
+            <!-- <div class="flex items-center">
+            <button mat-icon-button [color]="'warn'">
+                <mat-icon>delete</mat-icon>
+            </button>
+        </div> -->
+        </div>
+        <div class="flex items-center">
+            <button mat-icon-button class="bg-primary" (click)="close()">
+                <mat-icon class="text-on-primary">check</mat-icon>
+            </button>
+        </div>
+    </mat-dialog-actions>
+</div>
+
+<!-- <div fxFlex fxLayout="column" class="box box-shadow">
+    <div class="box dialog-header blue">
+        <div fxFlex fxLayout="row" fxLayoutAlign="space-between center">
+            <span class="font-bigger">{{title}}</span>
+            <button mat-mini-fab (click)="close()"><mat-icon>close</mat-icon></button>
+        </div>
+    </div>
+    <div fxFlex fxLayout="column" fxLayoutAlign="start center" mat-dialog-content class="dialog-content-info">
+        <h2 fxFlex [innerHTML]="alertHeading"></h2>
+        <p fxFlex [innerHTML]="alertContent"></p>
+    </div>
+    <div mat-dialog-actions class="box box-shadow dialog-footer blue" fxFlex="50px" fxLayout="row"
+        fxLayoutAlign="end center" fxLayoutGap="8px">
+        <span style="flex: 1 1 auto;"></span>
+        <button mat-mini-fab (click)="close()">OK</button>
+    </div>
+</div> -->

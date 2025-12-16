@@ -1,0 +1,127 @@
+<div class="absolute inset-0 flex flex-col flex-auto min-w-0 sm:overflow-hidden bg-card dark:bg-gray-800 sticky"
+    [style.margin-right]="showAdverts?'208px':'0px'">
+
+    <mat-drawer-container class="flex-auto sm:h-full">
+
+        <!-- Drawer -->
+        <mat-drawer class="sm:w-96 dark:bg-gray-900" [autoFocus]="false" [mode]="drawerMode" [opened]="drawerOpened"
+            #drawer>
+            <!-- Header -->
+            <div class="flex items-center justify-between m-8 mr-6 sm:my-10">
+                <!-- Title -->
+                <div class="text-2xl font-extrabold tracking-tight leading-none">Lookups</div>
+                <!-- Close button -->
+                <div class="lg:hidden">
+                    <button mat-icon-button (click)="drawer.close()">
+                        <mat-icon [svgIcon]="'heroicons_outline:x-mark'"></mat-icon>
+                    </button>
+                </div>
+            </div>
+            <!-- Panel links -->
+            <div class="flex flex-col divide-y border-t border-b">
+                <ng-container *ngFor="let panel of panels; trackBy: trackByFn">
+                    <div class="flex px-8 py-5 cursor-pointer" [ngClass]="{'hover:bg-gray-100 dark:hover:bg-hover': !selectedPanel || selectedPanel !== panel.id,
+                                    'bg-primary-50 dark:bg-hover': selectedPanel && selectedPanel === panel.id}"
+                        (click)="goToPanel(panel.id)">
+                        <mat-icon
+                            [ngClass]="{'text-hint': !selectedPanel || selectedPanel !== panel.id,
+                                        'text-primary dark:text-primary-500': selectedPanel && selectedPanel === panel.id}"
+                            [svgIcon]="panel.icon"></mat-icon>
+                        <div class="ml-3">
+                            <div class="font-medium leading-6"
+                                [ngClass]="{'text-primary dark:text-primary-500': selectedPanel && selectedPanel === panel.id}">
+                                {{panel.title}}
+                            </div>
+                            <!-- <div class="mt-0.5 text-secondary">
+                                {{panel.description}}
+                            </div> -->
+                        </div>
+                    </div>
+                </ng-container>
+            </div>
+        </mat-drawer>
+
+        <!-- Drawer content -->
+        <mat-drawer-content class="flex flex-col">
+
+            <!-- Main -->
+            <div class="flex-auto">
+
+                <!-- Panel header -->
+                <div class="lg:hidden flex items-center z-10 sticky top-0 pl-8 pr-8 bg-primary text-on-primary">
+
+                    <!-- Drawer toggle -->
+                    <button class="lg:hidden -ml-2" mat-icon-button (click)="drawer.toggle()">
+                        <mat-icon class="text-on-primary" [svgIcon]="'heroicons_outline:bars-3'"></mat-icon>
+                    </button>
+
+                    <!-- Panel title -->
+                    <div class="ml-2 lg:ml-0 text-3xl font-bold tracking-tight leading-none">
+                        {{getPanelInfo(selectedPanel).title}}
+                    </div>
+                </div>
+
+                <!-- Load lookups panel -->
+                <div class="mt-2 pb-12 md:p-8 md:pt-0 md:pb-12 lg:p-12 lg:pt-0">
+                    <ng-container [ngSwitch]="selectedPanel">
+                        <ng-container *ngSwitchCase="'company-type'">
+                            <lookups-company-type></lookups-company-type>
+                        </ng-container>
+                        <ng-container *ngSwitchCase="'vehicle-category'">
+                            <lookups-vehicle-category></lookups-vehicle-category>
+                        </ng-container>
+                        <ng-container *ngSwitchCase="'vehicle-type'">
+                            <lookups-vehicle-type></lookups-vehicle-type>
+                        </ng-container>
+                        <ng-container *ngSwitchCase="'load-category'">
+                            <lookups-load-category></lookups-load-category>
+                        </ng-container>
+                        <ng-container *ngSwitchCase="'load-type'">
+                            <lookups-load-type></lookups-load-type>
+                        </ng-container>
+                        <ng-container *ngSwitchCase="'licence-type'">
+                            <lookups-licence-type></lookups-licence-type>
+                        </ng-container><ng-container *ngSwitchCase="'directory-category'">
+                            <lookups-directory-category></lookups-directory-category>
+                        </ng-container><ng-container *ngSwitchCase="'make'">
+                            <lookups-make></lookups-make>
+                        </ng-container><ng-container *ngSwitchCase="'model'">
+                            <lookups-model></lookups-model>
+                        </ng-container>
+                        <ng-container *ngSwitchCase="'axel'">
+                            <lookups-axel></lookups-axel>
+                        </ng-container>
+                        <ng-container *ngSwitchCase="'body-type'">
+                            <lookups-body-type></lookups-body-type>
+                        </ng-container>
+                        <ng-container *ngSwitchCase="'body-load'">
+                            <lookups-body-load></lookups-body-load>
+                        </ng-container>
+                        <ng-container *ngSwitchCase="'pdp-group'">
+                            <lookups-pdp-group></lookups-pdp-group>
+                        </ng-container>
+                        <ng-container *ngSwitchCase="'pdp'">
+                            <lookups-pdp></lookups-pdp>
+                        </ng-container>
+                        <ng-container *ngSwitchCase="'maintenancePlannedType'">
+                            <lookups-maintenancePlannedType></lookups-maintenancePlannedType>
+                        </ng-container>
+                        <ng-container *ngSwitchCase="'maintenanceUnPlannedType'">
+                            <lookups-maintenanceUnPlannedType></lookups-maintenanceUnPlannedType>
+                        </ng-container>
+                        <ng-container *ngSwitchCase="'stockProblem'">
+                            <lookups-stockProblem></lookups-stockProblem>
+                        </ng-container>
+                        <ng-container *ngSwitchCase="'returnReason'">
+                            <lookups-returnReason></lookups-returnReason>
+                        </ng-container>
+                    </ng-container>
+                </div>
+
+            </div>
+
+        </mat-drawer-content>
+
+    </mat-drawer-container>
+
+</div>

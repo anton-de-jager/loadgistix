@@ -1,0 +1,126 @@
+<div
+    class="fixed inset-0 sm:relative flex flex-col min-w-0 bg-card dark:bg-gray-800 h-screen sm:h-auto">
+    <div (click)="check()"
+        class="flex flex-0 items-center justify-between h-16 pr-3 sm:pr-5 pl-6 sm:pl-8 bg-primary text-on-primary">
+        <div class="text-lg font-medium">{{data.title}} Advert</div>
+        <button (click)="onNoClick()"
+            mat-icon-button
+            [tabIndex]="-1">
+            <mat-icon class="text-on-primary">close</mat-icon>
+        </button>
+    </div>
+    <mat-dialog-content #target
+        class="flex flex-col flex-auto mat-typography bg-card dark:bg-gray-800  h-fit p-0 max-h-max sm:max-h-[65vh]">
+        <form name="form"
+            [formGroup]="form"
+            novalidate class="w-full mt-5">
+
+            <mat-form-field fxFlex appearance="outline"
+                [ngClass]="loading?'w-full sm:w-2/4 pl-2 pr-2 mat-form-field-loading':'w-full sm:w-2/4 pl-2 pr-2'">
+                <mat-label>Title</mat-label><input matInput placeholder="Title"
+                    maxlength="30" formControlName="title">
+                <mat-error *ngIf="hasError('title', 'required')">Title is
+                    required</mat-error>
+            </mat-form-field>
+
+            <mat-form-field fxFlex appearance="outline"
+                [ngClass]="loading?'w-full sm:w-2/4 pl-2 pr-2 mat-form-field-loading':'w-full sm:w-2/4 pl-2 pr-2'">
+                <mat-label>Sub-Title</mat-label><input matInput
+                    placeholder="Sub-Title" maxlength="50"
+                    formControlName="subTitle" id="subTitle">
+                <mat-error *ngIf="hasError('subTitle', 'required')">Sub-Title is
+                    required</mat-error>
+            </mat-form-field>
+
+            <mat-form-field fxFlex appearance="outline"
+                [ngClass]="loading?'w-full sm:w-2/4 pl-2 pr-2 mat-form-field-loading':'w-full sm:w-2/4 pl-2 pr-2'">
+                <mat-label>Content</mat-label><input matInput
+                    placeholder="Content" maxlength="200"
+                    formControlName="content" id="content">
+                <mat-error *ngIf="hasError('content', 'required')">Content is
+                    required</mat-error>
+            </mat-form-field>
+
+            <mat-form-field fxFlex appearance="outline"
+                [ngClass]="loading?'w-full sm:w-2/4 pl-2 pr-2 mat-form-field-loading':'w-full sm:w-2/4 pl-2 pr-2'">
+                <mat-label>Phone</mat-label><input matInput placeholder="Phone"
+                    formControlName="phone" id="phone">
+                <mat-icon matSuffix>phone</mat-icon>
+                <mat-error *ngIf="hasError('phone', 'required')">Phone is
+                    required</mat-error>
+            </mat-form-field>
+
+            <mat-form-field fxFlex appearance="outline"
+                [ngClass]="loading?'w-full sm:w-2/4 pl-2 pr-2 mat-form-field-loading':'w-full sm:w-2/4 pl-2 pr-2'">
+                <mat-label>Email</mat-label><input matInput placeholder="Email"
+                    formControlName="email" id="email">
+                <mat-icon matSuffix>mail</mat-icon>
+                <mat-error *ngIf="hasError('email', 'required')">Email is
+                    required</mat-error>
+            </mat-form-field>
+
+            <mat-form-field fxFlex appearance="outline"
+                [ngClass]="loading?'w-full sm:w-2/4 pl-2 pr-2 mat-form-field-loading':'w-full sm:w-2/4 pl-2 pr-2'">
+                <mat-label>Website</mat-label><input matInput
+                    placeholder="Website" formControlName="website" id="website">
+                <mat-icon matSuffix>language</mat-icon>
+                <mat-error *ngIf="hasError('website', 'required')">Website is
+                    required</mat-error>
+            </mat-form-field>
+
+            <mat-form-field
+                fxFlex
+                appearance="outline"
+                [ngClass]="loading?'w-full sm:w-2/4 pl-2 pr-2 mat-form-field-loading':'w-full sm:w-2/4 pl-2 pr-2'">
+                <mat-label>Address</mat-label>
+                <input matInput 
+                    id="pac-input-address"
+                    formControlName="addressLabel" 
+                    class="w-full h-full"
+                    type="text" 
+                    placeholder="Address"
+                    (input)="onAddressInput($event)"
+                    [matAutocomplete]="autoAddress">
+                <mat-autocomplete #autoAddress="matAutocomplete" 
+                    (optionSelected)="onAddressSelected($event)">
+                    <mat-option *ngFor="let suggestion of addressSuggestions" [value]="suggestion">
+                        {{ getFormattedAddress(suggestion) }}
+                    </mat-option>
+                </mat-autocomplete>
+                <mat-error *ngIf="hasError('addressLabel', 'required')||hasError('addressLat', 'required')||hasError('addressLon', 'required')">Address
+                    is required
+                </mat-error>
+            </mat-form-field>
+
+            <div class="w-full z-10 relative flex flex-col items-center">
+                <img fxFlex class="cursor-pointer shadow-inner shadow-xl rounded-lg w-36" onerror="this.src='assets/images/no-image.jpg';"
+                  [src]="avatarChanged ? fileToUpload : form.value.avatar ? imagesFolder + 'Adverts/' + form.value.id + form.value.avatar + '?t=' + this.timestamp : 'assets/images/no-image.png'"
+                  alt="User avatar" (click)="uploadImage($event)" />
+              </div>
+        </form>
+      </mat-dialog-content>
+      <mat-dialog-actions
+        class="flex items-end flex-row items-center justify-between bg-gray-200 dark:bg-gray-600">
+        <div>
+          <button *ngIf="id" mat-icon-button [color]="'warn'"
+            (click)="onDeleteClick()">
+            <ng-container *ngIf="!loading; else spinnerTemplate">
+              <mat-icon>delete</mat-icon>
+            </ng-container>
+            <ng-template #spinnerTemplate>
+              <mat-spinner [diameter]="24" [color]="'warn'"></mat-spinner>
+            </ng-template>
+          </button>
+        </div>
+        <button mat-icon-button class="bg-primary"
+          [disabled]="!form.valid"
+          (click)="onYesClick()">
+          <ng-container *ngIf="!loading; else spinnerTemplate">
+            <mat-icon class="text-on-primary">check</mat-icon>
+          </ng-container>
+          <ng-template #spinnerTemplate>
+            <mat-spinner [diameter]="24" [color]="'primary'" class="text-on-primary"></mat-spinner>
+          </ng-template>
+        </button>
+      </mat-dialog-actions>
+    </div>

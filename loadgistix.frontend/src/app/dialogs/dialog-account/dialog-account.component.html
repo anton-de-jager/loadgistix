@@ -1,0 +1,201 @@
+<div class="fixed inset-0 sm:relative flex flex-col min-w-0 bg-card dark:bg-gray-800">
+    <div
+        class="flex flex-0 flex-col items-center justify-center h-16 pr-3 sm:pr-5 pl-6 sm:pl-8 bg-primary text-on-primary">
+        <div class="text-lg font-medium">Update Subscription</div>
+        <div><i>** you will be required to sign in again **</i></div>
+        <button (click)="onNoClick()" mat-icon-button class="absolute top-1 right-1" [tabIndex]="-1">
+            <mat-icon class="text-on-primary">close</mat-icon>
+        </button>
+    </div>
+    <mat-dialog-content
+        class="flex flex-col flex-auto mat-typography bg-card dark:bg-gray-800 pl-0 pr-0 h-fit max-h-max sm:max-h-[65vh]">
+        <div class="flex flex-col flex-auto" fxLayoutAlign="start stretch">
+
+            <mat-card class="flex flex-col flex-auto clean-card"
+                *ngIf="fromPage=='bids'||fromPage=='drivers'||fromPage=='vehicles'">
+                <mat-card-header class='table-header-column bg-gray-50 dark:bg-gray-800'>Vehicles</mat-card-header>
+                <mat-card-content>
+                    <mat-list>
+                        <mat-list-item>
+                            <span matListItemTitle>1 Vehicle</span>
+                            <span matListItemLine>R159.00 per month</span>
+                            <mat-slide-toggle class="list-checkbox" [checked]="selectedVehicle1"
+                                (change)="onSelectCardVehicle(1)" color="#5db1de"></mat-slide-toggle>
+                        </mat-list-item>
+                        <mat-list-item>
+                            <span matListItemTitle>Up To 5 Vehicles</span>
+                            <span matListItemLine>R600.00 per month</span>
+                            <mat-slide-toggle class="list-checkbox" [checked]="selectedVehicle5"
+                                (change)="onSelectCardVehicle(5)" color="#5db1de"></mat-slide-toggle>
+                        </mat-list-item>
+                        <mat-list-item>
+                            <span matListItemTitle>Up To 10 Vehicles</span>
+                            <span matListItemLine>R975.00 per month</span>
+                            <mat-slide-toggle class="list-checkbox" [checked]="selectedVehicle10"
+                                (change)="onSelectCardVehicle(10)" color="#5db1de"></mat-slide-toggle>
+                        </mat-list-item>
+                        <mat-list-item>
+                            <span matListItemTitle>Unlimited Vehicles</span>
+                            <span matListItemLine>R2,250.00 per month</span>
+                            <mat-slide-toggle class="list-checkbox" [checked]="selectedVehicle11"
+                                (change)="onSelectCardVehicle(11)" color="#5db1de"></mat-slide-toggle>
+                        </mat-list-item>
+                    </mat-list>
+                </mat-card-content>
+            </mat-card>
+            <mat-card class="clean-card" *ngIf="fromPage=='loads'">
+                <mat-card-header class='table-header-column bg-gray-50 dark:bg-gray-800'>Loads</mat-card-header>
+                <mat-card-content>
+                    <mat-list>
+                        <mat-list-item>
+                            <span matListItemTitle>Up To 5 Loads</span>
+                            <span matListItemLine>R300.00 per month</span>
+                            <mat-slide-toggle class="list-checkbox" [checked]="selectedLoad5"
+                                (change)="onSelectCardLoad(5)" color="#5db1de"></mat-slide-toggle>
+                        </mat-list-item>
+                        <mat-list-item>
+                            <span matListItemTitle>Up To 10 Loads</span>
+                            <span matListItemLine>R495.00 per month</span>
+                            <mat-slide-toggle class="list-checkbox" [checked]="selectedLoad10"
+                                (change)="onSelectCardLoad(10)" color="#5db1de"></mat-slide-toggle>
+                        </mat-list-item>
+                        <mat-list-item>
+                            <span matListItemTitle>Unlimited Loads</span>
+                            <span matListItemLine>R1,450.00 per month</span>
+                            <mat-slide-toggle class="list-checkbox" [checked]="selectedLoad11"
+                                (change)="onSelectCardLoad(11)" color="#5db1de"></mat-slide-toggle>
+                        </mat-list-item>
+                    </mat-list>
+                </mat-card-content>
+            </mat-card>
+            <mat-card class="clean-card" *ngIf="fromPage=='directories'">
+                <mat-card-header class='table-header-column bg-gray-50 dark:bg-gray-800'>Business
+                    Directory</mat-card-header>
+                <mat-card-content>
+                    <mat-list>
+                        <mat-list-item>
+                            <span matListItemTitle class="mdc-list-item--with-two-lines">Listing</span>
+                            <span matListItemLine>R110.00 per month</span>
+                            <mat-slide-toggle class="list-checkbox" [checked]="selectedBusinessDirectory"
+                                (change)="onSelectCardBusinessDirectory()" color="#5db1de"></mat-slide-toggle>
+                        </mat-list-item>
+                    </mat-list>
+                </mat-card-content>
+            </mat-card>
+            <mat-card class="clean-card" *ngIf="fromPage=='adverts'">
+                <mat-card-header class='table-header-column bg-gray-50 dark:bg-gray-800'>Adverts</mat-card-header>
+                <mat-card-content>
+                    <mat-list>
+                        <mat-list-item>
+                            <span matListItemTitle>Premium Advert Listing</span>
+                            <span matListItemLine>R195.00 per month</span>
+                            <mat-slide-toggle class="list-checkbox" [checked]="selectedAdvert"
+                                (change)="onSelectCardAdvert()" color="#5db1de"></mat-slide-toggle>
+                        </mat-list-item>
+                    </mat-list>
+                </mat-card-content>
+            </mat-card>
+            <mat-card class="clean-card" *ngIf="fromPage=='tms'">
+                <mat-card-header class='table-header-column bg-gray-50 dark:bg-gray-800'>Transport Mangement
+                    System</mat-card-header>
+                <mat-card-content>
+                    <mat-list>
+                        <mat-list-item>
+                            <span matListItemTitle>Transport Mangement System</span>
+                            <span matListItemLine>R195.00 per month</span>
+                            <mat-slide-toggle class="list-checkbox" [checked]="selectedTms" (change)="onSelectCardTms()"
+                                color="#5db1de"></mat-slide-toggle>
+                        </mat-list-item>
+                    </mat-list>
+                </mat-card-content>
+            </mat-card>
+            <mat-card class="clean-card">
+                <mat-card-header class='table-header-column bg-gray-50 dark:bg-gray-800'>Voucher Code</mat-card-header>
+                <mat-card-content>
+                    <mat-list>
+                        <mat-list-item>
+                            <input matInput [value]="voucher" (input)="voucher = $event.target.value"
+                                (change)="getVoucher(voucher)" class="w-full h-full" type="text"
+                                placeholder="Optional Voucher Code">
+                        </mat-list-item>
+                    </mat-list>
+                </mat-card-content>
+            </mat-card>
+        </div>
+        <!-- <angular4-paystack
+            [key]="'pk_test_6872ef171aa55ad8d730340a2654bbbe9cf6f7f9'"
+            [paystackOptions]="options"
+            [channels]="['bank']"
+            [currency]="'USD'"
+            [class]="'btn btn-primary'"
+            (onClose)="paymentCancel()"
+            (callback)="paymentDone($event)">
+            Pay with Paystack
+        </angular4-paystack>
+        <hr>
+        <button
+            angular4-paystack
+            [key]="key"
+            [paystackOptions]="options"
+            [class]="'btn btn-primary'"
+            [currency]="'ZAR'"
+            (paymentInit)="paymentInit()"
+            (onClose)="paymentCancel()"
+            (callback)="paymentDone($event)">
+            Pay with Paystack
+        </button> -->
+    </mat-dialog-content>
+    <mat-dialog-actions class="flex items-end flex-row items-center justify-between bg-gray-200 dark:bg-gray-600">
+        <div>
+            {{zar |
+            currency:'R':'symbol':'1.0-0'}} /
+            month
+        </div>
+        <!-- <button mat-icon-button class="bg-primary"
+            [disabled]="!(zarOriginal!==zar)"
+            (click)="checkOut()">
+            <ng-container *ngIf="!loading; else spinnerTemplate">
+                <mat-icon class="text-on-primary">check</mat-icon>
+            </ng-container>
+            <ng-template #spinnerTemplate>
+                <mat-spinner [diameter]="24" [color]="'primary'"
+                    class="text-on-primary"></mat-spinner>
+            </ng-template>
+        </button> -->
+        <!-- <button *ngIf="currentUser&&!free" mat-icon-button class="bg-primary" angular4-paystack [key]="key"
+            [paystackOptions]="options" [disabled]="!(zarOriginal!==zar)||!options" [email]="currentUser.email"
+            (paymentInit)="paymentInit()" (onClose)="paymentCancel()" (callback)="paymentDone($event)">
+            <ng-container *ngIf="!loading; else spinnerTemplate">
+                <mat-icon class="text-on-primary">check</mat-icon>
+            </ng-container>
+            <ng-template #spinnerTemplate>
+                <mat-spinner [diameter]="24" [color]="'primary'" class="text-on-primary"></mat-spinner>
+            </ng-template>
+        </button>
+        <button *ngIf="currentUser&&free" mat-icon-button class="bg-primary"
+            [disabled]="!(zarOriginal!==zar)||!options||!free" (click)="submitFree()">
+            <ng-container *ngIf="!loading; else spinnerTemplate">
+                <mat-icon class="text-on-primary">check</mat-icon>
+            </ng-container>
+            <ng-template #spinnerTemplate>
+                <mat-spinner [diameter]="24" [color]="'primary'" class="text-on-primary"></mat-spinner>
+            </ng-template>
+        </button> -->
+        <subscription (onSubmitted)="loading=true;submit();" [page]="fromPage" [emailAddress]="currentUser.email"
+            [amount]="amount" [itemName]="itemName" [itemDescription]="itemName" [recurringAmount]="recurringAmount"
+            *ngIf="currentUser.email&&itemName&&!free"></subscription>
+        <!-- <payfast></payfast> -->
+        <button *ngIf="currentUser.email&&itemName&&free" mat-button class="bg-primary" (click)="submitFree();submit();">
+            <ng-container *ngIf="!loading; else spinnerTemplate">
+                subscribe
+            </ng-container>
+            <ng-template #spinnerTemplate>
+                <mat-spinner [diameter]="24" [color]="'primary'" class="text-on-primary"></mat-spinner>
+            </ng-template>
+        </button>
+        <!-- |{{zarOriginal}}|{{zar}}|{{free}}|{{options!==null}}|{{currentUser!==null}} -->
+    </mat-dialog-actions>
+</div>
+<ng-template #loadingTemplate>
+    <div class="loading-template"></div>
+</ng-template>

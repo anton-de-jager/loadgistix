@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "205167160998",
+    "firebase_url": "https://loadgistix-b2a22-default-rtdb.firebaseio.com",
+    "project_id": "loadgistix-b2a22",
+    "storage_bucket": "loadgistix-b2a22.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:205167160998:android:b6d94b094c4d59e3b34e67",
+        "android_client_info": {
+          "package_name": "com.loadgistix.www"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "205167160998-bic72bb1uvnmvvuh86k5ihaih3d0bett.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.loadgistix.www",
+            "certificate_hash": "cde442f67908dda1ad15935d2ff4d641f892cddc"
+          }
+        },
+        {
+          "client_id": "205167160998-5gs9ofn1jbu05ba8jbsdb7n97lgimp1g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDfbtLoZn03T2lxnmxaTCBgHbrdm3zTUEU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "205167160998-5gs9ofn1jbu05ba8jbsdb7n97lgimp1g.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "205167160998-vdc30ek1o53iai3j75ela0ao2b6kqvsf.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.loadgistix.www"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

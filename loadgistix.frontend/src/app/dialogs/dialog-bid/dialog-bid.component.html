@@ -1,0 +1,310 @@
+<div class="fixed inset-0 sm:relative flex flex-col min-w-0 bg-card dark:bg-gray-800 h-screen sm:h-auto">
+    <div class="flex flex-0 items-center justify-between h-16 pr-3 sm:pr-5 pl-6 sm:pl-8 bg-primary text-on-primary">
+        <div class="text-lg font-medium">{{data.title}} Bid</div>
+        <button (click)="onNoClick()" mat-icon-button [tabIndex]="-1">
+            <mat-icon class="text-on-primary">close</mat-icon>
+        </button>
+    </div>
+    <mat-dialog-content #target
+        class="flex flex-col flex-auto mat-typography bg-card dark:bg-gray-800 pl-0 pr-0 h-fit max-h-max sm:max-h-[65vh]">
+        <div *ngIf="showMap" fxFlex [ngClass]="readOnly?'absolute left-0 top-16 z-40 w-full':''">
+            <div class="h-52 w-full z-40">
+                <div id="map-load" class="h-full w-full z-40"></div>
+            </div>
+        </div>
+        <mat-list class="flex flex-wrap mt-52 z-10" *ngIf="readOnly">
+            <mat-list-item class="w-full sm:w-2/4">
+                <span matListItemTitle>Load Type</span>
+                {{data.item.loadTypeDescription}}
+            </mat-list-item>
+            <mat-list-item class="w-full sm:w-2/4">
+                <span matListItemTitle>Load Description</span>
+                {{data.item.loadDescription}}
+            </mat-list-item>
+            <mat-list-item class="w-full sm:w-2/4">
+                <span matListItemTitle>Vehicle Category</span>
+                {{data.item.vehicleCategoryDescription}}
+            </mat-list-item>
+            <mat-list-item class="w-full sm:w-2/4">
+                <span matListItemTitle>Load Type</span>
+                {{data.item.vehicleTypeDescription}}
+            </mat-list-item>
+            <mat-list-item class="w-full sm:w-2/4">
+                <span matListItemTitle>Vehicle Description</span>
+                {{data.item.vehicleDescription}}
+            </mat-list-item>
+            <mat-list-item class="w-full sm:w-2/4">
+                <span matListItemTitle>Driver</span>
+                {{data.item.driverDescription}}
+            </mat-list-item>
+            <mat-list-item class="w-full sm:w-2/4" lines="3">
+                <span matListItemTitle>Driver Rating</span>
+                <span [matBadge]="data.item.reviewCountDriver!" matBadgeOverlap="false">
+                    <mat-star-rating [rating]="data.item.reviewAverageDriver!" [starCount]="5" class="w-fit"
+                        [color]="starColorP"></mat-star-rating>
+                </span>
+            </mat-list-item>
+            <mat-list-item class="w-full sm:w-2/4">
+                <span matListItemTitle>Departure Date</span>
+                {{data.item.dateOut | date:'medium'}}
+            </mat-list-item>
+            <mat-list-item class="w-full sm:w-2/4">
+                <span matListItemTitle>Delivery Date</span>
+                {{data.item.dateIn | date:'medium'}}
+            </mat-list-item>
+            <mat-list-item class="w-full sm:w-2/4">
+                <span matListItemTitle>Price</span>
+                R{{data.item.price | number:'1.0-0'}}
+            </mat-list-item>
+            <mat-list-item
+                *ngIf="data.item.statusLoad=='Loaded Confirmed'||data.item.statusLoad=='Delivered'||data.item.statusLoad=='Delivered Confirmed'"
+                class="w-full sm:w-2/4 z-10">
+                <span matListItemTitle>Fridge Hours</span>
+                <span>{{ data.item.fridgeHours }}</span>
+            </mat-list-item><mat-list-item
+                *ngIf="data.item.statusLoad=='Loaded Confirmed'||data.item.statusLoad=='Delivered'||data.item.statusLoad=='Delivered Confirmed'"
+                class="w-full sm:w-2/4 z-10">
+                <span matListItemTitle>Kgs Loaded</span>
+                <span>{{ data.item.kgsLoaded }}</span>
+            </mat-list-item><mat-list-item
+                *ngIf="data.item.statusLoad=='Loaded Confirmed'||data.item.statusLoad=='Delivered'||data.item.statusLoad=='Delivered Confirmed'"
+                class="w-full sm:w-2/4 z-10">
+                <span matListItemTitle>Weigh-Bridge Ticket Number</span>
+                <span>{{ data.item.weighBridgeTicketNumber }}</span>
+            </mat-list-item>
+        </mat-list>
+        <form *ngIf="form" name="form" [formGroup]="form" novalidate class="w-full mt-4">
+            <ng-container *ngIf="!readOnly">
+                <mat-form-field fxFlex appearance="outline"
+                    [ngClass]="loading?'w-full sm:w-2/4 pl-2 pr-2 mat-form-field-loading':'w-full sm:w-2/4 pl-2 pr-2'">
+                    <mat-label>Vehicle</mat-label>
+                    <mat-select placeholder="VehicleId" formControlName="vehicleId"
+                        (selectionChange)="vehicleChanged()">
+                        <mat-option *ngFor="let vehicleItem of formData.vehicleList | order_by:'description'"
+                            [value]="vehicleItem.id">
+                            {{vehicleItem.description}}</mat-option>
+                    </mat-select>
+                    <mat-error>Vehicle is required</mat-error>
+                </mat-form-field>
+
+                <mat-form-field fxFlex appearance="outline"
+                    [ngClass]="loading?'w-full sm:w-2/4 pl-2 pr-2 mat-form-field-loading':'w-full sm:w-2/4 pl-2 pr-2'">
+                    <mat-label>Driver</mat-label>
+                    <mat-select placeholder="DriverId" formControlName="driverId" (selectionChange)="driverChanged()">
+                        <mat-option *ngFor="let driverItem of formData.driverList | order_by:'firstName'"
+                            [value]="driverItem.id">
+                            {{driverItem.firstName + ' ' + driverItem.lastName}}</mat-option>
+                    </mat-select>
+                    <mat-error>Driver is required</mat-error>
+                </mat-form-field>
+
+                <mat-form-field fxFlex appearance="outline"
+                    [ngClass]="loading?'w-full sm:w-2/4 pl-2 pr-2 mat-form-field-loading':'w-full sm:w-2/4 pl-2 pr-2'">
+                    <mat-label>Price</mat-label><input matInput type="number" placeholder="Price"
+                        formControlName="price" id="price">
+                    <mat-error *ngIf="hasError('price', 'required')">Price is
+                        required</mat-error>
+                </mat-form-field>
+
+                <mat-form-field fxFlex appearance="outline"
+                    [ngClass]="loading?'w-full sm:w-2/4 pl-2 pr-2 mat-form-field-loading':'w-full sm:w-2/4 pl-2 pr-2'">
+                    <mat-label>Departure Date</mat-label>
+                    <input matInput [matDatepicker]="picker_dateOut" placeholder="Choose a date"
+                        formControlName="dateOut">
+                    <mat-datepicker-toggle matSuffix [for]="$any(picker_dateOut)"
+                        *ngIf="!readOnly"></mat-datepicker-toggle>
+                    <mat-datepicker #picker_dateOut>
+                    </mat-datepicker>
+                    <mat-error>Departure Date is required</mat-error>
+                </mat-form-field>
+
+                <mat-form-field fxFlex appearance="outline"
+                    [ngClass]="loading?'w-full sm:w-2/4 pl-2 pr-2 mat-form-field-loading':'w-full sm:w-2/4 pl-2 pr-2'">
+                    <mat-label>Delivery Date</mat-label>
+                    <input matInput [matDatepicker]="picker_dateIn" placeholder="Choose a date"
+                        formControlName="dateIn">
+                    <mat-datepicker-toggle matSuffix [for]="$any(picker_dateIn)"
+                        *ngIf="!readOnly"></mat-datepicker-toggle>
+                    <mat-datepicker #picker_dateIn>
+                    </mat-datepicker>
+                    <mat-error>Delivery Date is required</mat-error>
+                </mat-form-field>
+
+                <mat-form-field *ngIf="readOnly" appearance="outline"
+                    [ngClass]="loading?'w-full sm:w-2/4 pl-2 pr-2 mat-form-field-loading':'w-full sm:w-2/4 pl-2 pr-2'"
+                    floatLabel="always">
+                    <mat-label>Driver Rating</mat-label>
+                    <input matInput type="number" placeholder="Punctuality" class="invisible"
+                        formControlName="reviewAverageDriver" id="reviewAverageDriver">
+                    <mat-star-rating [rating]="form.controls['reviewAverageDriver'].value" [starCount]="5" class="w-fit"
+                        [color]="starColorP"></mat-star-rating>
+                    <mat-error>Rating is required</mat-error>
+                </mat-form-field>
+            </ng-container>
+            <ng-container
+                *ngIf="readOnly&&form&&form.value.statusLoad!=='Open'&&form.value.statusLoad!=='Bid(s) Placed'">
+                <mat-form-field *ngIf="id && (form.value.statusLoad === 'Accepted' || form.value.statusLoad === 'Loaded')" fxFlex appearance="outline"
+                    [ngClass]="loading?'w-full sm:w-2/4 pl-2 pr-2 mat-form-field-loading':'w-full sm:w-2/4 pl-2 pr-2'">
+                    <mat-label>Fridge Hours</mat-label><input matInput type="number" placeholder="Fridge Hours"
+                        formControlName="fridgeHours" id="fridgeHours" />
+                    <mat-error *ngIf="hasError('fridgeHours', 'required')">Fridge Hours are required</mat-error>
+                </mat-form-field>
+                <mat-form-field *ngIf="id && (form.value.statusLoad === 'Accepted' || form.value.statusLoad === 'Loaded')" fxFlex appearance="outline"
+                    [ngClass]="loading?'w-full sm:w-2/4 pl-2 pr-2 mat-form-field-loading':'w-full sm:w-2/4 pl-2 pr-2'">
+                    <mat-label>Kgs Loaded</mat-label><input matInput type="number" placeholder="Kgs Loaded"
+                        formControlName="kgsLoaded" id="kgsLoaded" />
+                    <mat-error *ngIf="hasError('kgsLoaded', 'required')">Kgs Loaded is required</mat-error>
+                </mat-form-field>
+                <mat-form-field *ngIf="id && (form.value.statusLoad === 'Accepted' || form.value.statusLoad === 'Loaded')" fxFlex appearance="outline"
+                    [ngClass]="loading?'w-full sm:w-2/4 pl-2 pr-2 mat-form-field-loading':'w-full sm:w-2/4 pl-2 pr-2'">
+                    <mat-label>ODO Reading</mat-label><input matInput type="number" placeholder="ODO Reading" formControlName="odoStart"
+                        id="odoStart" />
+                    <mat-error *ngIf="hasError('odoStart', 'required')">ODO Reading is required</mat-error>
+                </mat-form-field>
+                <mat-form-field *ngIf="id && (form.value.statusLoad === 'Loaded Confirmed' || form.value.statusLoad === 'Delivered' || form.value.statusLoad === 'Delivered Confirmed')" fxFlex appearance="outline"
+                    [ngClass]="loading?'w-full sm:w-2/4 pl-2 pr-2 mat-form-field-loading':'w-full sm:w-2/4 pl-2 pr-2'">
+                    <mat-label>ODO Reading</mat-label><input matInput type="number" placeholder="ODO Reading" formControlName="odoEnd"
+                        id="odoEnd"/>
+                    <mat-error *ngIf="hasError('odoEnd', 'required')">ODO Reading is required</mat-error>
+                </mat-form-field>
+                <mat-form-field *ngIf="id && (form.value.statusLoad === 'Loaded Confirmed' || form.value.statusLoad === 'Delivered' || form.value.statusLoad === 'Delivered Confirmed')" fxFlex appearance="outline"
+                    [ngClass]="loading?'w-full sm:w-2/4 pl-2 pr-2 mat-form-field-loading':'w-full sm:w-2/4 pl-2 pr-2'">
+                    <mat-label>Delivery Note Number</mat-label><input matInput placeholder="Delivery Note Number"
+                        formControlName="deliveryNoteNumber" id="deliveryNoteNumber" />
+                    <mat-error *ngIf="hasError('deliveryNoteNumber', 'required')">Delivery Note Number is
+                        required</mat-error>
+                </mat-form-field>
+                <mat-form-field *ngIf="id && (form.value.statusLoad === 'Accepted' || form.value.statusLoad === 'Loaded')" fxFlex appearance="outline"
+                    [ngClass]="loading?'w-full sm:w-2/4 pl-2 pr-2 mat-form-field-loading':'w-full sm:w-2/4 pl-2 pr-2'">
+                    <mat-label>Weigh-Bridge Ticket Number</mat-label><input matInput
+                        placeholder="Weigh-Bridge Ticket Number" formControlName="weighBridgeTicketNumber"
+                        id="weighBridgeTicketNumber" />
+                    <mat-error *ngIf="hasError('weighBridgeTicketNumber', 'required')">Weigh-Bridge Ticket Number is
+                        required</mat-error>
+                </mat-form-field>
+                <mat-form-field *ngIf="id && (form.value.statusLoad === 'Loaded Confirmed' || form.value.statusLoad === 'Delivered' || form.value.statusLoad === 'Delivered Confirmed')" fxFlex appearance="outline"
+                    [ngClass]="loading?'w-full sm:w-2/4 pl-2 pr-2 mat-form-field-loading':'w-full sm:w-2/4 pl-2 pr-2'">
+                    <mat-label>Return Document Number</mat-label><input matInput placeholder="Return Document Number"
+                        formControlName="returnDocumentNumber" id="returnDocumentNumber" />
+                    <mat-error *ngIf="hasError('returnDocumentNumber', 'required')">Return Document Number is
+                        required</mat-error>
+                </mat-form-field>
+                <mat-form-field *ngIf="id && (form.value.statusLoad === 'Loaded Confirmed' || form.value.statusLoad === 'Delivered' || form.value.statusLoad === 'Delivered Confirmed')" fxFlex appearance="outline"
+                    [ngClass]="loading?'w-full sm:w-2/4 pl-2 pr-2 mat-form-field-loading':'w-full sm:w-2/4 pl-2 pr-2'">
+                    <mat-label>Return Kgs</mat-label><input matInput type="number" placeholder="Return Kgs"
+                        formControlName="returnKgs" id="returnKgs" />
+                    <mat-error *ngIf="hasError('returnKgs', 'required')">Return Kgs is required</mat-error>
+                </mat-form-field>
+                <mat-form-field *ngIf="id && (form.value.statusLoad === 'Loaded Confirmed' || form.value.statusLoad === 'Delivered' || form.value.statusLoad === 'Delivered Confirmed')" fxFlex appearance="outline"
+                    [ngClass]="loading?'w-full sm:w-2/4 pl-2 pr-2 mat-form-field-loading':'w-full sm:w-2/4 pl-2 pr-2'">
+                    <mat-label>Return Pallets</mat-label><input matInput type="number" placeholder="Return Pallets"
+                        formControlName="returnPallets" id="returnPallets" />
+                    <mat-error *ngIf="hasError('returnPallets', 'required')">Return Pallets is required</mat-error>
+                </mat-form-field>
+
+                <mat-form-field *ngIf="id && (form.value.statusLoad === 'Loaded Confirmed' || form.value.statusLoad === 'Delivered' || form.value.statusLoad === 'Delivered Confirmed')" fxFlex appearance="outline"
+                    [ngClass]="loading?'w-full sm:w-2/4 pl-2 pr-2 mat-form-field-loading':'w-full sm:w-2/4 pl-2 pr-2'">
+                    <mat-label>Return Reason</mat-label>
+                    <mat-select placeholder="Return Reason" formControlName="returnReasonId">
+                        <ng-container *ngFor="let returnReasonItem of data.returnReasonList | order_by: 'description'">
+                            <mat-option [value]="returnReasonItem.id">
+                                {{ returnReasonItem.description }}
+                            </mat-option>
+                        </ng-container>
+                    </mat-select>
+                    <mat-error>Return Reason is required</mat-error>
+                </mat-form-field>
+
+                <mat-form-field *ngIf="id && (form.value.statusLoad === 'Loaded Confirmed' || form.value.statusLoad === 'Delivered' || form.value.statusLoad === 'Delivered Confirmed')" fxFlex appearance="outline"
+                    [ngClass]="loading?'w-full sm:w-2/4 pl-2 pr-2 mat-form-field-loading':'w-full sm:w-2/4 pl-2 pr-2'">
+                    <mat-label>Stock Problem</mat-label>
+                    <mat-select placeholder="Stock Problem" formControlName="stockProblemId">
+                        <ng-container *ngFor="let stockProblemItem of data.stockProblemList | order_by: 'description'">
+                            <mat-option [value]="stockProblemItem.id">
+                                {{ stockProblemItem.description }}
+                            </mat-option>
+                        </ng-container>
+                    </mat-select>
+                    <mat-error>Stock Problem is required</mat-error>
+                </mat-form-field>
+            </ng-container>
+        </form>
+    </mat-dialog-content>
+    <mat-dialog-actions (click)="testUpdate('Loaded')"
+        class="flex items-end flex-row items-center justify-between bg-gray-200 dark:bg-gray-600">
+
+        <div class="flex items-start">
+            <div *ngIf="getCurrentDestinationString() !== ''">
+                Current Destination: <a href class="overflow-visible text-sm" mat-menu-item
+                    (click)="viewLocation()">{{getCurrentDestinationString()| addressLabel: ','}}</a>
+            </div>
+            <button *ngIf="id&&action!=='insert'&&!readOnly" mat-icon-button [color]="'warn'" (click)="initDelete(id)">
+                <ng-container *ngIf="!loading; else spinnerTemplate">
+                    <mat-icon>delete</mat-icon>
+                </ng-container>
+                <ng-template #spinnerTemplate>
+                    <mat-spinner [diameter]="24" [color]="'warn'"></mat-spinner>
+                </ng-template>
+            </button>
+        </div>
+        <div class="flex items-end">
+            <ng-container *ngIf="form">
+                <button mat-icon-button class="bg-primary" *ngIf="form.value.statusLoad === 'Accepted'" mat-icon-button
+                    (click)="updateStatus('Loaded')" matTooltip="Mark as Loaded">
+                    <ng-container *ngIf="!loading; else spinnerTemplatePrimary">
+                        <mat-icon class="text-on-primary">check_circle_outline</mat-icon>
+                    </ng-container>
+                </button>
+                <button mat-icon-button class="bg-primary"
+                    *ngIf="form.value.statusLoad === 'Loaded' && loadDestinationCurrent.userIdLoaded !== data.user.id"
+                    mat-icon-button (click)="updateStatus('Loaded Confirmed')" matTooltip="Confirm Loaded">
+                    <ng-container *ngIf="!loading; else spinnerTemplatePrimary">
+                        <mat-icon class="text-on-primary">check_circle</mat-icon>
+                    </ng-container>
+                </button>
+                <button mat-icon-button class="bg-primary" *ngIf="form.value.statusLoad === 'Loaded Confirmed'"
+                    mat-icon-button (click)="updateStatus('Delivered')" matTooltip="Mark as Delivered">
+                    <ng-container *ngIf="!loading; else spinnerTemplatePrimary">
+                        <mat-icon class="text-on-primary">check_circle_outline</mat-icon>
+                    </ng-container>
+                </button>
+                <button mat-icon-button class="bg-primary"
+                    *ngIf="form.value.statusLoad === 'Delivered' && loadDestinationCurrent.userIdDelivered !== data.user.id"
+                    mat-icon-button (click)="updateStatus('Delivered Confirmed')"
+                    matTooltip="Confirm Delivered">
+                    <ng-container *ngIf="!loading; else spinnerTemplatePrimary">
+                        <mat-icon class="text-on-primary">check_circle</mat-icon>
+                    </ng-container>
+                </button>
+                <button *ngIf="readOnly&&(form.value.statusLoad==='Open'||form.value.statusLoad==='Bid(s) Placed')"
+                    mat-icon-button (click)="decline()" class="bg-warn justify-self-end" matTooltip="Decline Bid">
+                    <ng-container *ngIf="!loading; else spinnerTemplateWarn">
+                        <mat-icon class="text-on-primary">close</mat-icon>
+                    </ng-container>
+                </button>
+                <button *ngIf="readOnly&&(form.value.statusLoad==='Open'||form.value.statusLoad==='Bid(s) Placed')"
+                    mat-icon-button (click)="accept()" class="bg-primary justify-self-end" matTooltip="Accept Bid">
+                    <ng-container *ngIf="!loading; else spinnerTemplatePrimary">
+                        <mat-icon class="text-on-primary">check</mat-icon>
+                    </ng-container>
+                </button>
+            </ng-container>
+            <button mat-icon-button class="bg-primary" (click)="onYesClick()" *ngIf="!readOnly" matTooltip="Submit"
+                [disabled]="!form.valid">
+                <ng-container *ngIf="!loading; else spinnerTemplatePrimary">
+                    <mat-icon class="text-on-primary">check</mat-icon>
+                </ng-container>
+            </button>
+        </div>
+
+        <ng-template #spinnerTemplateDefault>
+            <mat-spinner [diameter]="24" [color]="'default'"></mat-spinner>
+        </ng-template>
+        <ng-template #spinnerTemplatePrimary>
+            <mat-spinner [diameter]="24" [color]="'primary'" class="text-on-primary"></mat-spinner>
+        </ng-template>
+        <ng-template #spinnerTemplateWarn>
+            <mat-spinner [diameter]="24" [color]="'warn'"></mat-spinner>
+        </ng-template>
+    </mat-dialog-actions>
+</div>

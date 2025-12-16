@@ -1,0 +1,79 @@
+<div *ngIf="profileForm"
+    class="absolute inset-0 flex flex-col flex-auto min-w-0 sm:overflow-hidden bg-card dark:bg-gray-800 sticky"
+    [style.margin-right]="showAdverts?'208px':'0px'">
+    <div class="flex flex-auto flex-col flex-shrink-0 min-w-0 overflow-x-auto mt-4">
+        <form class="flex flex-col flex-auto" name="profileForm" [formGroup]="profileForm" novalidate class="w-full">
+
+            <mat-form-field appearance="outline"
+                [ngClass]="loading?'w-full mt-2 sm:w-2/4 pl-2 pr-2 mat-form-field-loading':'w-full mt-2 sm:w-2/4 pl-2 pr-2'">
+                <mat-label>Full Name</mat-label>
+                <input matInput type="text" id="name" formControlName="name" required>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline"
+                [ngClass]="loading?'w-full sm:w-2/4 pl-2 pr-2 mat-form-field-loading':'w-full sm:w-2/4 pl-2 pr-2'">
+                <mat-label>Email</mat-label>
+                <input matInput isDisabled="true" type="email" id="email" formControlName="email" required readonly>
+                <mat-icon matSuffix><img src="/assets/images/email.png" /></mat-icon>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline"
+                [ngClass]="loading?'w-full mt-2 sm:w-2/4 pl-2 pr-2 mat-form-field-loading':'w-full mt-2 sm:w-2/4 pl-2 pr-2'">
+                <mat-label>Company</mat-label>
+                <input matInput type="text" id="company" formControlName="company" required>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline"
+                [ngClass]="loading?'w-full sm:w-2/4 pl-2 pr-2 mat-form-field-loading':'w-full sm:w-2/4 pl-2 pr-2'">
+                <mat-label>Phone</mat-label><input matInput placeholder="Phone Number"
+                    formControlName="phoneNumber" id="phoneNumber">
+                <mat-icon matSuffix>phone</mat-icon>
+            </mat-form-field> 
+            <!-- <mat-form-field appearance="outline" [ngClass]="loading?'w-full sm:w-2/4 pl-2 pr-2 mat-form-field-loading':'w-full sm:w-2/4 pl-2 pr-2'">
+                <mat-label>Phone</mat-label>
+                <input matInput type="text" id="phoneNumber"
+                    formControlName="phoneNumber">
+            </mat-form-field> -->
+
+            <div class="w-full z-10 relative flex flex-col items-center">
+                <div class="avatar-mad">
+                    <img fxFlex class="cursor-pointer" onerror="this.src='assets/images/no-image.jpg';"
+                        [src]="avatarChanged ? fileToUpload : (profileForm.value.avatar ? (imagesFolder + 'Users/' + profileForm.value.id + profileForm.value.avatar + '?t=' + this.timestamp) : 'assets/images/no-image.jpg')"
+                        alt="User avatar" (click)="uploadImage($event)" />
+                </div>
+            </div>
+            <!-- <div class="grid-container-avatar">
+                <button class="grid-item-avatar-button" mat-fab extended
+                    matTooltip="Update Avatar"
+                    aria-label="Update Avatar" type="button"
+                    (click)="uploadImage($event)">
+                    <mat-icon>linked_camera</mat-icon>
+                    Update Avatar
+                </button>
+                <span>&nbsp;</span>
+                <div class="-mt-26 lg:-mt-22">
+                    <img class="w-32 h-32 ring-4 ring-bg-card avatar"
+                        [src]="!avatarChanged?(user?(user.avatar?user.avatar:'assets/images/user.png'):'assets/images/user.png'):profileForm.value.avatar"
+                        alt="User avatar">
+                </div>
+            </div> -->
+        </form>
+
+    </div>
+    <div
+        class="flex items-end flex-row items-center border-t bg-primary text-on-primary dark:bg-gray-800 dark:text-primary justify-between p-2">
+        <div></div>
+        <div class="flex items-center">
+            <button mat-icon-button class="bg-primary w-7 h-7 min-w-7 min-h-7 -mt-1" [disabled]="!profileForm.valid"
+                (click)="onSubmit()">
+                <ng-container *ngIf="!loading; else spinnerTemplate">
+                    <mat-icon class="text-on-primary">check</mat-icon>
+                </ng-container>
+                <ng-template #spinnerTemplate>
+                    <mat-spinner [diameter]="24" [color]="'primary'" class="text-on-primary"></mat-spinner>
+                </ng-template>
+            </button>
+        </div>
+
+    </div>
+</div>

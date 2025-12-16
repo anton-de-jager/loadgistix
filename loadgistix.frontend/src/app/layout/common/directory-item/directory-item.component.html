@@ -1,0 +1,63 @@
+<mat-card class="flex m-0 rounded-lg shadow p-0 overflow-hidden box-shadow">
+    <mat-card-header
+        class="flex flex-col bg-primary text-on-primary dark:bg-gray-800 dark:text-primary rouned-t-lg p-0 h-12">
+        <mat-card-title class="text-on-primary dark:text-primary font-bold flex justify-center p-1 text-xl">{{
+            directoryItem.companyName }}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="flex flex-col md:flex-row justify-center p-2 m-0">
+        <img alt *ngIf="directoryItem.avatar"
+            class="flex max-w-[250px] max-h-[250px] aspect-[4/3] justify-center self-center"
+            onerror="this.src='assets/images/no-image.jpg';"
+            [src]="directoryItem.avatar ? (imagesFolder + 'Directories/' + directoryItem.id + directoryItem.avatar + '?t=' + this.timestamp) : 'assets/images/no-image.png'"
+            (click)="viewImage(directoryItem.avatar ? (imagesFolder + 'Directories/' + directoryItem.id + directoryItem.avatar + '?t=' + this.timestamp) : 'assets/images/no-image.png')">
+        <div class="flex flex-wrap w-fit">
+            <p class="flex min-w-[100%] pb-2 pt-1 pl-2 pr-2 text-xl font-bold text-justify">
+                {{directoryItem.description}}
+            </p>
+            <span class="flex flex-row min-w-[200px] cursor-pointer" fxLayoutAlign="start center"
+                *ngIf="directoryItem.phone">
+                <img class="image-icon" src="assets/images/phone.svg" alt>
+                <a href="tel:{{directoryItem.phone}}" class="no-format-link">{{directoryItem.phone |
+                    ellipsis:20}}
+                </a>
+            </span>
+            <span class="flex flex-row min-w-[200px] cursor-pointer" *ngIf="directoryItem.email">
+                <img class="image-icon" src="assets/images/email.svg" alt>
+                <a href="mailto:{{directoryItem.email}}" class="no-format-link">{{directoryItem.email|
+                    ellipsis:20}}</a>
+            </span>
+            <span class="flex flex-row min-w-[200px] cursor-pointer" *ngIf="directoryItem.website">
+                <img class="image-icon" src="assets/images/google.svg" alt>
+                <a href
+                    (click)="navigateExternal($event, directoryItem.website.substring(0, 4) === 'http' ? directoryItem.website : 'https://' + directoryItem.website)"
+                    class="no-format-link">{{directoryItem.website|
+                    ellipsis:20}}</a>
+            </span>
+            <span class="flex flex-row min-w-[200px] cursor-pointer" *ngIf="directoryItem.facebook">
+                <img class="image-icon" src="assets/images/facebook.svg" alt>
+                <a href (click)="navigateExternal($event, directoryItem.facebook)"
+                    class="no-format-link">{{directoryItem.facebook.replace('https://www.facebook.com/',
+                    '') | ellipsis:20}}</a>
+            </span>
+            <span class="flex flex-row min-w-[200px] cursor-pointer" *ngIf="directoryItem.twitter">
+                <img class="image-icon" src="assets/images/twitter.png" alt>
+                <a href (click)="navigateExternal($event, directoryItem.twitter)"
+                    class="no-format-link">{{directoryItem.twitter.replace('https://twitter.com/',
+                    '') | ellipsis:20}}</a>
+            </span>
+            <span class="flex flex-row min-w-[200px] cursor-pointer" *ngIf="directoryItem.instagram">
+                <img class="image-icon" src="assets/images/instagram.png" alt>
+                <a href (click)="navigateExternal($event, directoryItem.instagram)"
+                    class="no-format-link">{{directoryItem.instagram.replace('https://twitter.com/',
+                    '') | ellipsis:20}}</a>
+            </span>
+            <span class="flex flex-row max-w min-w-[200px] cursor-pointer" *ngIf="directoryItem.addressLabel"
+                (click)="viewLocation(directoryItem)">
+                <img class="image-icon" src="assets/images/destination-blue.png" alt>
+                <span class="no-format-link">{{getAddressSubstring(directoryItem.addressLabel,
+                    ',') |
+                    ellipsis:40}}</span>
+            </span>
+        </div>
+    </mat-card-content>
+</mat-card>

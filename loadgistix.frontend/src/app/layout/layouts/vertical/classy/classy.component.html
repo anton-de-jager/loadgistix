@@ -1,0 +1,112 @@
+<!-- Loading bar -->
+<fuse-loading-bar></fuse-loading-bar>
+
+<!-- Navigation -->
+<fuse-vertical-navigation class="dark bg-gray-900 print:hidden" [mode]="isScreenSmall ? 'over' : 'side'"
+    [name]="'mainNavigation'" [navigation]="navigation.default" [opened]="!isScreenSmall">
+    <!-- Navigation header hook -->
+    <ng-container fuseVerticalNavigationContentHeader>
+        <div class="flex items-center w-full p-4 pl-6">
+            <!-- Logo -->
+            <div class="flex items-center justify-center">
+                <img class="w-8 icon-logo" src="assets/images/iconWhite.png">
+            </div>
+            <!-- Components -->
+            <div class="flex items-center ml-auto">
+                <!-- <notifications></notifications> -->
+                <!-- <messages *ngIf="user"></messages> -->
+                <day-night></day-night>
+                <user *ngIf="user" [showAvatar]="false"></user>
+            </div>
+        </div>
+        <!-- User -->
+        <div class="flex flex-col items-center w-full p-4" *ngIf="user">
+            <div class="relative w-24 h-24">
+                <img *ngIf="user.avatar" alt="" class="w-full h-full rounded-full"
+                    [src]="user.avatar && user.id ? (imagesFolder + 'Users/' + user.id + user.avatar + '?t=' + timestamp) : 'assets/images/no-image.jpg'"
+                    onerror="this.src='assets/images/no-image.jpg';">
+                <!-- <img class="w-full h-full rounded-full" *ngIf="user.avatar" [src]="base64Image" alt="User avatar"> -->
+                <mat-icon class="icon-size-24" *ngIf="!user.avatar"
+                    [svgIcon]="'heroicons_solid:user-circle'"></mat-icon>
+            </div>
+            <div class="flex flex-col items-center justify-center w-full mt-6">
+                <div
+                    class="w-full whitespace-nowrap text-ellipsis overflow-hidden text-center leading-normal font-medium">
+                    {{user.displayName}}
+                </div>
+                <div
+                    class="w-full mt-0.5 whitespace-nowrap text-ellipsis overflow-hidden text-center text-md leading-normal font-medium text-secondary">
+                    {{user.email}}
+                </div>
+            </div>
+        </div>
+    </ng-container>
+    <!-- Navigation footer hook -->
+    <ng-container fuseVerticalNavigationContentFooter>
+        <div class="flex flex-0 items-center justify-center h-16 pr-6 pl-2 mt-2 mb-4 opacity-12">
+            <img class="max-w-36" src="assets/images/logo-text-on-dark.png">
+        </div>
+    </ng-container>
+</fuse-vertical-navigation>
+
+<!-- Wrapper -->
+<div class="flex flex-col flex-auto w-full min-w-0 overflow-hidden">
+
+    <!-- Header -->
+    <div
+        class="relative flex flex-0 items-center w-full h-16 px-4 md:px-6 z-49 shadow dark:shadow-none dark:border-b bg-card dark:bg-gray-800 print:hidden">
+        <!-- Navigation toggle button -->
+        <button *ngIf="user" mat-icon-button (click)="toggleNavigation('mainNavigation')">
+            <mat-icon [svgIcon]="'heroicons_outline:bars-3'"></mat-icon>
+        </button>
+        <span class="dark:hidden flex items-center">
+            <img class="items-center content-normal w-12 min-w-12 block icon-logo" src="/assets/images/icon.png"
+                alt="Logo image">
+            <img class="items-center content-normal max-w-48 pl-4 block" src="/assets/images/name.png" alt="Logo image">
+        </span>
+        <span class="hidden dark:flex items-center">
+            <img class="items-center content-normal w-12 min-w-12 block icon-logo" src="assets/images/iconWhite.png"
+                alt="Logo image">
+            <img class="items-center content-normal max-w-48 pl-4 block" src="/assets/images/nameWhite.png"
+                alt="Logo image">
+        </span>
+        <!-- Components -->
+        <div class="flex items-center pl-4 ml-auto space-x-0.5 sm:space-x-2">
+            <day-night class="hidden sm:block"></day-night>
+            <fuse-fullscreen class="hidden sm:block"></fuse-fullscreen>
+            <!-- <search [appearance]="'bar'"></search> -->
+            <!-- <shortcuts></shortcuts> -->
+            <!-- <messages *ngIf="user"></messages> -->
+            <app-adverts *ngIf="isScreenSmOrBigger"></app-adverts>
+            <user *ngIf="user"></user>
+            <!-- <button
+                class="lg:hidden"
+                mat-icon-button
+                (click)="quickChat.toggle()">
+                <mat-icon [svgIcon]="'heroicons_outline:chat-bubble-left-right'"></mat-icon>
+            </button> -->
+        </div>
+    </div>
+
+    <!-- Content -->
+    <div class="flex flex-auto flex-row">
+        <!-- *ngIf="true" hack is required here for router-outlet to work correctly.
+             Otherwise, layout changes won't be registered and the view won't be updated! -->
+        <!-- <router-outlet *ngIf="true"></router-outlet>
+        <app-advert [marginBottom]="16" class="z-10 hidden sm:flex" *ngIf="showAdverts"></app-advert> -->
+        <router-outlet *ngIf="true"></router-outlet>
+        <app-advert *ngIf="showAdverts && isScreenSmOrBigger"></app-advert>
+        <!-- <router-outlet *ngIf="true"></router-outlet>
+        <app-advert [marginBottom]="16" class="z-10 hidden sm:flex" *ngIf="showAdverts"></app-advert> -->
+    </div>
+    <!-- <app-advert class="z-10 hidden sm:flex" *ngIf="showAdvertsBottom"></app-advert> -->
+
+    <!-- Footer -->
+    <!--<div class="relative flex flex-0 items-center justify-start w-full h-14 px-4 md:px-6 z-49 border-t bg-card dark:bg-transparent print:hidden">
+        <span class="font-medium text-secondary">Fuse &copy; {{currentYear}}</span>
+    </div>-->
+
+</div>
+
+<!-- Quick chat -->
+<!-- <quick-chat #quickChat="quickChat"></quick-chat> -->

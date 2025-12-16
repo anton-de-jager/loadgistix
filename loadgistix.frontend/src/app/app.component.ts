@@ -1,0 +1,90 @@
+import { Component, NgZone } from '@angular/core';
+import { Router, RouterOutlet } from '@angular/router';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { App, URLOpenListenerEvent } from '@capacitor/app';
+import { Device } from '@capacitor/device';
+import { Geolocation } from '@capacitor/geolocation';
+import { Capacitor } from '@capacitor/core';
+import { SqlService } from './services/sql.service';
+import { User } from './core/user/user.types';
+import { UserService } from './core/user/user.service';
+import { Guid } from 'guid-typescript';
+
+const options: PositionOptions = {
+    enableHighAccuracy: true,
+    timeout: 25000,
+    maximumAge: 0
+};
+
+@Component({
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.scss'],
+    standalone: true,
+    imports: [RouterOutlet, NgxSpinnerModule],
+})
+export class AppComponent {
+    deviceId: string;
+    currentUser: User | null = null;
+    /**
+     * Constructor
+     */
+    constructor(
+        private router: Router,
+        private zone: NgZone,
+        private sqlService: SqlService,
+        private userService: UserService
+        ) {
+        this.initDevice();
+        this.userService.user$.subscribe(user => {
+            if (user) {
+                this.currentUser = user;
+            }
+        });
+        App.addListener('appUrlOpen', (event: URLOpenListenerEvent) => {
+            this.zone.run(() => {
+                const domain = 'loadgistix.com';
+                const pathAttay = event.url.split(domain);
+                const appPath = pathAttay.pop();
+
+                if(appPath) {
+                    this,router.navigateByUrl(appPath);
+                }
+            });
+        });
+
+        App.addListener('appStateChange', ({ isActive }) => {
+            //console.log('App state changed. Is active?', isActive);
+            if (isActive) {
+                //this.router.navigateByUrl('refresh');
+                this.initDevice();
+            }
+        });
+    }
+
+    initDevice() {
+        Device.getId().then(id => {
+            this.deviceId = id.identifier;
+            this.logLocation();
+        });
+    }
+
+    logLocation() {
+        Geolocation.getCurrentPosition(options).then(getCurrentPositionResult => {
+            this.sqlService.createItem('device/log', { deviceId: this.deviceId, userId: this.currentUser ? this.currentUser.id : Guid.EMPTY, platform: Capacitor.getPlatform(), lat: getCurrentPositionResult.coords.latitude, lon: getCurrentPositionResult.coords.longitude }).subscribe(res => {
+
+            });
+            // console.log(Capacitor.getPlatform(), { id: this.deviceId, lat: getCurrentPositionResult.coords.latitude, lon: getCurrentPositionResult.coords.longitude });
+            // // this.apiService.saveLocation(this.deviceId, getCurrentPositionResult.coords.latitude, getCurrentPositionResult.coords.longitude).subscribe(res => {
+            // //     // if (Capacitor.getPlatform() !== 'web') {
+            // //     //     // this.getDevicePromotions(getCurrentPositionResult.coords.latitude, getCurrentPositionResult.coords.longitude);
+            // //     // }
+            // // });
+        }).catch(error => {
+            // Silently handle geolocation errors (permission denied, unavailable, timeout, etc.)
+            console.warn('Geolocation not available:', error);
+            // Optionally log device without location
+            // this.sqlService.createItem('device/log', { deviceId: this.deviceId, userId: this.currentUser ? this.currentUser.id : Guid.EMPTY, platform: Capacitor.getPlatform(), lat: null, lon: null }).subscribe(res => {});
+        });
+    }
+}

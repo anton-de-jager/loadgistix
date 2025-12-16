@@ -1,0 +1,271 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Ben.BlockingDetector" Version="0.0.4" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.26" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.26" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR" Version="1.1.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.26" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.26">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="5.1.5" />
+    <PackageReference Include="PayFast.AspNetCore" Version="1.0.5" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="EmailTemplates\complete.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EmailTemplates\confirm.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EmailTemplates\images\app.jpeg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EmailTemplates\images\app.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EmailTemplates\images\loadgistix.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EmailTemplates\images\loadgistix.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EmailTemplates\images\logo-rounded.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EmailTemplates\images\logo-text.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EmailTemplates\info.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EmailTemplates\insuranceRequest.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EmailTemplates\reset.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Images\Adverts\255E8454-4C31-46F5-AFAA-53148F0ADD24.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Images\Adverts\272ED105-5A30-4964-9BF8-9F6D42D4BF29.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Images\Adverts\8ADECB9A-727A-4F27-816E-381D686D455B.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Images\Adverts\B4F1E8AF-9481-4D3F-B42E-35154974B66E.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Images\Directories\034BAFC0-4EB7-4A3A-983A-539CCA2E44A6.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Images\Directories\0640b9aa-fe2e-8d72-65ee-690cdfa0a6e0.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Images\Directories\0db1aaa7-ee2e-7938-def8-dc9dd2e8ebba.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Images\Directories\12dffc4a-741c-0f49-6790-c30ed68245e3.PNG">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Images\Directories\2be9f4b7-f978-6398-f25f-cdea62035084.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Images\Directories\2ea4a954-9b68-b74d-8eac-02cac7e35053.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Images\Directories\3f6dadc4-2b4e-6116-6ed7-13c99899bc5b.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Images\Directories\5306b428-988e-95d0-e37d-1ffbb1d55bc0.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Images\Directories\5f7e91b4-d4a9-8b8f-a3a7-39a5fdd5dab6.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Images\Directories\62038b94-f28f-d8be-ef11-4601036c5a7b.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Images\Directories\6bfbaed5-e4b0-5a05-5acb-952cffea3f39.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Images\Directories\6f677472-bb22-dad9-6193-fbf9ccb43c0d.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Images\Directories\80fda53c-6291-d230-0778-bf0b04890c87.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Images\Directories\9449ecc0-2f7a-32e5-3b36-3972bed98166.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Images\Directories\bb653c60-a462-0995-db3f-4802c1fea0d8.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Images\Directories\c23d4c9e-51ef-c4d5-6520-3c305e09cf5b.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Images\Directories\c7143dad-4474-865c-147b-0ca46ee8ba8b.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Images\Directories\c8041a39-245e-dc6c-d8de-f7839d4d7ac8.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Images\Directories\cb249d3f-3eed-358e-11fb-e37796ef5a88.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Images\Directories\d8b016df-476b-bf27-3532-fd48a3c893d2.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Images\Directories\da2bead8-4929-645c-0c16-7a8721496ffb.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Images\Directories\dbb8d4fe-66df-c7d0-b2de-f432d0b98b4b.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Images\Directories\dbb8d4fe-66df-c7d0-b2de-f432d0b98b4b.PNG">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Images\Directories\dcd1607a-497b-bac9-235a-16d0ed75790a.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Images\Directories\ea6bf6d8-8f0d-3b59-eca6-669af9da432f.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Images\Directories\fa672479-4d8e-c03e-9ec3-838926d0dbe1.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Images\Directories\fbe1570b-d129-c068-6675-03ba4c926cd4.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Images\Drivers\17dba93b-ecf0-49e4-b2e5-84482a3a6e1c.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Images\Drivers\228a410f-eccd-4418-87ac-7d03ee2df92c.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Images\Drivers\22a34900-b496-4a36-857f-1f9cf2f80cfc.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Images\Drivers\25ED89AC-FC58-418D-9BCE-1975688F86EE.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Images\Drivers\4fcea361-821e-4aa2-a56b-c07c4dca743e.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Images\Drivers\67c1bb09-24b5-4498-83f1-4ef9b00b3a44.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Images\Drivers\84906bdd-6123-4e9d-a2a1-cd0424190063.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Images\Drivers\953202d0-369e-406a-9821-142c929af947.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Images\Drivers\aa266b72-efa4-4f3f-9678-a929347bde09.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Images\Drivers\AAA2C694-EC08-4D85-8E86-14D06A26CB2A.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Images\Drivers\f11fd91b-c474-45f2-bc46-7e09d5c267d4.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Images\Emails\insuranceRequest.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Images\Pdps\17dba93b-ecf0-49e4-b2e5-84482a3a6e1c.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Images\Pdps\228a410f-eccd-4418-87ac-7d03ee2df92c.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Images\Pdps\22a34900-b496-4a36-857f-1f9cf2f80cfc.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Images\Pdps\25ED89AC-FC58-418D-9BCE-1975688F86EE.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Images\Pdps\4fcea361-821e-4aa2-a56b-c07c4dca743e.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Images\Pdps\67c1bb09-24b5-4498-83f1-4ef9b00b3a44.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Images\Pdps\84906bdd-6123-4e9d-a2a1-cd0424190063.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Images\Pdps\953202d0-369e-406a-9821-142c929af947.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Images\Pdps\aa266b72-efa4-4f3f-9678-a929347bde09.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Images\Pdps\AAA2C694-EC08-4D85-8E86-14D06A26CB2A.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Images\Pdps\f11fd91b-c474-45f2-bc46-7e09d5c267d4.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Images\Users\05245FED-F3C0-467A-ACA2-F8FA6D1F7E0C.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Images\Users\1.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Images\Users\8812D692-A63C-4C98-A9E2-90E7BBC4C4DB.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Images\Users\FF3BA747-8755-4DDC-BDA2-4C1057D0DA1A.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Images\Users\undefined.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Images\Vehicles\15e7bd18-f131-4867-bad9-416940d39c2f.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Images\Vehicles\24c2f0d9-7dea-4c17-a09d-e2d943a3a4bf.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Images\Vehicles\33436203-22BC-457B-AD1D-7F4AE8F66CBF.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Images\Vehicles\3c5aeae9-fda3-4c85-889f-268ead1a5858.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Images\Vehicles\5292d445-030c-4aa0-840d-b084c2ea56d5.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Images\Vehicles\58B0A913-626E-4712-B572-46AE2AC85F7A.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Images\Vehicles\611e291f-f1eb-4880-88dd-325965a4362b.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Images\Vehicles\8b236b96-7e45-4817-a7d4-0b6e1254a20b.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Images\Vehicles\ed0af337-22a4-496e-9fe3-0f19fa9c56d9.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Images\Vehicles\Z9iUftjm7FZ2vDyWq1Qbdrg2ypQ2_fAeqqe2gDjgFDFCDmAqi.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Images\Adverts\" />
+  </ItemGroup>
+
+</Project>

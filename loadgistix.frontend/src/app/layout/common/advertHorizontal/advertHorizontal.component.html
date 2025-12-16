@@ -1,0 +1,136 @@
+<!-- Partner Services Section -->
+<section class="py-16 bg-gray-50 dark:bg-gray-900">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <ng-container *ngIf="advertItems.length > 0">
+            <!-- Section Header -->
+            <div class="text-center mb-12">
+                <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+                    Partner Services
+                </h2>
+                <p class="text-xl text-gray-600 dark:text-gray-400">
+                    Trusted partners offering quality services to the logistics community
+                </p>
+            </div>
+
+            <!-- Adverts Grid -->
+            <div class="gap-8" 
+                 [ngClass]="{
+                     'flex justify-center': advertItems.length === 1,
+                     'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3': advertItems.length > 1
+                 }">
+                <div *ngFor="let advertItem of advertItems" 
+                     class="group bg-white dark:bg-gray-800 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden transform hover:-translate-y-2 flex flex-col"
+                     [ngClass]="{'w-full max-w-lg': advertItems.length === 1, 'w-full h-full': advertItems.length > 1}">
+                    
+                    <!-- Card Header with Gradient -->
+                    <div class="relative p-6 text-white flex-shrink-0" style="background: linear-gradient(135deg, #1976D2 0%, #2196F3 50%, #42A5F5 100%);">
+                        <h3 class="text-2xl font-bold mb-2 drop-shadow-md">{{ advertItem.title }}</h3>
+                        <p class="text-blue-100 text-sm drop-shadow-sm">{{ advertItem.subTitle }}</p>
+                        
+                        <!-- Decorative Corner -->
+                        <div class="absolute top-0 right-0 w-24 h-24 opacity-10">
+                            <mat-icon class="!w-20 !h-20 !text-[80px]" svgIcon="heroicons_outline:sparkles"></mat-icon>
+                        </div>
+                    </div>
+
+                    <!-- Image Section -->
+                    <div *ngIf="advertItem.avatar" 
+                         class="relative h-48 overflow-hidden bg-gray-100 dark:bg-gray-700 cursor-pointer group-hover:scale-105 transition-transform duration-300 flex-shrink-0"
+                         (click)="viewImage(advertItem.avatar ? (imagesFolder + 'Adverts/' + advertItem.id + advertItem.avatar + '?t=' + this.timestamp) : 'assets/images/no-image.png')">
+                        <img 
+                            [src]="advertItem.avatar ? (imagesFolder + 'Adverts/' + advertItem.id + advertItem.avatar + '?t=' + this.timestamp) : 'assets/images/no-image.png'"
+                            onerror="this.src='assets/images/no-image.jpg';"
+                            (load)="onImageLoad()"
+                            alt="{{ advertItem.title }}"
+                            class="w-full h-full object-cover">
+                        
+                        <!-- Image Overlay on Hover -->
+                        <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-300 flex items-center justify-center">
+                            <mat-icon class="text-white opacity-0 group-hover:opacity-100 !w-12 !h-12 !text-5xl transition-opacity duration-300" svgIcon="heroicons_outline:magnifying-glass-plus"></mat-icon>
+                        </div>
+                    </div>
+
+                    <!-- Content Section - grows to fill available space -->
+                    <div class="p-6 flex-grow">
+                        <p class="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">
+                            {{ advertItem.content }}
+                        </p>
+                    </div>
+
+                    <!-- Contact Actions - stays at bottom -->
+                    <div class="px-6 pb-6 flex-shrink-0">
+                        <button 
+                            mat-flat-button 
+                            [matMenuTriggerFor]="menu"
+                            class="w-full !bg-gradient-to-r !from-blue-500 !to-blue-600 !text-white !py-3 !rounded-xl hover:!from-blue-600 hover:!to-blue-700 !shadow-md hover:!shadow-lg !transition-all !duration-300">
+                            <div class="flex items-center justify-center gap-2">
+                                <mat-icon class="!w-5 !h-5" svgIcon="heroicons_outline:phone"></mat-icon>
+                                <span class="font-semibold">Contact Details</span>
+                                <mat-icon class="!w-4 !h-4" svgIcon="heroicons_outline:chevron-down"></mat-icon>
+                            </div>
+                        </button>
+
+                        <mat-menu #menu="matMenu" class="advert-menu">
+                            <a mat-menu-item 
+                               [href]="'tel:' + advertItem.phone"
+                               class="!py-3 hover:!bg-blue-50 dark:hover:!bg-gray-700">
+                                <mat-icon class="text-blue-600 dark:text-blue-400" svgIcon="heroicons_outline:phone"></mat-icon>
+                                <span class="ml-3 text-gray-900 dark:text-gray-100">{{ advertItem.phone }}</span>
+                            </a>
+                            
+                            <a mat-menu-item 
+                               [href]="'mailto:' + advertItem.email + '?subject=RE: LoadGistix Partner Service&body='"
+                               class="!py-3 hover:!bg-blue-50 dark:hover:!bg-gray-700">
+                                <mat-icon class="text-blue-600 dark:text-blue-400" svgIcon="heroicons_outline:envelope"></mat-icon>
+                                <span class="ml-3 text-gray-900 dark:text-gray-100">{{ advertItem.email }}</span>
+                            </a>
+                            
+                            <button mat-menu-item 
+                                    (click)="navigateExternal($event, advertItem.website!.substring(0,4)==='http'?advertItem.website!:'https://'+advertItem.website)"
+                                    class="!py-3 hover:!bg-blue-50 dark:hover:!bg-gray-700">
+                                <mat-icon class="text-blue-600 dark:text-blue-400" svgIcon="heroicons_outline:globe-alt"></mat-icon>
+                                <span class="ml-3 text-gray-900 dark:text-gray-100">{{ advertItem.website }}</span>
+                            </button>
+                            
+                            <button mat-menu-item 
+                                    (click)="viewLocation(advertItem)"
+                                    class="!py-3 hover:!bg-blue-50 dark:hover:!bg-gray-700">
+                                <mat-icon class="text-blue-600 dark:text-blue-400" svgIcon="heroicons_outline:map-pin"></mat-icon>
+                                <span class="ml-3 text-gray-900 dark:text-gray-100">{{ advertItem.addressLabel }}</span>
+                            </button>
+                        </mat-menu>
+                    </div>
+
+                    <!-- Bottom Accent Bar -->
+                    <div class="h-1 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left flex-shrink-0" 
+                         style="background: linear-gradient(90deg, #2196F3 0%, #42A5F5 100%);"></div>
+                </div>
+            </div>
+        </ng-container>
+
+        <!-- Empty State -->
+        <ng-container *ngIf="advertItems.length === 0 && !loading">
+            <div class="text-center py-16">
+                <div class="w-24 h-24 bg-gray-200 dark:bg-gray-700 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <mat-icon class="!w-12 !h-12 !text-5xl text-gray-400" svgIcon="heroicons_outline:megaphone"></mat-icon>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">No Partner Services Available</h3>
+                <p class="text-gray-600 dark:text-gray-400">Check back soon for exciting partner offerings</p>
+            </div>
+        </ng-container>
+
+        <!-- Loading State -->
+        <ng-container *ngIf="loading">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div *ngFor="let i of [1,2,3]" class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden">
+                    <div class="h-32 bg-gray-200 dark:bg-gray-700 animate-pulse"></div>
+                    <div class="p-6 space-y-4">
+                        <div class="h-4 bg-gray-200 dark:bg-gray-700 rounded animate-pulse"></div>
+                        <div class="h-4 bg-gray-200 dark:bg-gray-700 rounded w-3/4 animate-pulse"></div>
+                        <div class="h-10 bg-gray-200 dark:bg-gray-700 rounded animate-pulse"></div>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+</section>

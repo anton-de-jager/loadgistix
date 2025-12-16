@@ -1,0 +1,10 @@
+<div class="static inset-auto flex flex-col min-w-90 w-auto rounded-2xl shadow-2xl shadow-inner drop-shadow-2xl p-0">
+    <mat-dialog-content fxFlex fxLayout="column" fxLayoutAlign="start center" class="mat-typography p-0">
+        <button class="absolute top-1 right-1 bg-primary z-40" (click)="close()"
+            mat-icon-button
+            [tabIndex]="-1">
+            <mat-icon class="text-on-primary">close</mat-icon>
+        </button>
+        <img alt="Avatar" class="content-dialog-image-upload object-fill" [src]="data.avatar + '?t=' + this.timestamp" onerror="this.src='assets/images/no-image.jpg';">
+    </mat-dialog-content>
+</div>

@@ -1,0 +1,85 @@
+<ng-container>
+    <!-- Button -->
+    <button mat-icon-button [matMenuTriggerFor]="userActions">
+        <span class="relative">
+            <img *ngIf="showAvatar && (currentUser ? currentUser.avatar : false)" alt="" class="w-7 h-7 rounded-full"
+                [src]="currentUser.avatar && currentUser.id ? (imagesFolder + 'Users/' + currentUser.id + currentUser.avatar + '?t=' + this.timestamp) : 'assets/images/no-image.jpg'"
+                onerror="this.src='assets/images/no-image.jpg';">
+            <!-- <img class="w-7 h-7 rounded-full" *ngIf="showAvatar && (currentUser ? currentUser.avatar : false)"
+                [src]="(currentUser ? currentUser.avatar : '')" onerror="this.src='assets/images/no-image.jpg';"> -->
+            <mat-icon *ngIf="!showAvatar || !(currentUser ? currentUser.avatar : false)"
+                [svgIcon]="'heroicons_outline:user-circle'"></mat-icon>
+        </span>
+    </button>
+
+    <mat-menu [xPosition]="'before'" #userActions="matMenu">
+        <button mat-menu-item>
+            <span class="flex flex-col leading-none">
+                <span>Signed in as</span>
+                <span class="mt-1.5 text-md font-medium">{{currentUser ? currentUser.email : ''}}</span>
+            </span>
+        </button>
+        <mat-divider class="my-2"></mat-divider>
+        <button mat-menu-item (click)="selectPage('home')">
+            <mat-icon>home</mat-icon>
+            Home
+        </button>
+        <!-- <button mat-menu-item (click)="selectPage('dashboard')">
+                <mat-icon>dashboard</mat-icon>
+                Dashboard
+            </button> -->
+        <mat-divider class="my-2"></mat-divider>
+        <button mat-menu-item (click)="selectPage('profile')">
+            <mat-icon>person</mat-icon>
+            <span>My Profile</span>
+        </button>
+        <!-- <button mat-menu-item (click)="selectPage('account')">
+            <mat-icon>rule</mat-icon>
+            <span>Plan & Billing</span>
+        </button> -->
+        <mat-divider
+            *ngIf="currentUser ? (currentUser.email === 'admin@loadgistix.com' || currentUser.email === 'anton@madproducts.co.za' || currentUser.email === 'antondj@me.com') : false"></mat-divider>
+        <button
+            *ngIf="currentUser ? (currentUser.email === 'admin@loadgistix.com' || currentUser.email === 'anton@madproducts.co.za' || currentUser.email === 'antondj@me.com') : false"
+            mat-menu-item (click)="selectPage('lookups')">
+            <mat-icon>manage_search</mat-icon>
+            <span>Lookups (111.33)</span>
+        </button>
+        <mat-divider class="my-2"></mat-divider>
+        <!-- <button mat-menu-item (click)="selectPage('/terms-and-conditions')">
+        <mat-icon>no_accounts</mat-icon>
+        <span>Terms & Conditions</span>
+    </button><button mat-menu-item (click)="selectPage('/privacy-policy')">
+        <mat-icon>no_accounts</mat-icon>
+        <span>Privacy Policy</span>
+    </button> -->
+        <button color="warn" mat-menu-item (click)="selectPage('account-delete')">
+            <mat-icon>no_accounts</mat-icon>
+            <span>Delete Account</span>
+        </button>
+        <mat-divider class="my-2"></mat-divider>
+        <button mat-menu-item (click)="signOut()">
+            <mat-icon [svgIcon]="'heroicons_outline:arrow-right-on-rectangle'"></mat-icon>
+            <span>Sign out</span>
+        </button>
+    </mat-menu>
+
+    <mat-menu class="user-status-menu" #userStatus="matMenu">
+        <button mat-menu-item (click)="updateUserStatus('online')">
+            <span class="w-4 h-4 mr-3 rounded-full bg-green-500"></span>
+            <span>Online</span>
+        </button>
+        <button mat-menu-item (click)="updateUserStatus('away')">
+            <span class="w-4 h-4 mr-3 rounded-full bg-amber-500"></span>
+            <span>Away</span>
+        </button>
+        <button mat-menu-item (click)="updateUserStatus('busy')">
+            <span class="w-4 h-4 mr-3 rounded-full bg-red-500"></span>
+            <span>Busy</span>
+        </button>
+        <button mat-menu-item (click)="updateUserStatus('not-visible')">
+            <span class="w-4 h-4 mr-3 rounded-full bg-gray-400"></span>
+            <span>Invisible</span>
+        </button>
+    </mat-menu>
+</ng-container>

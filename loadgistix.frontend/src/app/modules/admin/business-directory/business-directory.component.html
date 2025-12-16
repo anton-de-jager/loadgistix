@@ -1,0 +1,251 @@
+<!-- <div
+    class="absolute inset-0 flex flex-col flex-auto min-w-0 sm:overflow-hidden bg-card dark:bg-gray-800 sticky">
+    <div class="flex flex-col sm:flex-row md:flex-col lg:flex-row">
+        <div class="relative flex flex-col sm:flex-row md:flex-col lg:flex-row h-2/4 sm:h-fit md:h-2/4 lg:h-fit">
+            <div class="flex flex w-fit">
+                <div class="visible sm:invisible md:visible lg:invisible">title</div>
+                <div>image</div>
+                <div class="invisible sm:visible md:invisible lg:visible">content</div>
+            </div>
+            <div class="flex flex w-fit">
+                <div class="invisible sm:visible md:invisible lg:visible">title</div>
+                <div class="visible sm:invisible md:visible lg:invisible">content</div>
+                <div>links</div>
+            </div>
+        </div>
+        <div class="relative flex flex-col w-fit h-2/4 sm:h-fit md:h-2/4 lg:h-fit">
+            <div id="map" class="w-fit h-fit box box-shadow">map</div>
+            <div class="map-shadow"></div>
+        </div>
+    </div>
+
+</div> -->
+
+<div class="absolute top-0 left-0 w-full h-full p-2 z-20">
+    <div class="w-[100%] h-[100%] z-20" id="map"></div>
+    <div class="map-shadow overflow-hidden z-30"></div>
+
+    <!-- <div fxFlex
+        class="absolute top-4 right-4 z-40">
+        <button mat-icon-button [matMenuTriggerFor]="menuMap" class="bg-primary -mt-1">
+            <ng-container *ngIf="!loading; else spinnerTemplate">
+                <mat-icon class="text-on-primary">tune</mat-icon>
+            </ng-container>
+            <ng-template #spinnerTemplate>
+                <mat-spinner [diameter]="24" [color]="'primary'"
+                    class="text-on-primary"></mat-spinner>
+            </ng-template>
+        </button>
+    </div> -->
+    <div fxFlex class="absolute top-4 left-16 z-40">
+        <button mat-fab (click)="goHome()" *ngIf="!currentUser" class="mr-1 align-middle">
+            <ng-container *ngIf="!loading; else spinnerTemplate">
+                <mat-icon>home</mat-icon>
+            </ng-container>
+            <ng-template #spinnerTemplate>
+                <mat-spinner [diameter]="24"></mat-spinner>
+            </ng-template>
+        </button>
+    </div>
+    <div fxFlex class="absolute top-4 right-4 z-40">
+        <button mat-fab [matMenuTriggerFor]="menuMap" (click)="openMenu()" class="menu-trigger" id="menu-trigger"
+            class="mr-1 align-middle">
+            <ng-container *ngIf="!loading; else spinnerTemplate">
+                <mat-icon>tune</mat-icon>
+            </ng-container>
+            <ng-template #spinnerTemplate>
+                <mat-spinner [diameter]="24"></mat-spinner>
+            </ng-template>
+        </button>
+        <button mat-fab (click)="changeListVisibility()" [disabled]="directoryItems.length==0"
+            class="ml-1 align-middle">
+            <ng-container *ngIf="!loading; else spinnerTemplate">
+                <mat-icon>list</mat-icon>
+            </ng-container>
+            <ng-template #spinnerTemplate>
+                <mat-spinner [diameter]="24"></mat-spinner>
+            </ng-template>
+        </button>
+    </div>
+    <mat-menu #menuMap="matMenu" fxLayoutAlign="center stretch" class="flex flex-col w-60 p-2"
+        (click)="$event.stopPropagation()" (open)="$event.stopPropagation()">
+        <mat-form-field appearance="outline" class="w-full" (click)="$event.stopPropagation()">
+            <mat-label>Within</mat-label>
+            <mat-select [(ngModel)]="distance" placeholder="Within Range" (click)="$event.stopPropagation();"
+                (selectionChange)="changeRange()">
+                <mat-option *ngFor="let rangeItem of rangeItems | order_by:'value'" [value]="rangeItem.value">
+                    {{rangeItem.description}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <div (click)="$event.stopPropagation()" class="flex flex-col max-h-64 py-2 border-t overflow-y-auto">
+            <!-- CategorySelection -->
+            <div class="flex items-center">
+                <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:magnifying-glass'"></mat-icon>
+                <div class="ml-2">
+                    <input class="w-full min-w-0 py-1" type="text" placeholder="Enter Category Name"
+                        (input)="filterCategorySelection($event)"
+                        (keydown)="filterCategorySelectionInputKeyDown($event)" [maxLength]="30" #newCategoryItemInput>
+                </div>
+            </div>
+            <ng-container *ngFor="let categoryItem of directoryCategoryItemsFiltered | order_by: 'description'">
+                <div matRipple class="flex items-center h-10 min-h-10 pl-1 pr-4 cursor-pointer hover:bg-hover"
+                    (click)="$event.stopPropagation();toggleTaskCategoryItem(categoryItem)">
+                    <mat-checkbox class="flex items-center h-10 min-h-10 pointer-events-none"
+                        [checked]="categorySelection.includes(categoryItem.id)" [color]="'primary'"
+                        (click)="$event.stopPropagation()" [disableRipple]="true">
+                    </mat-checkbox>
+                    <div class="ml-1" (click)="$event.stopPropagation()" [matBadge]="categoryItem.directoryCount"
+                        matBadgeOverlap="false" matBadgeSize="small" matBadgeColor="primary">
+                        {{categoryItem.description}}</div>
+                </div>
+            </ng-container>
+        </div>
+
+        <button fxFlex mat-raised-button class="w-full" color="primary" (click)="updateMap()" matTooltip="Filter">
+            <mat-icon class="fab-icon">search</mat-icon><span>Filter</span>
+        </button>
+    </mat-menu>
+
+    <!-- <div
+        class="z-40 absolute top-2 right-2 items-center justify-center px-4 m-1.5 rounded-full leading-9 cursor-pointer text-gray-500 bg-gray-100 dark:text-gray-300 dark:bg-gray-700"
+        (click)="openCategorySelectionPanel()"
+        #directoryCategoryItemsPanelOrigin>
+        Directory Categories
+        <ng-template #categorySelectionPanel>
+            <div class="w-60 z-40 rounded border shadow-md bg-card">
+                <div class="flex items-center m-3 mr-2">
+                    <div class="flex items-center">
+                        <mat-icon
+                            class="icon-size-5"
+                            [svgIcon]="'heroicons_solid:magnifying-glass'"></mat-icon>
+                        <div class="ml-2">
+                            <input
+                                class="w-full min-w-0 py-1 border-0"
+                                type="text"
+                                placeholder="Enter Category Name"
+                                (input)="filterCategorySelection($event)"
+                                (keydown)="filterCategorySelectionInputKeyDown($event)"
+                                [maxLength]="30"
+                                #newCategoryItemInput>
+                        </div>
+                    </div>
+                </div>
+                <div
+                    class="flex flex-col max-h-64 py-2 border-t overflow-y-auto">
+                    <ng-container *ngIf="!categorySelectionEditMode">
+                        <ng-container
+                            *ngFor="let categoryItem of directoryCategoryItemsFiltered | order_by: 'description'">
+                            <div
+                                class="flex items-center h-10 min-h-10 pl-1 pr-4 cursor-pointer hover:bg-hover"
+                                (click)="toggleTaskCategoryItem(categoryItem)"
+                                matRipple>
+                                <mat-checkbox
+                                    class="flex items-center h-10 min-h-10 pointer-events-none"
+                                    [checked]="categorySelection.includes(categoryItem.id)"
+                                    [color]="'primary'"
+                                    [disableRipple]="true">
+                                </mat-checkbox>
+                                <div class="ml-1">{{categoryItem.description}}</div>
+                            </div>
+                        </ng-container>
+                    </ng-container>
+                    <ng-container *ngIf="categorySelectionEditMode">
+                        <div class="py-2 space-y-2">
+                            <ng-container
+                                *ngFor="let categoryItem of directoryCategoryItemsFiltered; trackBy: trackByFn">
+                                <div class="flex items-center">
+                                    <mat-form-field
+                                        class="fuse-mat-dense w-full mx-4"
+                                        [subscriptSizing]="'dynamic'">
+                                        <input
+                                            matInput
+                                            [value]="categoryItem.description"
+                                            (input)="updateCategoryItemTitle(categoryItem, $event)">
+                                        <button title="delete"
+                                            mat-icon-button
+                                            (click)="deleteCategoryItem(categoryItem)"
+                                            matSuffix>
+                                            <mat-icon
+                                                class="icon-size-5 ml-2"
+                                                [svgIcon]="'heroicons_solid:trash'"></mat-icon>
+                                        </button>
+                                    </mat-form-field>
+                                </div>
+                            </ng-container>
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+        </ng-template>
+    </div>
+    <mat-form-field appearance="outline" class="z-40 absolute top-30 right-2"
+        color="primary"
+        (click)="$event.stopPropagation()">
+        <mat-label>Within</mat-label>
+        <mat-select [(ngModel)]="distance" placeholder="Within Range"
+            class="bg-card"
+            (click)="$event.stopPropagation()" (ngModelChange)="updateMap()">
+            <mat-option
+                *ngFor="let rangeItem of rangeItems | order_by:'description'"
+                [value]="rangeItem.value">
+                {{rangeItem.description}}</mat-option>
+        </mat-select>
+    </mat-form-field> -->
+</div>
+
+<div [hidden]="!showList" class="absolute top-20 left-2 right-2 z-40 h-[calc(100vh_-_190px)] overflow-hidden">
+    <div class="flex flex-col h-[calc(100vh_-_190px)] lg:h-[calc(100vh_-_190px)]">
+        <div
+            class="flex flex-col h-[calc(100vh_-_190px)] lg:h-[calc(100vh_-_190px)] bg-transparent overflow-y-auto no-scrollbar">
+            <directory [directoryItems]="directoryItems"
+                class="flex flex-col h-[calc(100vh_-_190px)] lg:h-[calc(100vh_-_190px)] bg-transparent"></directory>
+        </div>
+    </div>
+</div>
+
+<!-- <div class="flex flex-auto flex-col h-[calc(100vh_-_120px)] overflow-hidden">
+    <div class="flex flex-col w-full lg:w-1/2 h-[calc((100vh_-_120px)_/_2)] lg:h-[calc(100vh_-_120px)]">
+        <div
+            class="flex flex-col w-full h-[calc((100vh_-_120px)_/_2)] lg:h-[calc(100vh_-_120px)] bg-transparent overflow-y-auto">
+            <directory [directoryItems]="directoryItems" class="flex flex-col w-full h-[calc((100vh_-_120px)_/_2)] lg:h-[calc(100vh_-_120px)] bg-transparent"></directory>
+        </div>
+    </div>
+
+</div> -->
+
+<!-- <div
+    class="flex flex-wrap flex-auto">
+    <div
+        class="relative flex flex-col flex-auto overflow-hidden w-2/4 sm:w-full md:w-2/4 lg:w-full">
+        <directory class="flex flex-col"
+            *ngFor="let directoryItem of directoryItems"
+            [directoryItem]="directoryItem">
+        </directory>
+    </div>
+    <div
+        class="relative flex flex-auto overflow-hidden w-2/4 sm:w-full md:w-2/4 lg:w-full">
+        <div class="flex w-[100%] h-[100%] overflow-hidden" id="map"></div>
+        <div class="map-shadow overflow-hidden"></div>
+    </div>
+</div> -->
+
+<!--
+<div
+    class="absolute inset-0 flex flex-col md:flex-row flex-auto min-w-0 overflow-auto bg-card dark:bg-gray-800 sticky">
+
+    <div
+        class="flex w-full flex-col md:w-2/4m h-2/4 m:h-2/4 lg:h-fit overflow-y-auto">
+
+        <directory class="relative flex"
+            *ngFor="let directoryItem of directoryItems"
+            [directoryItem]="directoryItem"></directory>
+    </div>
+    <div class="relative flex w-full md:w-2/4m h-2/4 m:h-2/4 lg:h-[calc(100vh_-_120px)]">
+        <div id="map"
+            class="block w-max h-max box box-shadow shadow-gray-100 dark:shadow-gray-900"></div>
+        <div id="item-shadow"
+            class="item-shadow shadow-gray-100 dark:shadow-gray-900"
+            dark:class="item-shadow-dark"></div>
+    </div>
+</div> -->

@@ -1,0 +1,73 @@
+<fuse-drawer
+    [ngClass]="position +' right-' + right.toString() + ' bottom-' + bottom.toString() + ' top-' + _top.toString() + ' w-52 min-w-52 ' + _height + ' shadow-none z-999'"
+    [mode]="drawerMode" [name]="'advertsDrawer'" [position]="'right'" [opened]="drawerOpened"
+    (openedChanged)="openedChanged($event)" #advertsDrawer style="height: calc(100% - 64px)!important;">
+    <button class="absolute top-2 right-2 mr-2 opacity-50 bg-primary z-60" (click)="openedChanged(false)"
+        mat-icon-button [tabIndex]="-1">
+        <mat-icon class="text-on-primary">close</mat-icon>
+    </button>
+    <cdk-virtual-scroll-viewport itemSize="1"
+        [ngClass]="'flex flex-col flex-auto z-50 gap-[16px] scrollbar-hide bg-[#D6D6D6] dark:bg-gray-800 mb-' + marginBottom.toString()">
+        <ng-container *ngIf="advertItems.length > 0">
+            <mat-card *cdkVirtualFor="let advertItem of advertItems"
+                class="flex m-2 rounded-lg shadow-xl shadow-inner p-0 overflow-hidden">
+                <mat-card-header
+                    class="flex flex-col bg-primary text-on-primary dark:bg-gray-800 dark:text-primary rouned-t-lg p-0">
+                    <mat-card-title
+                        class="text-on-primary dark:text-primary font-bold text-sm flex justify-center text-center pl-2 pr-2">{{
+                        advertItem.title }}</mat-card-title>
+                    <mat-card-subtitle
+                        class="text-on-primary dark:text-primary font-medium text-sm flex justify-center text-center pl-2 pr-2">{{
+                        advertItem.subTitle }}</mat-card-subtitle>
+                </mat-card-header>
+                <img alt *ngIf="advertItem.avatar" class="flex" onerror="this.src='assets/images/no-image.jpg';"
+                    [src]="advertItem.avatar ? (imagesFolder + 'Adverts/' + advertItem.id + advertItem.avatar + '?t=' + this.timestamp) : 'assets/images/no-image.png'"
+                    (load)="onImageLoad()"
+                    (click)="viewImage(advertItem.avatar ? (imagesFolder + 'Adverts/' + advertItem.id + advertItem.avatar + '?t=' + this.timestamp) : 'assets/images/no-image.png')">
+                <mat-card-content>
+                    <p class="text-justify text-xs">
+                        {{advertItem.content}}
+                    </p>
+                </mat-card-content>
+                <mat-card-actions [matMenuTriggerFor]="menu"
+                    class="flex flex-row bg-primary text-sm text-on-primary dark:bg-gray-800 dark:text-primary rouned-b-lg cursor-pointer justify-between">
+                    <i>contact details</i>
+                    <mat-icon class="text-on-primary text-sm">contacts</mat-icon>
+                </mat-card-actions>
+                <mat-menu #menu="matMenu" class="text-sm">
+                    <a mat-menu-item class="text-sm"
+                        [href]="'tel:' + advertItem.phone"><mat-icon>phone</mat-icon>&nbsp;{{advertItem.phone}}</a>
+                    <a mat-menu-item class="text-sm"
+                        [href]="'mailto:' + advertItem.email + '?subject=RE: loadgistix.com&body='"><mat-icon>mail</mat-icon>&nbsp;{{advertItem.email}}</a>
+                    <button mat-menu-item class="text-sm"
+                        (click)="navigateExternal($event, advertItem.website!.substring(0,4)==='http'?advertItem.website!:'https://'+advertItem.website)"><mat-icon>language</mat-icon>&nbsp;{{advertItem.website}}</button>
+                    <button mat-menu-item (click)="viewLocation(advertItem)"><mat-icon
+                            class="overflow-visible text-sm">map</mat-icon>&nbsp;{{advertItem.addressLabel}}</button>
+                </mat-menu>
+            </mat-card>
+        </ng-container>
+        <ng-container *ngIf="advertItems.length === 0">
+            <mat-card *ngFor="let i of [1,2,3,4]"
+                class="flex m-2 rounded-lg shadow-xl shadow-inner p-0 overflow-hidden">
+                <ngx-skeleton-loader count="1" animation="pulse" [theme]="{
+                      height: '50px'
+                    }"></ngx-skeleton-loader>
+                <mat-card-content>
+                    <p class="text-justify text-xs">
+                        <ngx-skeleton-loader count="3" [theme]="{ width: '100%', 'border-radius': '0', height: '15px' }">
+                        </ngx-skeleton-loader>
+                    </p>
+                </mat-card-content>
+                <mat-card-actions
+                    class="flex flex-row items-end">
+                    <ngx-skeleton-loader class="self-end" count="3" appearance="circle" [theme]="{
+                          width: '20px',
+                          height: '20px',
+                          'border-radius': '10px'
+                        }">
+                    </ngx-skeleton-loader>
+                </mat-card-actions>
+            </mat-card>
+        </ng-container>
+    </cdk-virtual-scroll-viewport>
+</fuse-drawer>

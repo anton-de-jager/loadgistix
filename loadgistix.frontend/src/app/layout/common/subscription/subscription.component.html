@@ -1,0 +1,23 @@
+<form name="PayFastPayNowForm" (submit)="onSubmit($event)" [action]="actionUrl" method="post">
+    <input required type="hidden" name="cmd" value="_paynow">
+    <input required type="hidden" name="receiver" pattern="[0-9]" value="12100762">
+    <input type="hidden" name="email_address" maxlength="255" [value]="emailAddress">
+    <input type="hidden" name="return_url" [value]="returnUrl">
+    <input type="hidden" name="cancel_url" [value]="cancelUrl">
+    <input type="hidden" name="notify_url" [value]="notifyUrl">
+    <input required type="hidden" name="amount" [value]="amount">
+    <input required type="hidden" name="item_name" maxlength="255" [value]="itemName">
+    <input type="hidden" name="item_description" maxlength="255" [value]="itemDescription ">
+    <input required type="hidden" name="subscription_type" pattern="1" value="1">
+    <input type="hidden" name="recurring_amount" [value]="recurringAmount">
+    <input required type="hidden" name="cycles" pattern="[0-9]" value="0">
+    <input required type="hidden" name="frequency" pattern="[0-9]" value="3">
+    <table *ngIf="!loading">
+        <tr>
+            <td colspan=2 align=center>
+                <input type="image" src="https://my.payfast.io/images/buttons/Subscribe/Light-Small-Subscribe.png"
+                    alt="Subscribe" title="Subscribe with Payfast">
+            </td>
+        </tr>
+    </table>
+</form>

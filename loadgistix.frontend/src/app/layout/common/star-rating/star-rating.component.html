@@ -1,0 +1,6 @@
+<div class="flex flex-row items-center justify-between -mt-5">
+    <mat-icon [color]="color" *ngFor="let ratingId of ratingArr;index as i"
+        [id]="'star_'+i" (click)="onClick(i+1)" class="cursor-pointer z-10">
+        {{showIcon(i)}}
+    </mat-icon>
+</div>
