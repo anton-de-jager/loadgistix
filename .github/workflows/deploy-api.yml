@@ -35,11 +35,13 @@ jobs:
         working-directory: loadgistix.api
         run: dotnet publish --configuration Release --no-build --output ./publish
 
-      - name: Deploy to MonsterASP via FTP
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      - name: Deploy to MonsterASP via SFTP
+        uses: wlixcc/SFTP-Deploy-Action@v1.2.4
         with:
           server: ${{ secrets.FTP_SERVER }}
+          port: 22
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: ./loadgistix.api/publish/
-          server-dir: /
+          local_path: './loadgistix.api/publish/*'
+          remote_path: '/wwwroot/'
+          sftp_only: true
