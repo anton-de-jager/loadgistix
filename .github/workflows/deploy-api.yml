@@ -1,4 +1,4 @@
-name: Deploy API to MonsterASP
+name: Deploy API to MonsterASP (site47136)
 
 on:
   push:
@@ -13,7 +13,7 @@ env:
 jobs:
   build-and-deploy:
     runs-on: windows-latest
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -39,23 +39,23 @@ jobs:
         run: |
           echo "<!DOCTYPE html><html><head><title>Maintenance</title></head><body><h1>Application is being updated...</h1></body></html>" > loadgistix.api/publish/app_offline.htm
 
-      - name: Deploy to MonsterASP via WebDeploy
+      - name: Deploy to MonsterASP (site47136)
         uses: rasmusbuchholdt/simply-web-deploy@2.1.0
         with:
-          website-name: ${{ secrets.MONSTERASP_WEBSITE_NAME }}
-          server-computer-name: ${{ secrets.MONSTERASP_SERVER_URL }}
-          server-username: ${{ secrets.MONSTERASP_USERNAME }}
-          server-password: ${{ secrets.MONSTERASP_PASSWORD }}
+          website-name: ${{ secrets.MONSTERASP_SITE47136_SITE_NAME }}
+          server-computer-name: ${{ secrets.MONSTERASP_SITE47136_SERVER }}
+          server-username: ${{ secrets.MONSTERASP_SITE47136_USERNAME }}
+          server-password: ${{ secrets.MONSTERASP_SITE47136_PASSWORD }}
           source-path: './loadgistix.api/publish'
           target-path: '/'
 
-      - name: Remove app_offline.htm (bring site back online)
+      - name: Remove app_offline.htm
         uses: rasmusbuchholdt/simply-web-deploy@2.1.0
         with:
-          website-name: ${{ secrets.MONSTERASP_WEBSITE_NAME }}
-          server-computer-name: ${{ secrets.MONSTERASP_SERVER_URL }}
-          server-username: ${{ secrets.MONSTERASP_USERNAME }}
-          server-password: ${{ secrets.MONSTERASP_PASSWORD }}
+          website-name: ${{ secrets.MONSTERASP_SITE47136_SITE_NAME }}
+          server-computer-name: ${{ secrets.MONSTERASP_SITE47136_SERVER }}
+          server-username: ${{ secrets.MONSTERASP_SITE47136_USERNAME }}
+          server-password: ${{ secrets.MONSTERASP_SITE47136_PASSWORD }}
           source-path: './loadgistix.api/publish'
           target-path: '/'
           parameters: '-enableRule:AppOffline'
