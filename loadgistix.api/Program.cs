@@ -106,15 +106,13 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+// Enable Swagger in all environments for API testing
+app.UseSwagger();
+app.UseSwaggerUI(c =>
 {
-    app.UseSwagger();
-    app.UseSwaggerUI(c =>
-    {
-        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Loadgistix API V1");
-        // Additional Swagger UI configuration as needed
-    });
-}
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Loadgistix API V1");
+    // Additional Swagger UI configuration as needed
+});
 
 app.UseHttpsRedirection();
 
