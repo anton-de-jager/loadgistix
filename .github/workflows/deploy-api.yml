@@ -18,22 +18,23 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Setup .NET
+      - name: Setup .NET SDK 6
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }}
+          roll-forward: disable
 
-      - name: Restore dependencies
+      - name: Restore dependencies (win-x86)
         working-directory: loadgistix.api
-        run: dotnet restore
+        run: dotnet restore --runtime win-x86
 
       - name: Build
         working-directory: loadgistix.api
         run: dotnet build --configuration Release --no-restore
 
-      - name: Publish
+      - name: Publish for IIS (MonsterASP)
         working-directory: loadgistix.api
-        run: dotnet publish --configuration Release --no-build --output ./publish --runtime win-x86 --self-contained false
+        run: dotnet publish --configuration Release --no-build --runtime win-x86 --self-contained false --output ./publish
 
       - name: Create app_offline.htm
         run: |
@@ -49,7 +50,7 @@ jobs:
           source-path: './loadgistix.api/publish'
           target-path: '/'
 
-      - name: Remove app_offline.htm
+      - name: Remove app_offline.htm (bring site online)
         uses: rasmusbuchholdt/simply-web-deploy@2.1.0
         with:
           website-name: ${{ secrets.MONSTERASP_SITE47136_SITE_NAME }}
