@@ -1,0 +1,46 @@
+﻿2025-12-16T07:08:28.3836057Z ##[debug]Evaluating condition for step: 'Setup .NET'
+2025-12-16T07:08:28.3840349Z ##[debug]Evaluating: success()
+2025-12-16T07:08:28.3840678Z ##[debug]Evaluating success:
+2025-12-16T07:08:28.3841055Z ##[debug]=> true
+2025-12-16T07:08:28.3841483Z ##[debug]Result: true
+2025-12-16T07:08:28.3842802Z ##[debug]Starting: Setup .NET
+2025-12-16T07:08:28.3982136Z ##[debug]Register post job cleanup for action: actions/setup-dotnet@v4
+2025-12-16T07:08:28.4003598Z ##[debug]Loading inputs
+2025-12-16T07:08:28.4006852Z ##[debug]Evaluating: env.DOTNET_VERSION
+2025-12-16T07:08:28.4007142Z ##[debug]Evaluating Index:
+2025-12-16T07:08:28.4007354Z ##[debug]..Evaluating env:
+2025-12-16T07:08:28.4007606Z ##[debug]..=> Object
+2025-12-16T07:08:28.4007814Z ##[debug]..Evaluating String:
+2025-12-16T07:08:28.4008035Z ##[debug]..=> 'DOTNET_VERSION'
+2025-12-16T07:08:28.4008334Z ##[debug]=> '6.0.x'
+2025-12-16T07:08:28.4008519Z ##[debug]Result: '6.0.x'
+2025-12-16T07:08:28.4015060Z ##[debug]Loading env
+2025-12-16T07:08:28.4020254Z ##[group]Run actions/setup-dotnet@v4
+2025-12-16T07:08:28.4020484Z with:
+2025-12-16T07:08:28.4020642Z   dotnet-version: 6.0.x
+2025-12-16T07:08:28.4020838Z   cache: false
+2025-12-16T07:08:28.4020998Z env:
+2025-12-16T07:08:28.4021136Z   DOTNET_VERSION: 6.0.x
+2025-12-16T07:08:28.4021309Z ##[endgroup]
+2025-12-16T07:08:28.9714127Z [command]"C:\Program Files\PowerShell\7\pwsh.exe" -NoLogo -Sta -NoProfile -NonInteractive -ExecutionPolicy Unrestricted -Command & 'D:\a\_actions\actions\setup-dotnet\v4\externals\install-dotnet.ps1' -SkipNonVersionedFiles -Runtime dotnet -Channel LTS
+2025-12-16T07:08:48.8320927Z dotnet-install: Downloaded file https://builds.dotnet.microsoft.com/dotnet/Runtime/10.0.1/dotnet-runtime-10.0.1-win-x64.zip size is 37107855 bytes.
+2025-12-16T07:08:48.8338171Z dotnet-install: Either downloaded or local package size can not be measured. One of them may be corrupted.
+2025-12-16T07:08:48.8364151Z dotnet-install: Extracting the archive.
+2025-12-16T07:08:50.4217145Z dotnet-install: Note that the script does not ensure your Windows version is supported during the installation.
+2025-12-16T07:08:50.4223633Z dotnet-install: To check the list of supported versions, go to https://learn.microsoft.com/dotnet/core/install/windows#supported-versions
+2025-12-16T07:08:50.4231229Z dotnet-install: Installed version is 10.0.1
+2025-12-16T07:08:50.4234352Z dotnet-install: Installation finished
+2025-12-16T07:08:51.1665104Z [command]"C:\Program Files\PowerShell\7\pwsh.exe" -NoLogo -Sta -NoProfile -NonInteractive -ExecutionPolicy Unrestricted -Command & 'D:\a\_actions\actions\setup-dotnet\v4\externals\install-dotnet.ps1' -SkipNonVersionedFiles -Channel 6.0
+2025-12-16T07:09:03.0681824Z dotnet-install: Downloaded file https://builds.dotnet.microsoft.com/dotnet/Sdk/6.0.428/dotnet-sdk-6.0.428-win-x64.zip size is 265214223 bytes.
+2025-12-16T07:09:03.0705057Z dotnet-install: Either downloaded or local package size can not be measured. One of them may be corrupted.
+2025-12-16T07:09:03.0730893Z dotnet-install: Extracting the archive.
+2025-12-16T07:09:21.6923423Z dotnet-install: Note that the script does not ensure your Windows version is supported during the installation.
+2025-12-16T07:09:21.6927120Z dotnet-install: To check the list of supported versions, go to https://learn.microsoft.com/dotnet/core/install/windows#supported-versions
+2025-12-16T07:09:21.6932712Z dotnet-install: Installed version is 6.0.428
+2025-12-16T07:09:21.6938364Z dotnet-install: Installation finished
+2025-12-16T07:09:21.7366329Z ##[add-matcher]D:\a\_actions\actions\setup-dotnet\v4\.github\csc.json
+2025-12-16T07:09:21.7389905Z ##[debug]Added matchers: 'csc'. Problem matchers scan action output for known warning or error strings and report these inline.
+2025-12-16T07:09:21.7445974Z ##[debug]Node Action run completed with exit code 0
+2025-12-16T07:09:21.7450421Z ##[debug]DOTNET_ROOT='C:\Program Files\dotnet'
+2025-12-16T07:09:21.7452644Z ##[debug]Set output dotnet-version = 6.0.428
+2025-12-16T07:09:21.7454447Z ##[debug]Finishing: Setup .NET

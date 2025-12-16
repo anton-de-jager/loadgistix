@@ -2,8 +2,8 @@ export const environment = {
     production: true,
 
     url: 'https://loadgistix.com/',
-    apiDotNet: 'https://api2.loadgistix.com/api/',
-    apiImage: 'https://api2.loadgistix.com/Images/',
+    apiDotNet: 'http://loadgistix.runasp.net/api/',
+    apiImage: 'http://loadgistix.runasp.net/Images/',
     hubs: 'wss://api2.loadgistix.com/hubs/',
     apiSecret: 'ThisIsMyAppThatDoesTransportAndStuff',
     actionUrl: 'https://payment.payfast.io/eng/process',

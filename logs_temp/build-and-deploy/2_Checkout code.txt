@@ -1,0 +1,173 @@
+﻿2025-12-16T07:08:18.7608057Z ##[debug]Evaluating condition for step: 'Checkout code'
+2025-12-16T07:08:18.7656683Z ##[debug]Evaluating: success()
+2025-12-16T07:08:18.7664245Z ##[debug]Evaluating success:
+2025-12-16T07:08:18.7688324Z ##[debug]=> true
+2025-12-16T07:08:18.7698341Z ##[debug]Result: true
+2025-12-16T07:08:18.7729034Z ##[debug]Starting: Checkout code
+2025-12-16T07:08:18.9069597Z ##[debug]Register post job cleanup for action: actions/checkout@v4
+2025-12-16T07:08:18.9169613Z ##[debug]Loading inputs
+2025-12-16T07:08:18.9178832Z ##[debug]Evaluating: github.repository
+2025-12-16T07:08:18.9180087Z ##[debug]Evaluating Index:
+2025-12-16T07:08:18.9182721Z ##[debug]..Evaluating github:
+2025-12-16T07:08:18.9184486Z ##[debug]..=> Object
+2025-12-16T07:08:18.9193592Z ##[debug]..Evaluating String:
+2025-12-16T07:08:18.9194992Z ##[debug]..=> 'repository'
+2025-12-16T07:08:18.9201165Z ##[debug]=> 'anton-de-jager/loadgistix'
+2025-12-16T07:08:18.9203922Z ##[debug]Result: 'anton-de-jager/loadgistix'
+2025-12-16T07:08:18.9210174Z ##[debug]Evaluating: github.token
+2025-12-16T07:08:18.9211157Z ##[debug]Evaluating Index:
+2025-12-16T07:08:18.9211843Z ##[debug]..Evaluating github:
+2025-12-16T07:08:18.9212738Z ##[debug]..=> Object
+2025-12-16T07:08:18.9213295Z ##[debug]..Evaluating String:
+2025-12-16T07:08:18.9213817Z ##[debug]..=> 'token'
+2025-12-16T07:08:18.9214765Z ##[debug]=> '***'
+2025-12-16T07:08:18.9215398Z ##[debug]Result: '***'
+2025-12-16T07:08:18.9238050Z ##[debug]Loading env
+2025-12-16T07:08:18.9309552Z ##[group]Run actions/checkout@v4
+2025-12-16T07:08:18.9310388Z with:
+2025-12-16T07:08:18.9310828Z   repository: anton-de-jager/loadgistix
+2025-12-16T07:08:18.9311721Z   token: ***
+2025-12-16T07:08:18.9312135Z   ssh-strict: true
+2025-12-16T07:08:18.9312565Z   ssh-user: git
+2025-12-16T07:08:18.9312994Z   persist-credentials: true
+2025-12-16T07:08:18.9313499Z   clean: true
+2025-12-16T07:08:18.9313934Z   sparse-checkout-cone-mode: true
+2025-12-16T07:08:18.9314475Z   fetch-depth: 1
+2025-12-16T07:08:18.9314901Z   fetch-tags: false
+2025-12-16T07:08:18.9315387Z   show-progress: true
+2025-12-16T07:08:18.9315818Z   lfs: false
+2025-12-16T07:08:18.9316221Z   submodules: false
+2025-12-16T07:08:18.9316663Z   set-safe-directory: true
+2025-12-16T07:08:18.9317348Z env:
+2025-12-16T07:08:18.9317742Z   DOTNET_VERSION: 6.0.x
+2025-12-16T07:08:18.9318199Z ##[endgroup]
+2025-12-16T07:08:19.1165472Z ##[debug]GITHUB_WORKSPACE = 'D:\a\loadgistix\loadgistix'
+2025-12-16T07:08:19.1167837Z ##[debug]qualified repository = 'anton-de-jager/loadgistix'
+2025-12-16T07:08:19.1169122Z ##[debug]ref = 'refs/heads/main'
+2025-12-16T07:08:19.1170528Z ##[debug]commit = '17f818843ad4e4a0844d0d416dfe4b12619571a4'
+2025-12-16T07:08:19.1174185Z ##[debug]clean = true
+2025-12-16T07:08:19.1175317Z ##[debug]filter = undefined
+2025-12-16T07:08:19.1178396Z ##[debug]fetch depth = 1
+2025-12-16T07:08:19.1184410Z ##[debug]fetch tags = false
+2025-12-16T07:08:19.1191423Z ##[debug]show progress = true
+2025-12-16T07:08:19.1197159Z ##[debug]lfs = false
+2025-12-16T07:08:19.1200053Z ##[debug]submodules = false
+2025-12-16T07:08:19.1201459Z ##[debug]recursive submodules = false
+2025-12-16T07:08:19.1202844Z ##[debug]GitHub Host URL = 
+2025-12-16T07:08:19.1207689Z ::add-matcher::D:\a\_actions\actions\checkout\v4\dist\problem-matcher.json
+2025-12-16T07:08:19.1311409Z ##[debug]Added matchers: 'checkout-git'. Problem matchers scan action output for known warning or error strings and report these inline.
+2025-12-16T07:08:19.1317528Z Syncing repository: anton-de-jager/loadgistix
+2025-12-16T07:08:19.1319432Z ::group::Getting Git version info
+2025-12-16T07:08:19.1321045Z ##[group]Getting Git version info
+2025-12-16T07:08:19.1322182Z Working directory is 'D:\a\loadgistix\loadgistix'
+2025-12-16T07:08:19.2850483Z ##[debug]Getting git version
+2025-12-16T07:08:19.2876132Z [command]"C:\Program Files\Git\bin\git.exe" version
+2025-12-16T07:08:19.9255046Z git version 2.52.0.windows.1
+2025-12-16T07:08:19.9309187Z ##[debug]0
+2025-12-16T07:08:19.9311472Z ##[debug]git version 2.52.0.windows.1
+2025-12-16T07:08:19.9315827Z ##[debug]
+2025-12-16T07:08:19.9318297Z ##[debug]Set git useragent to: git/2.52.0 (github-actions-checkout)
+2025-12-16T07:08:19.9321221Z ::endgroup::
+2025-12-16T07:08:19.9322523Z ##[endgroup]
+2025-12-16T07:08:19.9329129Z ::add-mask::***
+2025-12-16T07:08:19.9344046Z Temporarily overriding HOME='D:\a\_temp\4b6b8242-6bab-4d10-8bbe-3d7aa1b10baf' before making global git config changes
+2025-12-16T07:08:19.9348015Z Adding repository directory to the temporary git global config as a safe directory
+2025-12-16T07:08:19.9354562Z [command]"C:\Program Files\Git\bin\git.exe" config --global --add safe.directory D:\a\loadgistix\loadgistix
+2025-12-16T07:08:20.0604896Z ##[debug]0
+2025-12-16T07:08:20.0607081Z ##[debug]
+2025-12-16T07:08:20.0617175Z Deleting the contents of 'D:\a\loadgistix\loadgistix'
+2025-12-16T07:08:20.0624666Z ::group::Initializing the repository
+2025-12-16T07:08:20.0625843Z ##[group]Initializing the repository
+2025-12-16T07:08:20.0638207Z [command]"C:\Program Files\Git\bin\git.exe" init D:\a\loadgistix\loadgistix
+2025-12-16T07:08:20.2189411Z Initialized empty Git repository in D:/a/loadgistix/loadgistix/.git/
+2025-12-16T07:08:20.2238662Z ##[debug]0
+2025-12-16T07:08:20.2241591Z ##[debug]Initialized empty Git repository in D:/a/loadgistix/loadgistix/.git/
+2025-12-16T07:08:20.2243815Z ##[debug]
+2025-12-16T07:08:20.2253791Z [command]"C:\Program Files\Git\bin\git.exe" remote add origin https://github.com/anton-de-jager/loadgistix
+2025-12-16T07:08:20.3141183Z ##[debug]0
+2025-12-16T07:08:20.3143281Z ##[debug]
+2025-12-16T07:08:20.3145441Z ::endgroup::
+2025-12-16T07:08:20.3146628Z ##[endgroup]
+2025-12-16T07:08:20.3148769Z ::group::Disabling automatic garbage collection
+2025-12-16T07:08:20.3150628Z ##[group]Disabling automatic garbage collection
+2025-12-16T07:08:20.3155615Z [command]"C:\Program Files\Git\bin\git.exe" config --local gc.auto 0
+2025-12-16T07:08:20.3491898Z ##[debug]0
+2025-12-16T07:08:20.3493980Z ##[debug]
+2025-12-16T07:08:20.3495932Z ::endgroup::
+2025-12-16T07:08:20.3497210Z ##[endgroup]
+2025-12-16T07:08:20.3499622Z ::group::Setting up auth
+2025-12-16T07:08:20.3501036Z ##[group]Setting up auth
+2025-12-16T07:08:20.3511326Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp core\.sshCommand
+2025-12-16T07:08:20.3843701Z ##[debug]1
+2025-12-16T07:08:20.3845759Z ##[debug]
+2025-12-16T07:08:20.3857063Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\""
+2025-12-16T07:08:23.2525572Z ##[debug]0
+2025-12-16T07:08:23.2526423Z ##[debug]
+2025-12-16T07:08:23.2539268Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2025-12-16T07:08:23.2863542Z ##[debug]1
+2025-12-16T07:08:23.2863983Z ##[debug]
+2025-12-16T07:08:23.2874249Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\""
+2025-12-16T07:08:23.8681879Z ##[debug]0
+2025-12-16T07:08:23.8682421Z ##[debug]
+2025-12-16T07:08:23.8699586Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp ^includeIf\.gitdir:
+2025-12-16T07:08:23.9063158Z ##[debug]1
+2025-12-16T07:08:23.9063727Z ##[debug]
+2025-12-16T07:08:23.9078615Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "git config --local --show-origin --name-only --get-regexp remote.origin.url"
+2025-12-16T07:08:24.4870785Z ##[debug]0
+2025-12-16T07:08:24.4871902Z ##[debug]
+2025-12-16T07:08:24.4884942Z [command]"C:\Program Files\Git\bin\git.exe" config --local http.https://github.com/.extraheader "AUTHORIZATION: basic ***"
+2025-12-16T07:08:24.5191357Z ##[debug]0
+2025-12-16T07:08:24.5191716Z ##[debug]
+2025-12-16T07:08:24.5206470Z ::endgroup::
+2025-12-16T07:08:24.5207982Z ##[endgroup]
+2025-12-16T07:08:24.5208588Z ::group::Fetching the repository
+2025-12-16T07:08:24.5208968Z ##[group]Fetching the repository
+2025-12-16T07:08:24.5220620Z [command]"C:\Program Files\Git\bin\git.exe" -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +17f818843ad4e4a0844d0d416dfe4b12619571a4:refs/remotes/origin/main
+2025-12-16T07:08:26.9749973Z From https://github.com/anton-de-jager/loadgistix
+2025-12-16T07:08:26.9751426Z  * [new ref]         17f818843ad4e4a0844d0d416dfe4b12619571a4 -> origin/main
+2025-12-16T07:08:27.0131938Z ##[debug]0
+2025-12-16T07:08:27.0132483Z ##[debug]
+2025-12-16T07:08:27.0132992Z ::endgroup::
+2025-12-16T07:08:27.0133265Z ##[endgroup]
+2025-12-16T07:08:27.0133762Z ::group::Determining the checkout info
+2025-12-16T07:08:27.0134237Z ##[group]Determining the checkout info
+2025-12-16T07:08:27.0135898Z ::endgroup::
+2025-12-16T07:08:27.0136171Z ##[endgroup]
+2025-12-16T07:08:27.0151333Z [command]"C:\Program Files\Git\bin\git.exe" sparse-checkout disable
+2025-12-16T07:08:27.3038045Z ##[debug]0
+2025-12-16T07:08:27.3038664Z ##[debug]
+2025-12-16T07:08:27.3050448Z [command]"C:\Program Files\Git\bin\git.exe" config --local --unset-all extensions.worktreeConfig
+2025-12-16T07:08:27.3411499Z ##[debug]0
+2025-12-16T07:08:27.3411967Z ##[debug]
+2025-12-16T07:08:27.3412494Z ::group::Checking out the ref
+2025-12-16T07:08:27.3412839Z ##[group]Checking out the ref
+2025-12-16T07:08:27.3424655Z [command]"C:\Program Files\Git\bin\git.exe" checkout --progress --force -B main refs/remotes/origin/main
+2025-12-16T07:08:28.2571148Z branch 'main' set up to track 'origin/main'.
+2025-12-16T07:08:28.2580748Z Switched to a new branch 'main'
+2025-12-16T07:08:28.2661864Z ##[debug]0
+2025-12-16T07:08:28.2663971Z ##[debug]branch 'main' set up to track 'origin/main'.
+2025-12-16T07:08:28.2664406Z ##[debug]
+2025-12-16T07:08:28.2665230Z ::endgroup::
+2025-12-16T07:08:28.2665487Z ##[endgroup]
+2025-12-16T07:08:28.3274898Z ##[debug]0
+2025-12-16T07:08:28.3275608Z ##[debug]commit 17f818843ad4e4a0844d0d416dfe4b12619571a4
+2025-12-16T07:08:28.3276180Z ##[debug]Author: Anton De Jager <ADeJager4@oldmutual.com>
+2025-12-16T07:08:28.3276658Z ##[debug]Date:   Tue Dec 16 09:02:47 2025 +0200
+2025-12-16T07:08:28.3277022Z ##[debug]
+2025-12-16T07:08:28.3277348Z ##[debug]    Use MSDeploy directly for MonsterASP deployment
+2025-12-16T07:08:28.3277779Z ##[debug]
+2025-12-16T07:08:28.3286272Z [command]"C:\Program Files\Git\bin\git.exe" log -1 --format=%H
+2025-12-16T07:08:28.3610749Z 17f818843ad4e4a0844d0d416dfe4b12619571a4
+2025-12-16T07:08:28.3646679Z ##[debug]0
+2025-12-16T07:08:28.3647336Z ##[debug]17f818843ad4e4a0844d0d416dfe4b12619571a4
+2025-12-16T07:08:28.3647748Z ##[debug]
+2025-12-16T07:08:28.3656622Z ##[debug]Unsetting HOME override
+2025-12-16T07:08:28.3669689Z ::remove-matcher owner=checkout-git::
+2025-12-16T07:08:28.3685647Z ##[debug]Removed matchers: 'checkout-git'
+2025-12-16T07:08:28.3770083Z ##[debug]Node Action run completed with exit code 0
+2025-12-16T07:08:28.3808937Z ##[debug]Save intra-action state isPost = true
+2025-12-16T07:08:28.3809447Z ##[debug]Save intra-action state setSafeDirectory = true
+2025-12-16T07:08:28.3810096Z ##[debug]Save intra-action state repositoryPath = D:\a\loadgistix\loadgistix
+2025-12-16T07:08:28.3813801Z ##[debug]Set output commit = 17f818843ad4e4a0844d0d416dfe4b12619571a4
+2025-12-16T07:08:28.3814481Z ##[debug]Set output ref = refs/heads/main
+2025-12-16T07:08:28.3817762Z ##[debug]Finishing: Checkout code

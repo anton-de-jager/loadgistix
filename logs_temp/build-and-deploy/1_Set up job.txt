@@ -1,0 +1,56 @@
+﻿2025-12-16T07:08:17.8265479Z ##[debug]Starting: Set up job
+2025-12-16T07:08:17.8267743Z Current runner version: '2.329.0'
+2025-12-16T07:08:17.8290003Z ##[group]Runner Image Provisioner
+2025-12-16T07:08:17.8290658Z Hosted Compute Agent
+2025-12-16T07:08:17.8291241Z Version: 20251202.455
+2025-12-16T07:08:17.8291778Z Commit: 6c10caca4910e198df60de23adf20ad317c474e3
+2025-12-16T07:08:17.8293369Z Build Date: 2025-12-02T15:56:59Z
+2025-12-16T07:08:17.8294461Z Worker ID: {cd4b6050-3086-45cf-bd9c-7f66c6d9ac04}
+2025-12-16T07:08:17.8295491Z ##[endgroup]
+2025-12-16T07:08:17.8296215Z ##[group]Operating System
+2025-12-16T07:08:17.8297126Z Microsoft Windows Server 2025
+2025-12-16T07:08:17.8297986Z 10.0.26100
+2025-12-16T07:08:17.8298645Z Datacenter
+2025-12-16T07:08:17.8299368Z ##[endgroup]
+2025-12-16T07:08:17.8300142Z ##[group]Runner Image
+2025-12-16T07:08:17.8300936Z Image: windows-2025
+2025-12-16T07:08:17.8302520Z Version: 20251208.136.1
+2025-12-16T07:08:17.8304332Z Included Software: https://github.com/actions/runner-images/blob/win25/20251208.136/images/windows/Windows2025-Readme.md
+2025-12-16T07:08:17.8306925Z Image Release: https://github.com/actions/runner-images/releases/tag/win25%2F20251208.136
+2025-12-16T07:08:17.8308532Z ##[endgroup]
+2025-12-16T07:08:17.8310459Z ##[group]GITHUB_TOKEN Permissions
+2025-12-16T07:08:17.8314256Z Contents: read
+2025-12-16T07:08:17.8315239Z Metadata: read
+2025-12-16T07:08:17.8316201Z Packages: read
+2025-12-16T07:08:17.8316981Z ##[endgroup]
+2025-12-16T07:08:17.8320133Z Secret source: Actions
+2025-12-16T07:08:17.8321391Z ##[debug]Primary repository: anton-de-jager/loadgistix
+2025-12-16T07:08:17.8322492Z Prepare workflow directory
+2025-12-16T07:08:17.8404570Z ##[debug]Creating pipeline directory: 'D:\a\loadgistix'
+2025-12-16T07:08:17.8410153Z ##[debug]Creating workspace directory: 'D:\a\loadgistix\loadgistix'
+2025-12-16T07:08:17.8413388Z ##[debug]Update context data
+2025-12-16T07:08:17.8418272Z ##[debug]Evaluating job-level environment variables
+2025-12-16T07:08:17.8790293Z ##[debug]Evaluating job container
+2025-12-16T07:08:17.8794905Z ##[debug]Evaluating job service containers
+2025-12-16T07:08:17.8798297Z ##[debug]Evaluating job defaults
+2025-12-16T07:08:17.8833831Z Prepare all required actions
+2025-12-16T07:08:17.8889541Z Getting action download info
+2025-12-16T07:08:18.0837711Z Download action repository 'actions/checkout@v4' (SHA:34e114876b0b11c390a56381ad16ebd13914f8d5)
+2025-12-16T07:08:18.1139044Z ##[debug]Copied action archive 'C:\actionarchivecache\actions_checkout\34e114876b0b11c390a56381ad16ebd13914f8d5.zip' to 'D:\a\_actions\_temp_d22dedcb-6934-46a9-a336-9b5762efe21e\64813a04-6b9d-40fb-a11d-0f8e7d70ecd2.zip'
+2025-12-16T07:08:18.1619167Z ##[debug]Unwrap 'actions-checkout-34e1148' to 'D:\a\_actions\actions\checkout\v4'
+2025-12-16T07:08:18.2125477Z ##[debug]Archive 'D:\a\_actions\_temp_d22dedcb-6934-46a9-a336-9b5762efe21e\64813a04-6b9d-40fb-a11d-0f8e7d70ecd2.zip' has been unzipped into 'D:\a\_actions\actions\checkout\v4'.
+2025-12-16T07:08:18.2267085Z Download action repository 'actions/setup-dotnet@v4' (SHA:67a3573c9a986a3f9c594539f4ab511d57bb3ce9)
+2025-12-16T07:08:18.4152295Z ##[debug]Download 'https://api.github.com/repos/actions/setup-dotnet/zipball/67a3573c9a986a3f9c594539f4ab511d57bb3ce9' to 'D:\a\_actions\_temp_5b72f72e-3e25-494b-aefa-eb5454943115\6e37b8ec-8f17-4f92-9b56-ef875b3c2775.zip'
+2025-12-16T07:08:18.4806050Z ##[debug]Unwrap 'actions-setup-dotnet-67a3573' to 'D:\a\_actions\actions\setup-dotnet\v4'
+2025-12-16T07:08:18.5440566Z ##[debug]Archive 'D:\a\_actions\_temp_5b72f72e-3e25-494b-aefa-eb5454943115\6e37b8ec-8f17-4f92-9b56-ef875b3c2775.zip' has been unzipped into 'D:\a\_actions\actions\setup-dotnet\v4'.
+2025-12-16T07:08:18.5582643Z ##[debug]action.yml for action: 'D:\a\_actions\actions\checkout\v4\action.yml'.
+2025-12-16T07:08:18.7135010Z ##[debug]action.yml for action: 'D:\a\_actions\actions\setup-dotnet\v4\action.yml'.
+2025-12-16T07:08:18.7237817Z ##[debug]Set step '__actions_checkout' display name to: 'Checkout code'
+2025-12-16T07:08:18.7241877Z ##[debug]Set step '__actions_setup-dotnet' display name to: 'Setup .NET'
+2025-12-16T07:08:18.7248282Z ##[debug]Set step '__run' display name to: 'Restore dependencies'
+2025-12-16T07:08:18.7250391Z ##[debug]Set step '__run_2' display name to: 'Build'
+2025-12-16T07:08:18.7252410Z ##[debug]Set step '__run_3' display name to: 'Publish'
+2025-12-16T07:08:18.7254767Z ##[debug]Set step '__run_4' display name to: 'Deploy to MonsterASP via MSDeploy'
+2025-12-16T07:08:18.7256105Z Complete job name: build-and-deploy
+2025-12-16T07:08:18.7368604Z ##[debug]Collect running processes for tracking orphan processes.
+2025-12-16T07:08:18.7439905Z ##[debug]Finishing: Set up job

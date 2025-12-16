@@ -1,0 +1,88 @@
+﻿2025-12-16T07:10:06.6995412Z ##[debug]Evaluating condition for step: 'Deploy to MonsterASP via MSDeploy'
+2025-12-16T07:10:06.6997438Z ##[debug]Evaluating: success()
+2025-12-16T07:10:06.6997908Z ##[debug]Evaluating success:
+2025-12-16T07:10:06.6998390Z ##[debug]=> true
+2025-12-16T07:10:06.6998870Z ##[debug]Result: true
+2025-12-16T07:10:06.6999547Z ##[debug]Starting: Deploy to MonsterASP via MSDeploy
+2025-12-16T07:10:06.7159140Z ##[debug]Loading inputs
+2025-12-16T07:10:06.7167491Z ##[debug]Evaluating: format('"C:\Program Files\IIS\Microsoft Web Deploy V3\msdeploy.exe" ^
+2025-12-16T07:10:06.7167912Z ##[debug]  -verb:sync ^
+2025-12-16T07:10:06.7168170Z ##[debug]  -source:contentPath="{0}\loadgistix.api\publish" ^
+2025-12-16T07:10:06.7168979Z ##[debug]  -dest:contentPath="{1}",computerName="https://{2}.siteasp.net:8172/msdeploy.axd",userName="{3}",***,authType="Basic" ^
+2025-12-16T07:10:06.7169446Z ##[debug]  -allowUntrusted ^
+2025-12-16T07:10:06.7169658Z ##[debug]  -enableRule:AppOffline
+2025-12-16T07:10:06.7170208Z ##[debug]', github.workspace, secrets.MONSTERASP_WEBSITE_NAME, secrets.MONSTERASP_WEBSITE_NAME, secrets.MONSTERASP_USERNAME, secrets.MONSTERASP_PASSWORD)
+2025-12-16T07:10:06.7170841Z ##[debug]Evaluating format:
+2025-12-16T07:10:06.7174718Z ##[debug]..Evaluating String:
+2025-12-16T07:10:06.7175129Z ##[debug]..=> '"C:\Program Files\IIS\Microsoft Web Deploy V3\msdeploy.exe" ^
+2025-12-16T07:10:06.7175718Z ##[debug]  -verb:sync ^
+2025-12-16T07:10:06.7175977Z ##[debug]  -source:contentPath="{0}\loadgistix.api\publish" ^
+2025-12-16T07:10:06.7176600Z ##[debug]  -dest:contentPath="{1}",computerName="https://{2}.siteasp.net:8172/msdeploy.axd",userName="{3}",***,authType="Basic" ^
+2025-12-16T07:10:06.7177067Z ##[debug]  -allowUntrusted ^
+2025-12-16T07:10:06.7177280Z ##[debug]  -enableRule:AppOffline
+2025-12-16T07:10:06.7177482Z ##[debug]'
+2025-12-16T07:10:06.7190256Z ##[debug]..Evaluating Index:
+2025-12-16T07:10:06.7190509Z ##[debug]....Evaluating github:
+2025-12-16T07:10:06.7190748Z ##[debug]....=> Object
+2025-12-16T07:10:06.7190976Z ##[debug]....Evaluating String:
+2025-12-16T07:10:06.7191188Z ##[debug]....=> 'workspace'
+2025-12-16T07:10:06.7191457Z ##[debug]..=> 'D:\a\loadgistix\loadgistix'
+2025-12-16T07:10:06.7192284Z ##[debug]..Evaluating Index:
+2025-12-16T07:10:06.7192516Z ##[debug]....Evaluating secrets:
+2025-12-16T07:10:06.7192735Z ##[debug]....=> Object
+2025-12-16T07:10:06.7192940Z ##[debug]....Evaluating String:
+2025-12-16T07:10:06.7193180Z ##[debug]....=> 'MONSTERASP_WEBSITE_NAME'
+2025-12-16T07:10:06.7193504Z ##[debug]..=> '***'
+2025-12-16T07:10:06.7193705Z ##[debug]..Evaluating Index:
+2025-12-16T07:10:06.7193906Z ##[debug]....Evaluating secrets:
+2025-12-16T07:10:06.7194110Z ##[debug]....=> Object
+2025-12-16T07:10:06.7194293Z ##[debug]....Evaluating String:
+2025-12-16T07:10:06.7194513Z ##[debug]....=> 'MONSTERASP_WEBSITE_NAME'
+2025-12-16T07:10:06.7194765Z ##[debug]..=> '***'
+2025-12-16T07:10:06.7194944Z ##[debug]..Evaluating Index:
+2025-12-16T07:10:06.7195140Z ##[debug]....Evaluating secrets:
+2025-12-16T07:10:06.7195358Z ##[debug]....=> Object
+2025-12-16T07:10:06.7195540Z ##[debug]....Evaluating String:
+2025-12-16T07:10:06.7195748Z ##[debug]....=> 'MONSTERASP_USERNAME'
+2025-12-16T07:10:06.7196003Z ##[debug]..=> '***'
+2025-12-16T07:10:06.7196186Z ##[debug]..Evaluating Index:
+2025-12-16T07:10:06.7196388Z ##[debug]....Evaluating secrets:
+2025-12-16T07:10:06.7196586Z ##[debug]....=> Object
+2025-12-16T07:10:06.7196768Z ##[debug]....Evaluating String:
+2025-12-16T07:10:06.7196975Z ##[debug]....=> 'MONSTERASP_PASSWORD'
+2025-12-16T07:10:06.7197229Z ##[debug]..=> '***'
+2025-12-16T07:10:06.7197641Z ##[debug]=> '"C:\Program Files\IIS\Microsoft Web Deploy V3\msdeploy.exe" ^
+2025-12-16T07:10:06.7197949Z ##[debug]  -verb:sync ^
+2025-12-16T07:10:06.7198260Z ##[debug]  -source:contentPath="D:\a\loadgistix\loadgistix\loadgistix.api\publish" ^
+2025-12-16T07:10:06.7199083Z ##[debug]  -dest:contentPath="***",computerName="https://***.siteasp.net:8172/msdeploy.axd",userName="***",***,authType="Basic" ^
+2025-12-16T07:10:06.7201919Z ##[debug]  -allowUntrusted ^
+2025-12-16T07:10:06.7202144Z ##[debug]  -enableRule:AppOffline
+2025-12-16T07:10:06.7202351Z ##[debug]'
+2025-12-16T07:10:06.7202681Z ##[debug]Result: '"C:\Program Files\IIS\Microsoft Web Deploy V3\msdeploy.exe" ^
+2025-12-16T07:10:06.7202996Z ##[debug]  -verb:sync ^
+2025-12-16T07:10:06.7203297Z ##[debug]  -source:contentPath="D:\a\loadgistix\loadgistix\loadgistix.api\publish" ^
+2025-12-16T07:10:06.7204101Z ##[debug]  -dest:contentPath="***",computerName="https://***.siteasp.net:8172/msdeploy.axd",userName="***",***,authType="Basic" ^
+2025-12-16T07:10:06.7204567Z ##[debug]  -allowUntrusted ^
+2025-12-16T07:10:06.7204778Z ##[debug]  -enableRule:AppOffline
+2025-12-16T07:10:06.7204977Z ##[debug]'
+2025-12-16T07:10:06.7205580Z ##[debug]Loading env
+2025-12-16T07:10:06.7210181Z ##[group]Run "C:\Program Files\IIS\Microsoft Web Deploy V3\msdeploy.exe" ^
+2025-12-16T07:10:06.7210596Z [36;1m"C:\Program Files\IIS\Microsoft Web Deploy V3\msdeploy.exe" ^[0m
+2025-12-16T07:10:06.7210909Z [36;1m  -verb:sync ^[0m
+2025-12-16T07:10:06.7211212Z [36;1m  -source:contentPath="D:\a\loadgistix\loadgistix\loadgistix.api\publish" ^[0m
+2025-12-16T07:10:06.7212029Z [36;1m  -dest:contentPath="***",computerName="https://***.siteasp.net:8172/msdeploy.axd",userName="***",***,authType="Basic" ^[0m
+2025-12-16T07:10:06.7212619Z [36;1m  -allowUntrusted ^[0m
+2025-12-16T07:10:06.7213086Z [36;1m  -enableRule:AppOffline[0m
+2025-12-16T07:10:06.7251669Z shell: C:\Windows\system32\cmd.EXE /D /E:ON /V:OFF /S /C "CALL "{0}""
+2025-12-16T07:10:06.7251987Z env:
+2025-12-16T07:10:06.7252148Z   DOTNET_VERSION: 6.0.x
+2025-12-16T07:10:06.7252352Z   DOTNET_ROOT: C:\Program Files\dotnet
+2025-12-16T07:10:06.7252572Z ##[endgroup]
+2025-12-16T07:10:06.7297827Z ##[debug]C:\Windows\system32\cmd.EXE /D /E:ON /V:OFF /S /C "CALL "D:\a\_temp\35e6ec60-e070-4b7e-9921-e0ac2001a5ac.cmd""
+2025-12-16T07:10:09.1864246Z Info: Using ID '1dd1e0dc-e428-4efe-81c1-a00c02d60cb9' for connections to the remote server.
+2025-12-16T07:10:10.0036772Z Error Code: ERROR_USER_UNAUTHORIZED
+2025-12-16T07:10:10.0039577Z More Information: Connected to the remote computer ("***.siteasp.net") using the Web Management Service, but could not authorize. Make sure that you are using the correct user name and password, that the site you are connecting to exists, and that the credentials represent a user who has permissions to access the site.  Learn more at: https://go.microsoft.com/fwlink/?LinkId=221672#ERROR_USER_UNAUTHORIZED.
+2025-12-16T07:10:10.0041593Z Error: The remote server returned an error: (401) Unauthorized.
+2025-12-16T07:10:10.0041914Z Error count: 1.
+2025-12-16T07:10:10.2493681Z ##[error]Process completed with exit code -1.
+2025-12-16T07:10:10.2500200Z ##[debug]Finishing: Deploy to MonsterASP via MSDeploy

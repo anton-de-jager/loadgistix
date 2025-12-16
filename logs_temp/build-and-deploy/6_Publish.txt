@@ -1,0 +1,19 @@
+﻿2025-12-16T07:10:05.1425410Z ##[debug]Evaluating condition for step: 'Publish'
+2025-12-16T07:10:05.1426912Z ##[debug]Evaluating: success()
+2025-12-16T07:10:05.1427233Z ##[debug]Evaluating success:
+2025-12-16T07:10:05.1427643Z ##[debug]=> true
+2025-12-16T07:10:05.1427968Z ##[debug]Result: true
+2025-12-16T07:10:05.1428575Z ##[debug]Starting: Publish
+2025-12-16T07:10:05.1556672Z ##[debug]Loading inputs
+2025-12-16T07:10:05.1557646Z ##[debug]Loading env
+2025-12-16T07:10:05.1563210Z ##[group]Run dotnet publish --configuration Release --no-build --output ./publish
+2025-12-16T07:10:05.1563766Z [36;1mdotnet publish --configuration Release --no-build --output ./publish[0m
+2025-12-16T07:10:05.1636450Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+2025-12-16T07:10:05.1636862Z env:
+2025-12-16T07:10:05.1637423Z   DOTNET_VERSION: 6.0.x
+2025-12-16T07:10:05.1637736Z   DOTNET_ROOT: C:\Program Files\dotnet
+2025-12-16T07:10:05.1638043Z ##[endgroup]
+2025-12-16T07:10:05.1732279Z ##[debug]C:\Program Files\PowerShell\7\pwsh.EXE -command ". 'D:\a\_temp\a5b7f11a-5e54-4f64-9dc8-0ead06051f10.ps1'"
+2025-12-16T07:10:05.5667785Z MSBuild version 17.3.4+a400405ba for .NET
+2025-12-16T07:10:06.5447325Z   loadgistix.api -> D:\a\loadgistix\loadgistix\loadgistix.api\publish\
+2025-12-16T07:10:06.6979921Z ##[debug]Finishing: Publish

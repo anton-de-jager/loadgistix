@@ -1,0 +1,64 @@
+﻿2025-12-16T07:10:10.2530732Z ##[debug]Evaluating condition for step: 'Post Checkout code'
+2025-12-16T07:10:10.2532953Z ##[debug]Evaluating: always()
+2025-12-16T07:10:10.2533259Z ##[debug]Evaluating always:
+2025-12-16T07:10:10.2534797Z ##[debug]=> true
+2025-12-16T07:10:10.2535407Z ##[debug]Result: true
+2025-12-16T07:10:10.2536180Z ##[debug]Starting: Post Checkout code
+2025-12-16T07:10:10.2703369Z ##[debug]Loading inputs
+2025-12-16T07:10:10.2704467Z ##[debug]Evaluating: github.repository
+2025-12-16T07:10:10.2704736Z ##[debug]Evaluating Index:
+2025-12-16T07:10:10.2704936Z ##[debug]..Evaluating github:
+2025-12-16T07:10:10.2705184Z ##[debug]..=> Object
+2025-12-16T07:10:10.2705407Z ##[debug]..Evaluating String:
+2025-12-16T07:10:10.2705642Z ##[debug]..=> 'repository'
+2025-12-16T07:10:10.2706074Z ##[debug]=> 'anton-de-jager/loadgistix'
+2025-12-16T07:10:10.2706508Z ##[debug]Result: 'anton-de-jager/loadgistix'
+2025-12-16T07:10:10.2707991Z ##[debug]Evaluating: github.token
+2025-12-16T07:10:10.2708235Z ##[debug]Evaluating Index:
+2025-12-16T07:10:10.2708466Z ##[debug]..Evaluating github:
+2025-12-16T07:10:10.2708683Z ##[debug]..=> Object
+2025-12-16T07:10:10.2708944Z ##[debug]..Evaluating String:
+2025-12-16T07:10:10.2709278Z ##[debug]..=> 'token'
+2025-12-16T07:10:10.2709748Z ##[debug]=> '***'
+2025-12-16T07:10:10.2710034Z ##[debug]Result: '***'
+2025-12-16T07:10:10.2717746Z ##[debug]Loading env
+2025-12-16T07:10:10.2721516Z Post job cleanup.
+2025-12-16T07:10:10.5136098Z ##[debug]Getting git version
+2025-12-16T07:10:10.5167096Z [command]"C:\Program Files\Git\bin\git.exe" version
+2025-12-16T07:10:10.5460189Z git version 2.52.0.windows.1
+2025-12-16T07:10:10.5507590Z ##[debug]0
+2025-12-16T07:10:10.5508160Z ##[debug]git version 2.52.0.windows.1
+2025-12-16T07:10:10.5508588Z ##[debug]
+2025-12-16T07:10:10.5511131Z ##[debug]Set git useragent to: git/2.52.0 (github-actions-checkout)
+2025-12-16T07:10:10.5516812Z ::add-mask::***
+2025-12-16T07:10:10.5546231Z Temporarily overriding HOME='D:\a\_temp\a69bfaff-9819-4778-b802-10c37419d3a4' before making global git config changes
+2025-12-16T07:10:10.5547449Z Adding repository directory to the temporary git global config as a safe directory
+2025-12-16T07:10:10.5559052Z [command]"C:\Program Files\Git\bin\git.exe" config --global --add safe.directory D:\a\loadgistix\loadgistix
+2025-12-16T07:10:10.5903389Z ##[debug]0
+2025-12-16T07:10:10.5903910Z ##[debug]
+2025-12-16T07:10:10.5918920Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp core\.sshCommand
+2025-12-16T07:10:10.6297407Z ##[debug]1
+2025-12-16T07:10:10.6297924Z ##[debug]
+2025-12-16T07:10:10.6310652Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\""
+2025-12-16T07:10:11.2095262Z ##[debug]0
+2025-12-16T07:10:11.2096251Z ##[debug]
+2025-12-16T07:10:11.2111776Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2025-12-16T07:10:11.2385309Z http.https://github.com/.extraheader
+2025-12-16T07:10:11.2427157Z ##[debug]0
+2025-12-16T07:10:11.2428033Z ##[debug]http.https://github.com/.extraheader
+2025-12-16T07:10:11.2428469Z ##[debug]
+2025-12-16T07:10:11.2446776Z [command]"C:\Program Files\Git\bin\git.exe" config --local --unset-all http.https://github.com/.extraheader
+2025-12-16T07:10:11.2767171Z ##[debug]0
+2025-12-16T07:10:11.2767694Z ##[debug]
+2025-12-16T07:10:11.2779465Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\""
+2025-12-16T07:10:11.8346159Z ##[debug]0
+2025-12-16T07:10:11.8346503Z ##[debug]
+2025-12-16T07:10:11.8359492Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp ^includeIf\.gitdir:
+2025-12-16T07:10:11.8664669Z ##[debug]1
+2025-12-16T07:10:11.8667432Z ##[debug]
+2025-12-16T07:10:11.8676135Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "git config --local --show-origin --name-only --get-regexp remote.origin.url"
+2025-12-16T07:10:12.4116998Z ##[debug]0
+2025-12-16T07:10:12.4118606Z ##[debug]
+2025-12-16T07:10:12.4126925Z ##[debug]Unsetting HOME override
+2025-12-16T07:10:12.4233980Z ##[debug]Node Action run completed with exit code 0
+2025-12-16T07:10:12.4238183Z ##[debug]Finishing: Post Checkout code

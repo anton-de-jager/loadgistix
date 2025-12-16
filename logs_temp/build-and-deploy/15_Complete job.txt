@@ -1,0 +1,15 @@
+﻿2025-12-16T07:10:12.4286170Z ##[debug]Starting: Complete job
+2025-12-16T07:10:12.4288090Z Uploading runner diagnostic logs
+2025-12-16T07:10:12.4297079Z ##[debug]Starting diagnostic file upload.
+2025-12-16T07:10:12.4297382Z ##[debug]Setting up diagnostic log folders.
+2025-12-16T07:10:12.4300451Z ##[debug]Creating diagnostic log files folder.
+2025-12-16T07:10:12.4310257Z ##[debug]Copying 1 worker diagnostic logs.
+2025-12-16T07:10:12.4321331Z ##[debug]Copying 1 runner diagnostic logs.
+2025-12-16T07:10:12.4325821Z ##[debug]Zipping diagnostic files.
+2025-12-16T07:10:12.4393479Z ##[debug]Uploading diagnostic metadata file.
+2025-12-16T07:10:12.4423975Z ##[debug]Diagnostic file upload complete.
+2025-12-16T07:10:12.4424503Z Completed runner diagnostic log upload
+2025-12-16T07:10:12.4424753Z Cleaning up orphan processes
+2025-12-16T07:10:12.4857899Z Terminate orphan process: pid (9200) (dotnet)
+2025-12-16T07:10:12.5084002Z Terminate orphan process: pid (7104) (conhost)
+2025-12-16T07:10:12.5085579Z ##[debug]Finishing: Complete job

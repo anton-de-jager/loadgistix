@@ -1,0 +1,5 @@
+﻿2025-12-16T07:10:10.2515801Z ##[debug]Evaluating condition for step: 'Post Setup .NET'
+2025-12-16T07:10:10.2517648Z ##[debug]Evaluating: success()
+2025-12-16T07:10:10.2518006Z ##[debug]Evaluating success:
+2025-12-16T07:10:10.2518758Z ##[debug]=> false
+2025-12-16T07:10:10.2519118Z ##[debug]Result: false
