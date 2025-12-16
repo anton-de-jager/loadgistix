@@ -1,0 +1,84 @@
+name: Build Android APK
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'loadgistix.frontend/**'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'loadgistix.frontend/**'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: loadgistix.frontend/package-lock.json
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Install dependencies
+        working-directory: loadgistix.frontend
+        run: npm ci
+
+      - name: Build Angular app
+        working-directory: loadgistix.frontend
+        run: npm run build
+
+      - name: Sync Capacitor
+        working-directory: loadgistix.frontend
+        run: npx cap sync android
+
+      - name: Create keystore.properties
+        working-directory: loadgistix.frontend/android
+        run: |
+          echo "storeFile=../../loadgistix.keystore" > keystore.properties
+          echo "storePassword=${{ secrets.KEYSTORE_PASSWORD }}" >> keystore.properties
+          echo "keyAlias=${{ secrets.KEY_ALIAS }}" >> keystore.properties
+          echo "keyPassword=${{ secrets.KEY_PASSWORD }}" >> keystore.properties
+
+      - name: Decode Keystore
+        working-directory: loadgistix.frontend
+        run: |
+          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > loadgistix.keystore
+
+      - name: Build Release APK
+        working-directory: loadgistix.frontend/android
+        run: ./gradlew assembleRelease
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-release
+          path: loadgistix.frontend/android/app/build/outputs/apk/release/app-release.apk
+
+      - name: Build Debug APK (if release fails)
+        if: failure()
+        working-directory: loadgistix.frontend/android
+        run: ./gradlew assembleDebug
+
+      - name: Upload Debug APK
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-debug
+          path: loadgistix.frontend/android/app/build/outputs/apk/debug/app-debug.apk
+

@@ -55,3 +55,15 @@ coverage/
 # Misc
 *.tmp
 *.temp
+
+# Sensitive files (keep templates, ignore actual configs)
+keystore.properties
+local.properties
+*.keystore
+!loadgistix.keystore
+
+# Environment files with secrets
+.env
+.env.local
+.env.production
+!.env.example

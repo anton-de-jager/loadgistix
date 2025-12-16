@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  api:
+    build:
+      context: ./loadgistix.api
+      dockerfile: Dockerfile
+    ports:
+      - "5000:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ConnectionStrings__DefaultConnection=${DB_CONNECTION_STRING}
+      - PayFastSettings__MerchantId=${PAYFAST_MERCHANT_ID}
+      - PayFastSettings__MerchantKey=${PAYFAST_MERCHANT_KEY}
+      - PayFastSettings__PassPhrase=${PAYFAST_PASSPHRASE}
+      - PayFastSettings__paystack_sk=${PAYSTACK_SECRET_KEY}
+      - JWT__Secret=${JWT_SECRET}
+    volumes:
+      - ./loadgistix.api/Images:/app/Images
+    restart: unless-stopped
+
+  # Optional: Add nginx for frontend
+  # frontend:
+  #   image: nginx:alpine
+  #   ports:
+  #     - "80:80"
+  #   volumes:
+  #     - ./loadgistix.frontend/dist:/usr/share/nginx/html:ro
+  #   restart: unless-stopped
+
