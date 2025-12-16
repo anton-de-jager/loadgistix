@@ -35,11 +35,12 @@ jobs:
         working-directory: loadgistix.api
         run: dotnet publish --configuration Release --no-build --output ./publish
 
-      - name: Deploy to MonsterASP via WebDeploy
-        uses: rasmusbuchholdt/simply-web-deploy@2.1.0
-        with:
-          website-name: ${{ secrets.MONSTERASP_WEBSITE_NAME }}
-          server-computer-name: ${{ secrets.MONSTERASP_SERVER_URL }}
-          server-username: ${{ secrets.MONSTERASP_USERNAME }}
-          server-password: ${{ secrets.MONSTERASP_PASSWORD }}
-          source-path: './loadgistix.api/publish'
+      - name: Deploy to MonsterASP via MSDeploy
+        shell: cmd
+        run: |
+          "C:\Program Files\IIS\Microsoft Web Deploy V3\msdeploy.exe" ^
+            -verb:sync ^
+            -source:contentPath="${{ github.workspace }}\loadgistix.api\publish" ^
+            -dest:contentPath="${{ secrets.MONSTERASP_WEBSITE_NAME }}",computerName="https://${{ secrets.MONSTERASP_WEBSITE_NAME }}.siteasp.net:8172/msdeploy.axd",userName="${{ secrets.MONSTERASP_USERNAME }}",password="${{ secrets.MONSTERASP_PASSWORD }}",authType="Basic" ^
+            -allowUntrusted ^
+            -enableRule:AppOffline
