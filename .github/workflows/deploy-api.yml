@@ -33,11 +33,7 @@ jobs:
 
       - name: Publish
         working-directory: loadgistix.api
-        run: dotnet publish --configuration Release --no-build --output ./publish --runtime win-x86 --self-contained false
-
-      - name: Create app_offline.htm
-        run: |
-          echo "<!DOCTYPE html><html><head><title>Maintenance</title></head><body><h1>Application is being updated...</h1></body></html>" > loadgistix.api/publish/app_offline.htm
+        run: dotnet publish --configuration Release --no-build --output ./publish
 
       - name: Deploy to MonsterASP via WebDeploy
         uses: rasmusbuchholdt/simply-web-deploy@2.1.0
@@ -47,15 +43,3 @@ jobs:
           server-username: ${{ secrets.MONSTERASP_USERNAME }}
           server-password: ${{ secrets.MONSTERASP_PASSWORD }}
           source-path: './loadgistix.api/publish'
-          target-path: '/'
-
-      - name: Remove app_offline.htm (bring site back online)
-        uses: rasmusbuchholdt/simply-web-deploy@2.1.0
-        with:
-          website-name: ${{ secrets.MONSTERASP_WEBSITE_NAME }}
-          server-computer-name: ${{ secrets.MONSTERASP_SERVER_URL }}
-          server-username: ${{ secrets.MONSTERASP_USERNAME }}
-          server-password: ${{ secrets.MONSTERASP_PASSWORD }}
-          source-path: './loadgistix.api/publish'
-          target-path: '/'
-          parameters: '-enableRule:AppOffline'
