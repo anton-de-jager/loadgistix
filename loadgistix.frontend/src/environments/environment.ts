@@ -4,7 +4,7 @@ export const environment = {
     url: 'https://loadgistix.com/',
     apiDotNet: 'http://loadgistix.runasp.net/api/',
     apiImage: 'http://loadgistix.runasp.net/Images/',
-    hubs: 'wss://api2.loadgistix.com/hubs/',
+    hubs: 'ws://loadgistix.runasp.net/hubs/',
     apiSecret: 'ThisIsMyAppThatDoesTransportAndStuff',
     actionUrl: 'https://payment.payfast.io/eng/process',
 
