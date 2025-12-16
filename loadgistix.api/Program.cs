@@ -179,6 +179,6 @@ app.UseEndpoints(endpoints =>
 app.MapControllers();
 
 // Simple health check endpoint
-app.MapGet("/health", () => Results.Ok(new { status = "healthy", timestamp = DateTime.UtcNow }));
+app.MapGet("/health", () => Results.Ok(new { status = "healthy", version = "1.0.1", timestamp = DateTime.UtcNow }));
 
 app.Run();
