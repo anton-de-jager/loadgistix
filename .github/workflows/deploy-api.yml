@@ -12,7 +12,7 @@ env:
 
 jobs:
   build-and-deploy:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     
     steps:
       - name: Checkout code
@@ -35,12 +35,11 @@ jobs:
         working-directory: loadgistix.api
         run: dotnet publish --configuration Release --no-build --output ./publish
 
-      - name: Deploy to MonsterASP via MSDeploy
-        shell: cmd
-        run: |
-          "C:\Program Files\IIS\Microsoft Web Deploy V3\msdeploy.exe" ^
-            -verb:sync ^
-            -source:contentPath="${{ github.workspace }}\loadgistix.api\publish" ^
-            -dest:contentPath="${{ secrets.MONSTERASP_WEBSITE_NAME }}",computerName="https://${{ secrets.MONSTERASP_WEBSITE_NAME }}.siteasp.net:8172/msdeploy.axd",userName="${{ secrets.MONSTERASP_USERNAME }}",password="${{ secrets.MONSTERASP_PASSWORD }}",authType="Basic" ^
-            -allowUntrusted ^
-            -enableRule:AppOffline
+      - name: Deploy to MonsterASP via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./loadgistix.api/publish/
+          server-dir: /
