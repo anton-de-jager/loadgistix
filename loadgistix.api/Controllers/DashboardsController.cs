@@ -18,12 +18,21 @@ namespace loadgistix.api.Controllers
             connectionString = config.GetConnectionString("DefaultConnection");
         }
 
-        [HttpPost]
-        public async Task<ProcedureResult> Get(DashboardRequest request)
+        // GET: api/dashboard
+        [HttpGet]
+        public async Task<ProcedureResult> Get()
         {
-            var action = string.IsNullOrEmpty(request.Action) ? "select-single" : request.Action;
-            var result = await DataTypeHelper.ActionStoredProcedureAsync(connectionString, request, new Dashboard(), "dashboard", action);
+            // Dashboard stats don't require input parameters
+            var result = await DataTypeHelper.ActionStoredProcedureAsync(connectionString, new Dashboard(), new Dashboard(), "dashboard", "select-single");
+            return new ProcedureResult { Result = true, Data = result };
+        }
 
+        // POST: api/dashboard (for backwards compatibility with frontend)
+        [HttpPost]
+        public async Task<ProcedureResult> Post(DashboardRequest? request)
+        {
+            // Dashboard stats don't require input parameters - ignore the request body
+            var result = await DataTypeHelper.ActionStoredProcedureAsync(connectionString, new Dashboard(), new Dashboard(), "dashboard", "select-single");
             return new ProcedureResult { Result = true, Data = result };
         }
     }
