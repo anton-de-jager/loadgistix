@@ -1,0 +1,150 @@
+name: Deploy to 1-Grid
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:  # Allow manual trigger
+
+jobs:
+  deploy-api:
+    name: Deploy API
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '6.0.x'
+
+      - name: Build API
+        run: |
+          cd loadgistix.api
+          dotnet publish -c Release -o ./publish
+
+      - name: Upload app_offline.htm (stop app)
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_HOST }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./.github/app_offline/
+          server-dir: /api.loadgistix.com/
+          dangerous-clean-slate: false
+
+      - name: Wait for app to stop
+        run: sleep 5
+
+      - name: Deploy API files
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_HOST }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./loadgistix.api/publish/
+          server-dir: /api.loadgistix.com/
+          dangerous-clean-slate: true
+          exclude: |
+            **/app_offline.htm
+
+      - name: Remove app_offline.htm (start app)
+        uses: appleboy/ssh-action@v1.0.3
+        continue-on-error: true
+        with:
+          host: ${{ secrets.FTP_HOST }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          script: rm -f /api.loadgistix.com/app_offline.htm || true
+
+  deploy-frontend:
+    name: Deploy Frontend
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: loadgistix.frontend/package-lock.json
+
+      - name: Install dependencies
+        run: |
+          cd loadgistix.frontend
+          npm ci
+
+      - name: Build Frontend
+        run: |
+          cd loadgistix.frontend
+          npm run build -- --configuration=production
+
+      - name: Create web.config
+        run: |
+          cat > loadgistix.frontend/dist/fuse/browser/web.config << 'EOF'
+          <?xml version="1.0" encoding="utf-8"?>
+          <configuration>
+            <system.webServer>
+              <rewrite>
+                <rules>
+                  <rule name="Angular Routes" stopProcessing="true">
+                    <match url=".*" />
+                    <conditions logicalGrouping="MatchAll">
+                      <add input="{REQUEST_FILENAME}" matchType="IsFile" negate="true" />
+                      <add input="{REQUEST_FILENAME}" matchType="IsDirectory" negate="true" />
+                    </conditions>
+                    <action type="Rewrite" url="/index.html" />
+                  </rule>
+                </rules>
+              </rewrite>
+              <staticContent>
+                <remove fileExtension=".woff" />
+                <remove fileExtension=".woff2" />
+                <mimeMap fileExtension=".woff" mimeType="font/woff" />
+                <mimeMap fileExtension=".woff2" mimeType="font/woff2" />
+                <remove fileExtension=".json" />
+                <mimeMap fileExtension=".json" mimeType="application/json" />
+              </staticContent>
+            </system.webServer>
+          </configuration>
+          EOF
+
+      - name: Deploy Frontend files
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_HOST }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./loadgistix.frontend/dist/fuse/browser/
+          server-dir: /loadgistix.com/
+          dangerous-clean-slate: true
+          exclude: |
+            **/.well-known/**
+
+  verify:
+    name: Verify Deployment
+    runs-on: ubuntu-latest
+    needs: [deploy-api, deploy-frontend]
+    
+    steps:
+      - name: Wait for deployment
+        run: sleep 10
+
+      - name: Check Frontend
+        run: |
+          response=$(curl -s -o /dev/null -w "%{http_code}" https://loadgistix.com)
+          if [ "$response" = "200" ]; then
+            echo "✅ Frontend is up (HTTP $response)"
+          else
+            echo "⚠️ Frontend returned HTTP $response"
+          fi
+
+      - name: Check API Health
+        run: |
+          response=$(curl -s https://api.loadgistix.com/health || echo "failed")
+          echo "API Health: $response"
+
