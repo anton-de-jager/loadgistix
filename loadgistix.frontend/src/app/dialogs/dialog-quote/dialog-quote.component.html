@@ -1,15 +1,15 @@
-<div class="fixed inset-0 sm:relative flex flex-col min-w-0 bg-card dark:bg-gray-800">
-    <div class="flex flex-0 items-center justify-between h-16 pr-3 sm:pr-5 pl-6 sm:pl-8 bg-primary text-on-primary">
+<div class="fixed inset-0 sm:relative flex flex-col min-w-0 bg-card dark:bg-gray-800 overflow-hidden">
+    <div class="flex flex-0 items-center justify-between h-16 pr-3 sm:pr-5 pl-6 sm:pl-8 bg-primary text-on-primary flex-shrink-0">
         <div class="text-lg font-medium">Get a Quote</div>
         <button (click)="onNoClick()" mat-icon-button [tabIndex]="-1">
             <mat-icon class="text-on-primary">close</mat-icon>
         </button>
     </div>
-    <mat-stepper class="example-stepper" [linear]="true" [orientation]="(stepperOrientation | async)!"
+    <mat-stepper class="example-stepper flex-1 overflow-auto" [linear]="true" [orientation]="(stepperOrientation | async)!"
         (selectionChange)="next($event)">
         <mat-step [stepControl]="formGroup1" label="Contact Details" [editable]="!isCompleted">
             <mat-dialog-content
-                class="flex flex-col flex-auto mat-typography bg-card dark:bg-gray-800 h-fit max-h-max sm:max-h-[65vh]">
+                class="flex flex-col flex-auto mat-typography bg-card dark:bg-gray-800 overflow-y-auto max-h-[calc(100vh-200px)] sm:max-h-[65vh]">
                 <form [formGroup]="formGroup1"><mat-form-field fxFlex appearance="outline"
                         [ngClass]="loading?'w-full sm:w-2/4 pl-2 pr-2 mat-form-field-loading':'w-full sm:w-2/4 pl-2 pr-2'">
                         <mat-label>First Name</mat-label>
@@ -61,7 +61,7 @@
         </mat-step>
         <mat-step [stepControl]="formGroup2" label="Business Details" [editable]="!isCompleted">
             <mat-dialog-content
-                class="flex flex-col flex-auto mat-typography bg-card dark:bg-gray-800 h-fit max-h-max sm:max-h-[65vh]">
+                class="flex flex-col flex-auto mat-typography bg-card dark:bg-gray-800 overflow-y-auto max-h-[calc(100vh-200px)] sm:max-h-[65vh]">
                 <form [formGroup]="formGroup2">
                     <mat-form-field fxFlex appearance="outline"
                         [ngClass]="loading?'w-full sm:w-2/4 pl-2 pr-2 mat-form-field-loading':'w-full sm:w-2/4 pl-2 pr-2'">
@@ -124,7 +124,7 @@
         </mat-step>
         <mat-step label="Vehicle Details" [editable]="!isCompleted">
             <mat-dialog-content
-                class="flex flex-col flex-auto mat-typography bg-card dark:bg-gray-800 h-fit max-h-max sm:max-h-[65vh]">
+                class="flex flex-col flex-auto mat-typography bg-card dark:bg-gray-800 overflow-y-auto max-h-[calc(100vh-200px)] sm:max-h-[65vh]">
                 <form [formGroup]="formGroup3">
                     <mat-form-field fxFlex appearance="outline"
                         [ngClass]="loading?'w-full sm:w-2/4 pl-2 pr-2 mat-form-field-loading':'w-full sm:w-2/4 pl-2 pr-2'">
@@ -210,7 +210,7 @@
         </mat-step>
         <mat-step label="Trailer Details" [editable]="!isCompleted">
             <mat-dialog-content
-                class="flex flex-col flex-auto mat-typography bg-card dark:bg-gray-800 h-fit max-h-max sm:max-h-[65vh]">
+                class="flex flex-col flex-auto mat-typography bg-card dark:bg-gray-800 overflow-y-auto max-h-[calc(100vh-200px)] sm:max-h-[65vh]">
 
                 <form [formGroup]="formGroup4">
                     <mat-form-field fxFlex appearance="outline"
@@ -296,7 +296,7 @@
         </mat-step>
         <mat-step label="Final Stage">
             <mat-dialog-content
-                class="flex flex-col flex-auto mat-typography bg-card dark:bg-gray-800 h-fit max-h-max sm:max-h-[65vh]">
+                class="flex flex-col flex-auto mat-typography bg-card dark:bg-gray-800 overflow-y-auto max-h-[calc(100vh-200px)] sm:max-h-[65vh]">
                 <ng-template matStepLabel>Done</ng-template>
                 <p>Your information has successfully been submitted.</p>
                 <p>Please check your email for your quote.</p>
