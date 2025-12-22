@@ -36,6 +36,7 @@ export class AppComponent {
         private userService: UserService
         ) {
         this.initDevice();
+        this.initPWAInstallPrompt();
         this.userService.user$.subscribe(user => {
             if (user) {
                 this.currentUser = user;
@@ -85,6 +86,23 @@ export class AppComponent {
             console.warn('Geolocation not available:', error);
             // Optionally log device without location
             // this.sqlService.createItem('device/log', { deviceId: this.deviceId, userId: this.currentUser ? this.currentUser.id : Guid.EMPTY, platform: Capacitor.getPlatform(), lat: null, lon: null }).subscribe(res => {});
+        });
+    }
+
+    initPWAInstallPrompt() {
+        // Listen for the beforeinstallprompt event
+        window.addEventListener('beforeinstallprompt', (e: Event) => {
+            // Prevent the mini-infobar from appearing on mobile
+            e.preventDefault();
+            // Store the event for later use
+            (window as any).deferredPrompt = e;
+            console.log('PWA install prompt available');
+        });
+
+        // Listen for successful install
+        window.addEventListener('appinstalled', () => {
+            console.log('PWA was installed');
+            (window as any).deferredPrompt = null;
         });
     }
 }

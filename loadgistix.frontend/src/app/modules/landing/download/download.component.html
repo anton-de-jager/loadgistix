@@ -1,0 +1,124 @@
+<div class="min-h-screen bg-gradient-to-br from-blue-600 via-blue-700 to-blue-800 flex items-center justify-center p-4">
+    <div class="max-w-4xl w-full">
+        <!-- Header -->
+        <div class="text-center mb-12">
+            <div class="flex justify-center mb-6">
+                <img src="assets/images/iconWhite.png" alt="Loadgistix" class="h-20 w-auto">
+            </div>
+            <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">Get the Loadgistix App</h1>
+            <p class="text-xl text-blue-100 max-w-2xl mx-auto">
+                South Africa's premier logistics platform - now available on your mobile device
+            </p>
+        </div>
+
+        <!-- Download Options -->
+        <div class="grid md:grid-cols-2 gap-6 mb-12">
+            <!-- Android APK Download -->
+            <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20 hover:bg-white/20 transition-all">
+                <div class="flex items-center mb-4">
+                    <div class="w-16 h-16 bg-green-500 rounded-xl flex items-center justify-center mr-4">
+                        <svg class="w-10 h-10 text-white" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M17.523 15.341a.594.594 0 0 1-.582.592.583.583 0 0 1-.583-.592.585.585 0 0 1 1.165 0zm-10.444 0a.593.593 0 0 1-.583.592.584.584 0 0 1-.583-.592.585.585 0 0 1 1.166 0zm10.734-3.538l1.893-3.28c.107-.186.043-.424-.143-.531a.39.39 0 0 0-.531.143l-1.919 3.324c-1.473-.673-3.127-1.049-4.885-1.049-1.759 0-3.414.376-4.887 1.049l-1.918-3.324a.388.388 0 0 0-.531-.143c-.186.107-.25.345-.143.531l1.893 3.28C3.413 13.586 1.5 16.57 1.5 20h21c0-3.43-1.913-6.414-5.187-8.197z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold text-white">Android</h3>
+                        <p class="text-blue-200">Direct APK Download</p>
+                    </div>
+                </div>
+                <p class="text-blue-100 mb-6">
+                    Download the APK file directly to your Android device. No Google Play Store required.
+                </p>
+                <a href="https://github.com/anton-de-jager/loadgistix/releases/latest/download/loadgistix.apk" 
+                    class="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-4 px-6 rounded-xl flex items-center justify-center gap-3 transition-colors no-underline">
+                    <mat-icon>download</mat-icon>
+                    <span>Download APK</span>
+                </a>
+                <div class="mt-4 text-sm text-blue-200">
+                    <p class="flex items-center gap-2">
+                        <mat-icon class="text-base">info</mat-icon>
+                        Enable "Install from Unknown Sources" in settings
+                    </p>
+                </div>
+            </div>
+
+            <!-- PWA Install -->
+            <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20 hover:bg-white/20 transition-all">
+                <div class="flex items-center mb-4">
+                    <div class="w-16 h-16 bg-blue-400 rounded-xl flex items-center justify-center mr-4">
+                        <mat-icon class="!text-4xl text-white">language</mat-icon>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold text-white">Web App</h3>
+                        <p class="text-blue-200">Install as PWA</p>
+                    </div>
+                </div>
+                <p class="text-blue-100 mb-6">
+                    Install directly from your browser. Works on any device - Android, iOS, Windows, or Mac.
+                </p>
+                <button (click)="installPWA()" 
+                    class="w-full bg-blue-400 hover:bg-blue-500 text-white font-semibold py-4 px-6 rounded-xl flex items-center justify-center gap-3 transition-colors">
+                    <mat-icon>add_to_home_screen</mat-icon>
+                    <span>Install Web App</span>
+                </button>
+                <div class="mt-4 text-sm text-blue-200">
+                    <p class="flex items-center gap-2">
+                        <mat-icon class="text-base">devices</mat-icon>
+                        Works offline after installation
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- iOS Instructions -->
+        <div *ngIf="isIOS()" class="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 mb-8">
+            <h3 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+                <mat-icon>phone_iphone</mat-icon>
+                iOS Installation Instructions
+            </h3>
+            <ol class="text-blue-100 space-y-3">
+                <li class="flex items-start gap-3">
+                    <span class="bg-white/20 rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold shrink-0">1</span>
+                    <span>Tap the <strong>Share</strong> button (square with arrow) in Safari</span>
+                </li>
+                <li class="flex items-start gap-3">
+                    <span class="bg-white/20 rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold shrink-0">2</span>
+                    <span>Scroll down and tap <strong>"Add to Home Screen"</strong></span>
+                </li>
+                <li class="flex items-start gap-3">
+                    <span class="bg-white/20 rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold shrink-0">3</span>
+                    <span>Tap <strong>"Add"</strong> to install Loadgistix</span>
+                </li>
+            </ol>
+        </div>
+
+        <!-- Features -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+            <div class="bg-white/10 backdrop-blur-sm rounded-xl p-4 text-center border border-white/10">
+                <mat-icon class="!text-3xl text-blue-200 mb-2">speed</mat-icon>
+                <p class="text-white font-medium">Fast</p>
+            </div>
+            <div class="bg-white/10 backdrop-blur-sm rounded-xl p-4 text-center border border-white/10">
+                <mat-icon class="!text-3xl text-blue-200 mb-2">offline_bolt</mat-icon>
+                <p class="text-white font-medium">Works Offline</p>
+            </div>
+            <div class="bg-white/10 backdrop-blur-sm rounded-xl p-4 text-center border border-white/10">
+                <mat-icon class="!text-3xl text-blue-200 mb-2">security</mat-icon>
+                <p class="text-white font-medium">Secure</p>
+            </div>
+            <div class="bg-white/10 backdrop-blur-sm rounded-xl p-4 text-center border border-white/10">
+                <mat-icon class="!text-3xl text-blue-200 mb-2">sync</mat-icon>
+                <p class="text-white font-medium">Auto Update</p>
+            </div>
+        </div>
+
+        <!-- Back to Home -->
+        <div class="text-center">
+            <a routerLink="/" class="text-blue-200 hover:text-white transition-colors inline-flex items-center gap-2">
+                <mat-icon>arrow_back</mat-icon>
+                Back to Loadgistix Home
+            </a>
+        </div>
+    </div>
+</div>
+

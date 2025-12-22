@@ -42,7 +42,7 @@
               "src/assets/images/favicon-16x16.png",
               "src/assets/images/favicon-32x32.png",
               "src/assets/images/favicon-180x180.png",
-              "src/assets",
+              "src/manifest.webmanifest",
               {
                 "glob": "_redirects",
                 "input": "src",
@@ -89,7 +89,9 @@
                   "maximumError": "1mb"
                 }
               ],
-              "outputHashing": "all"
+              "outputHashing": "all",
+              "serviceWorker": true,
+              "ngswConfigPath": "ngsw-config.json"
             },
             "development": {
               "buildOptimizer": false,

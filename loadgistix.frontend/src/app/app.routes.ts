@@ -84,6 +84,11 @@ export const appRoutes: Route[] = [
                 loadChildren: () =>
                     import('app/modules/landing/quote-view/quote-view.routes'),
             },
+            {
+                path: 'download',
+                loadChildren: () =>
+                    import('app/modules/landing/download/download.routes'),
+            },
         ]
     },
 

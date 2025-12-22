@@ -56,6 +56,9 @@ coverage/
 *.tmp
 *.temp
 
+# Large binary files
+*.apk
+
 # Sensitive files (keep templates, ignore actual configs)
 keystore.properties
 local.properties

@@ -25,6 +25,7 @@
     "@angular/platform-browser": "16.0.3",
     "@angular/platform-browser-dynamic": "16.0.3",
     "@angular/router": "16.0.3",
+    "@angular/service-worker": "^16.2.12",
     "@asymmetrik/ngx-leaflet": "^17.0.0",
     "@asymmetrik/ngx-leaflet-markercluster": "^17.0.0",
     "@capacitor-community/electron": "^5.0.1",
