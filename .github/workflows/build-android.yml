@@ -57,7 +57,9 @@ jobs:
 
       - name: Build Release APK
         working-directory: loadgistix.frontend/android
-        run: ./gradlew assembleRelease
+        run: |
+          chmod +x ./gradlew
+          ./gradlew assembleRelease
 
       - name: Rename APK
         run: |
