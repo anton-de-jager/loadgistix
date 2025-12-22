@@ -5,7 +5,7 @@ import { NgClass, NgIf } from '@angular/common';
 import { Subject } from 'rxjs';
 import { MatButtonModule } from '@angular/material/button';
 import { environment } from 'environments/environment';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from 'app/core/auth/auth.service';
@@ -28,7 +28,7 @@ declare let google: any;
     styleUrls: ['./home.component.scss'],
     encapsulation: ViewEncapsulation.None,
     standalone: true,
-    imports: [NgClass, NgIf, MatButtonModule, MatIconModule, MatToolbarModule, MatMenuModule, MatButtonToggleModule, NgApexchartsModule, AdvertHorizontalComponent]
+    imports: [NgClass, NgIf, MatButtonModule, MatIconModule, MatToolbarModule, MatMenuModule, MatButtonToggleModule, NgApexchartsModule, AdvertHorizontalComponent, RouterLink]
 })
 export class LandingHomeComponent implements OnInit, OnDestroy, AfterViewInit {
     @ViewChild('targetElement') targetElement: ElementRef;
