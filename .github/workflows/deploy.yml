@@ -85,7 +85,7 @@ jobs:
 
       - name: Create web.config
         run: |
-          cat > loadgistix.frontend/dist/fuse/browser/web.config << 'EOF'
+          cat > loadgistix.frontend/dist/web.config << 'EOF'
           <?xml version="1.0" encoding="utf-8"?>
           <configuration>
             <system.webServer>
@@ -119,11 +119,12 @@ jobs:
           server: ${{ secrets.FTP_HOST }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: ./loadgistix.frontend/dist/fuse/browser/
+          local-dir: ./loadgistix.frontend/dist/
           server-dir: /loadgistix.com/
           dangerous-clean-slate: true
           exclude: |
             **/.well-known/**
+            **/fuse/**
 
   verify:
     name: Verify Deployment

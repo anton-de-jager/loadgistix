@@ -55,7 +55,7 @@ Write-Host "  Frontend build complete" -ForegroundColor Green
     </rewrite>
   </system.webServer>
 </configuration>
-"@ | Set-Content "$PSScriptRoot\loadgistix.frontend\dist\fuse\browser\web.config" -Encoding UTF8
+"@ | Set-Content "$PSScriptRoot\loadgistix.frontend\dist\web.config" -Encoding UTF8
 
 # FTP Upload Function
 function Upload-ToFtp {
@@ -114,7 +114,7 @@ Upload-ToFtp -LocalPath "$PSScriptRoot\loadgistix.api\publish" -RemotePath "/api
 
 # Step 4: Deploy Frontend  
 Write-Host "`n[4/4] Deploying Frontend..." -ForegroundColor Yellow
-Upload-ToFtp -LocalPath "$PSScriptRoot\loadgistix.frontend\dist\fuse\browser" -RemotePath "/loadgistix.com" -Description "Frontend"
+Upload-ToFtp -LocalPath "$PSScriptRoot\loadgistix.frontend\dist" -RemotePath "/loadgistix.com" -Description "Frontend"
 
 Write-Host "`n========================================" -ForegroundColor Green
 Write-Host "  Deployment Complete!" -ForegroundColor Green
