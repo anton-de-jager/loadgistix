@@ -79,6 +79,11 @@ export const appRoutes: Route[] = [
                 loadChildren: () =>
                     import('app/modules/landing/privacy-policy/privacy-policy.routes'),
             },
+            {
+                path: 'quote',
+                loadChildren: () =>
+                    import('app/modules/landing/quote-view/quote-view.routes'),
+            },
         ]
     },
 

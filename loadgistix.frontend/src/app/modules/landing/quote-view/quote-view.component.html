@@ -1,0 +1,212 @@
+<div class="quote-container">
+    <!-- Loading State -->
+    <div *ngIf="loading" class="loading-state">
+        <mat-spinner diameter="50"></mat-spinner>
+        <p>Loading your quote...</p>
+    </div>
+
+    <!-- Error State -->
+    <div *ngIf="error && !loading" class="error-state">
+        <mat-icon class="error-icon">error_outline</mat-icon>
+        <h2>Oops!</h2>
+        <p>{{error}}</p>
+        <button mat-raised-button color="primary" (click)="goHome()">
+            <mat-icon>home</mat-icon>
+            Go to Homepage
+        </button>
+    </div>
+
+    <!-- Quote Content -->
+    <div *ngIf="quote && !loading && !error" class="quote-content">
+        <!-- Header -->
+        <div class="quote-header">
+            <img src="assets/images/logo/logo-text.png" alt="Loadgistix Logo" class="logo" />
+            <h1>INSURANCE QUOTE</h1>
+            <p class="subtitle">Commercial Vehicle Protection</p>
+            <div class="quote-badge">
+                📋 Quote Reference: <strong>{{referenceNumber}}</strong>
+            </div>
+        </div>
+
+        <!-- Greeting -->
+        <div class="greeting">
+            Dear <strong>{{quote.nameFirst}} {{quote.nameLast}}</strong>,
+        </div>
+
+        <div class="intro-text">
+            Thank you for choosing <strong>Loadgistix</strong> for your commercial vehicle insurance needs. 
+            Below is your personalized quote based on your fleet details. Our tailored coverage 
+            ensures your business stays protected on every journey.
+        </div>
+
+        <!-- Premium Box - Monthly first (closes sales faster) -->
+        <div class="premium-box">
+            <h3>Your Estimated Monthly Premium</h3>
+            <div class="premium-amount">R{{monthlyPremium | number:'1.2-2'}}</div>
+            <div class="premium-period">per month (incl. SASRIA levy)</div>
+            <div class="premium-monthly">
+                📅 Annual Premium: <strong>R{{quote.premium | number:'1.2-2'}}</strong> per year
+            </div>
+        </div>
+
+        <!-- Quote Details -->
+        <div class="section">
+            <h2>📋 QUOTE DETAILS</h2>
+            <div class="details-grid">
+                <div class="detail-row">
+                    <span class="label">Reference Number</span>
+                    <span class="value"><strong>{{referenceNumber}}</strong></span>
+                </div>
+                <div class="detail-row">
+                    <span class="label">Quote Date</span>
+                    <span class="value">{{quote.createdOn | date:'yyyy-MM-dd'}}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="label">Total Insured Value</span>
+                    <span class="value currency"><strong>R{{totalAssetValue | number:'1.2-2'}}</strong></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact Details -->
+        <div class="section">
+            <h2>👤 CONTACT DETAILS</h2>
+            <div class="details-grid two-col">
+                <div class="detail-row">
+                    <span class="label">First Name</span>
+                    <span class="value">{{quote.nameFirst}}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="label">Last Name</span>
+                    <span class="value">{{quote.nameLast}}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="label">Email Address</span>
+                    <span class="value">{{quote.email}}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="label">Mobile Number</span>
+                    <span class="value">{{quote.mobileNumber}}</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Business Details -->
+        <div class="section">
+            <h2>🏢 BUSINESS DETAILS</h2>
+            <div class="details-grid">
+                <div class="detail-row">
+                    <span class="label">Company Name</span>
+                    <span class="value">{{quote.company}}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="label">Business Description</span>
+                    <span class="value">{{quote.businessDescription}}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="label">Vehicle Ownership</span>
+                    <span class="value">{{quote.ownedRentedDescription}}</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Trucks -->
+        <div class="section" *ngIf="trucks.length > 0">
+            <h2>🚛 VEHICLE DETAILS</h2>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Make</th>
+                            <th>Model</th>
+                            <th>Year</th>
+                            <th class="currency-col">Insured Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let truck of trucks">
+                            <td>{{truck.make}}</td>
+                            <td>{{truck.model}}</td>
+                            <td>{{truck.year}}</td>
+                            <td class="currency">R{{truck.value | number:'1.2-2'}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Trailers -->
+        <div class="section" *ngIf="trailers.length > 0">
+            <h2>🚚 TRAILER DETAILS</h2>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Make</th>
+                            <th>Type</th>
+                            <th>Year</th>
+                            <th class="currency-col">Insured Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let trailer of trailers">
+                            <td>{{trailer.make}}</td>
+                            <td>{{trailer.model}}</td>
+                            <td>{{trailer.year}}</td>
+                            <td class="currency">R{{trailer.value | number:'1.2-2'}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Benefits -->
+        <div class="benefits">
+            <h3>✅ What's Included in Your Coverage</h3>
+            <ul>
+                <li><strong>Comprehensive Vehicle Cover</strong> - Protection against theft, hijacking, fire, and accidents</li>
+                <li><strong>Third-Party Liability</strong> - Up to R10 million cover for damage to other vehicles or property</li>
+                <li><strong>Roadside Assistance</strong> - 24/7 breakdown and towing services nationwide</li>
+                <li><strong>SASRIA Cover</strong> - Protection against civil unrest and strikes</li>
+                <li><strong>Credit Shortfall Cover</strong> - Optional cover for financed vehicles</li>
+                <li><strong>Goods in Transit</strong> - Cover for cargo while in transit (optional add-on)</li>
+            </ul>
+        </div>
+
+        <!-- Validity Notice -->
+        <div class="validity">
+            ⏰ This quote is valid until <strong>{{validUntil}}</strong>
+            <br>
+            <small>Prices are subject to underwriting approval and may vary based on final assessment.</small>
+        </div>
+
+        <!-- CTA Section -->
+        <div class="cta-section">
+            <button mat-raised-button 
+                    class="contact-button"
+                    (click)="contactMe()"
+                    [disabled]="contactSending">
+                <mat-spinner *ngIf="contactSending" diameter="20"></mat-spinner>
+                <span *ngIf="!contactSending">
+                    📞 Contact Me - I'm Interested!
+                </span>
+            </button>
+            <p class="cta-help">Click the button above and our insurance team will contact you shortly.</p>
+            <p class="cta-phone">Or call us directly: <strong>0860 LOADGISTIX</strong></p>
+        </div>
+
+        <!-- Footer -->
+        <div class="quote-footer">
+            <p><strong>Loadgistix (Pty) Ltd</strong></p>
+            <p>📧 <a href="mailto:insurance@loadgistix.com">insurance@loadgistix.com</a></p>
+            <p>🌐 <a href="https://loadgistix.com">www.loadgistix.com</a></p>
+            <div class="disclaimer">
+                This quote is for informational purposes only and does not constitute a binding insurance contract. 
+                Final premiums, terms, and conditions are subject to underwriting approval. Loadgistix acts as an 
+                authorized financial services provider (FSP License pending). All insurance products are underwritten 
+                by registered South African insurers.
+            </div>
+        </div>
+    </div>
+</div>
+

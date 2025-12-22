@@ -17,18 +17,20 @@ namespace loadgistix.api.Controllers
             {
                 MailMessage mail = new MailMessage();
                 SmtpClient smtpClient = new SmtpClient();
-                mail.From = new MailAddress("info@madservices.co.za", "Vibe Viewer");
+                mail.From = new MailAddress("info@loadgistix.com", "Loadgistix");
                 mail.To.Add(email);
                 mail.Bcc.Add("anton@madproducts.co.za");
                 mail.Subject = subject;
                 mail.IsBodyHtml = true;
                 mail.AlternateViews.Add(Mail_Body(id, email, template));
-                smtpClient.Port = 587;
-                smtpClient.Host = "mail.madservices.co.za";
-                //smtpClient.EnableSsl = true;
+                // Port 25 without SSL (server doesn't support secure connections)
+                smtpClient.Port = 25;
+                smtpClient.Host = "winsvrmail01.hostserv.co.za";
+                smtpClient.EnableSsl = false;
                 smtpClient.UseDefaultCredentials = false;
-                smtpClient.Credentials = new NetworkCredential("info@madservices.co.za", "P@szw0rd");
+                smtpClient.Credentials = new NetworkCredential("info@loadgistix.com", "P@szw0rdL");
                 smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
+                smtpClient.Timeout = 30000;
                 smtpClient.Send(mail);
 
                 return "OK";

@@ -134,7 +134,7 @@ export class PayfastComponent implements OnInit, AfterViewInit {
         // Transaction details
         myData["m_payment_id"] = this.user.id;
         myData["amount"] = "350.00";
-        myData["item_name"] = "Vibe Viewer Subscription";
+        myData["item_name"] = "Loadgistix Subscription";
 
         myData["subscription_type"] = "1";
         //myData["billing_date"] = date.toISOString().slice(0, 10);
@@ -172,7 +172,7 @@ export class PayfastComponent implements OnInit, AfterViewInit {
         // Transaction details
         myData["m_payment_id"] = this.user.id;
         myData["amount"] = "350.00";
-        myData["item_name"] = "Vibe Viewer Subscription";
+        myData["item_name"] = "Loadgistix Subscription";
 
         myData["subscription_type"] = "1";
         //myData["billing_date"] = date.toISOString().slice(0, 10);

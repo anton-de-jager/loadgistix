@@ -18,25 +18,39 @@ namespace loadgistix.api.Controllers
             connectionString = config.GetConnectionString("DefaultConnection");
         }
 
-        // GET: api/dashboard
+        // GET: api/dashboard - For landing page stats (no parameters needed)
         [HttpGet]
         public async Task<ProcedureResult> Get()
         {
-            // Dashboard stats don't require input parameters
-            var result = await DataTypeHelper.ActionStoredProcedureAsync(connectionString, new Dashboard(), new Dashboard(), "dashboard", "select-single");
+            var result = await DataTypeHelper.ActionStoredProcedureAsync(connectionString, new DashboardRequestInternal(), new Dashboard(), "dashboard", "select-single");
             return new ProcedureResult { Result = true, Data = result };
         }
 
-        // POST: api/dashboard (for backwards compatibility with frontend)
+        // POST: api/dashboard - For admin dashboard with different actions
         [HttpPost]
         public async Task<ProcedureResult> Post(DashboardRequest? request)
         {
-            // Dashboard stats don't require input parameters - ignore the request body
-            var result = await DataTypeHelper.ActionStoredProcedureAsync(connectionString, new Dashboard(), new Dashboard(), "dashboard", "select-single");
+            // Determine the action - default to "select-single" for landing page
+            var action = string.IsNullOrEmpty(request?.Action) ? "select-single" : request.Action;
+            
+            // Create internal request with only the userId (action is passed separately)
+            var internalRequest = new DashboardRequestInternal
+            {
+                UserId = !string.IsNullOrEmpty(request?.UserId) ? Guid.Parse(request.UserId) : null
+            };
+            
+            var result = await DataTypeHelper.ActionStoredProcedureAsync(connectionString, internalRequest, new Dashboard(), "dashboard", action);
             return new ProcedureResult { Result = true, Data = result };
         }
     }
 
+    // Internal request class - only pass userId to stored procedure (action is passed as separate parameter)
+    public class DashboardRequestInternal
+    {
+        public Guid? UserId { get; set; }
+    }
+
+    // External request from frontend
     public class DashboardRequest
     {
         public string? UserId { get; set; }

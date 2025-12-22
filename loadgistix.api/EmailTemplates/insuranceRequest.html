@@ -3,131 +3,248 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Insurance Request</title>
-    <style>
-        @page {
-            size: A4;
-            margin: 20mm;
-        }
-
-        body {
-            font-family: Arial, sans-serif;
-            font-size: 10px;
-            margin: 0;
-            padding: 0;
-            color: #333;
-            position: relative;
-            min-height: 100%;
-            box-sizing: border-box;
-        }
-
-        h2 {
-            background-color: #f2f2f2;
-            padding: 5px;
-            border: 1px solid #ddd;
-            margin: 0;
-            font-size: 1.1em;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 10px;
-        }
-
-        table, th, td {
-            border: 1px solid black;
-        }
-
-        th, td {
-            padding: 5px;
-            text-align: left;
-        }
-
-        .section {
-            margin-bottom: 10px;
-        }
-
-        .header {
-            text-align: center;
-            margin-bottom: 10px;
-        }
-
-            .header img {
-                max-width: 100%;
-                height: auto;
-            }
-
-        .header-title {
-            font-size: 16px;
-            font-weight: bold;
-            margin-top: 5px;
-        }
-
-        .half-width td {
-            width: 50%;
-        }
-
-        .quarter-width th,
-        .quarter-width td {
-            width: 25%;
-        }
-    </style>
+    <title>Insurance Quote - Loadgistix</title>
 </head>
-<body>
-    <div class="header">
-        <img src="cid:MyImage" id="img" alt="Loadgistix Logo" />
-        <!--<img src="loadgistix.png" alt="Loadgistix Logo">-->
-        <div class="header-title">INSURANCE REQUEST FORM</div>
-    </div>
-    <div class="section">
-        <h2>QUOTE DETAILS</h2>
-        <table class="half-width">
-            <tr>
-                <th>Reference Number</th>
-                <td>!*id*!</td>
-            </tr>
-            <tr>
-                <th>Created On</th>
-                <td>!*createdOn*!</td>
-            </tr>
-        </table>
-    </div>
-    <div class="section">
-        <h2>CONTACT DETAILS</h2>
-        <table class="quarter-width">
-            <tr>
-                <th>First Name</th>
-                <td>!*nameFirst*!</td>
-                <th>Last Name</th>
-                <td>!*nameLast*!</td>
-            </tr>
-            <tr>
-                <th>E-mail address</th>
-                <td>!*email*!</td>
-                <th>Mobile no.</th>
-                <td>!*mobileNumber*!</td>
-            </tr>
-        </table>
-    </div>
-    <div class="section">
-        <h2>BUSINESS DETAILS</h2>
-        <table class="half-width">
-            <tr>
-                <th>Company Name</th>
-                <td>!*company*!</td>
-            </tr>
-            <tr>
-                <th>Business Description</th>
-                <td>!*businessDescription*!</td>
-            </tr>
-            <tr>
-                <th>Are the Vehicles Owned or Rented</th>
-                <td>!*ownedRentedDescription*!</td>
-            </tr>
-        </table>
-    </div>
-    !*trucks*!
-    !*trailers*!
+<body style="font-family: Arial, Helvetica, sans-serif; font-size: 14px; margin: 0; padding: 0; color: #333333; background-color: #f5f5f5; line-height: 1.6;">
+    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color: #f5f5f5; padding: 20px 0;">
+        <tr>
+            <td align="center">
+                <table width="650" cellpadding="0" cellspacing="0" border="0" style="background-color: #ffffff; border: 1px solid #dddddd;">
+                    
+                    <!-- Header -->
+                    <tr>
+                        <td align="center" style="background-color: #1976D2; padding: 30px 20px;">
+                            <img src="cid:MyImage" alt="Loadgistix Logo" style="max-width: 180px; height: auto; margin-bottom: 15px;" />
+                            <h1 style="color: #ffffff; font-size: 24px; font-weight: 600; margin: 10px 0 5px 0; letter-spacing: 1px;">INSURANCE QUOTE</h1>
+                            <p style="color: #ffffff; font-size: 14px; margin: 0; opacity: 0.9;">Commercial Vehicle Protection</p>
+                            <table cellpadding="0" cellspacing="0" border="0" style="margin-top: 20px;">
+                                <tr>
+                                    <td style="background-color: #1565C0; padding: 10px 25px; border-radius: 20px;">
+                                        <span style="color: #ffffff; font-size: 13px;">Quote Reference: <strong>!*referenceNumber*!</strong></span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <!-- Greeting -->
+                    <tr>
+                        <td style="padding: 25px 30px 15px 30px;">
+                            <p style="font-size: 16px; margin: 0; color: #333333;">
+                                Dear <strong style="color: #1976D2;">!*nameFirst*! !*nameLast*!</strong>,
+                            </p>
+                        </td>
+                    </tr>
+
+                    <!-- Intro Text -->
+                    <tr>
+                        <td style="padding: 0 30px 25px 30px;">
+                            <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                                <tr>
+                                    <td style="background-color: #e3f2fd; border-left: 4px solid #1976D2; padding: 15px 20px;">
+                                        Thank you for choosing <strong>Loadgistix</strong> for your commercial vehicle insurance needs. 
+                                        We've prepared a comprehensive quote based on your fleet details. Our tailored coverage 
+                                        ensures your business stays protected on every journey.
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <!-- Premium Box - Monthly first (closes sales faster) -->
+                    <tr>
+                        <td style="padding: 0 30px 25px 30px;">
+                            <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color: #1976D2; border-radius: 8px;">
+                                <tr>
+                                    <td align="center" style="padding: 30px;">
+                                        <p style="color: #ffffff; font-size: 14px; margin: 0 0 5px 0; opacity: 0.9;">Your Estimated Monthly Premium</p>
+                                        <p style="color: #ffffff; font-size: 42px; font-weight: 700; margin: 10px 0;">!*monthlyPremium*!</p>
+                                        <p style="color: #ffffff; font-size: 14px; margin: 0; opacity: 0.8;">per month (incl. SASRIA levy)</p>
+                                        <table cellpadding="0" cellspacing="0" border="0" style="margin-top: 20px;">
+                                            <tr>
+                                                <td style="background-color: #1565C0; padding: 12px 30px; border-radius: 20px;">
+                                                    <span style="color: #ffffff; font-size: 16px;">Annual: <strong>!*annualPremium*!</strong> per year</span>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <!-- Quote Details Section -->
+                    <tr>
+                        <td style="padding: 0 30px 20px 30px;">
+                            <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color: #1976D2; border-radius: 6px 6px 0 0;">
+                                <tr>
+                                    <td style="padding: 12px 15px;">
+                                        <strong style="color: #ffffff; font-size: 14px;">QUOTE DETAILS</strong>
+                                    </td>
+                                </tr>
+                            </table>
+                            <table width="100%" cellpadding="0" cellspacing="0" border="1" style="border-color: #e0e0e0; border-collapse: collapse;">
+                                <tr>
+                                    <td width="50%" style="background-color: #f5f5f5; padding: 12px 15px; font-weight: 600; color: #555555; font-size: 12px; text-transform: uppercase; border: 1px solid #e0e0e0;">Reference Number</td>
+                                    <td width="50%" style="padding: 12px 15px; border: 1px solid #e0e0e0;"><strong>!*referenceNumber*!</strong></td>
+                                </tr>
+                                <tr>
+                                    <td style="background-color: #f5f5f5; padding: 12px 15px; font-weight: 600; color: #555555; font-size: 12px; text-transform: uppercase; border: 1px solid #e0e0e0;">Quote Date</td>
+                                    <td style="padding: 12px 15px; border: 1px solid #e0e0e0;">!*createdOn*!</td>
+                                </tr>
+                                <tr>
+                                    <td style="background-color: #f5f5f5; padding: 12px 15px; font-weight: 600; color: #555555; font-size: 12px; text-transform: uppercase; border: 1px solid #e0e0e0;">Total Insured Value</td>
+                                    <td style="padding: 12px 15px; text-align: right; font-weight: 600; border: 1px solid #e0e0e0;"><strong>!*totalAssetValue*!</strong></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <!-- Contact Details Section -->
+                    <tr>
+                        <td style="padding: 0 30px 20px 30px;">
+                            <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color: #1976D2; border-radius: 6px 6px 0 0;">
+                                <tr>
+                                    <td style="padding: 12px 15px;">
+                                        <strong style="color: #ffffff; font-size: 14px;">CONTACT DETAILS</strong>
+                                    </td>
+                                </tr>
+                            </table>
+                            <table width="100%" cellpadding="0" cellspacing="0" border="1" style="border-color: #e0e0e0; border-collapse: collapse;">
+                                <tr>
+                                    <td width="25%" style="background-color: #f5f5f5; padding: 12px 15px; font-weight: 600; color: #555555; font-size: 12px; text-transform: uppercase; border: 1px solid #e0e0e0;">First Name</td>
+                                    <td width="25%" style="padding: 12px 15px; border: 1px solid #e0e0e0;">!*nameFirst*!</td>
+                                    <td width="25%" style="background-color: #f5f5f5; padding: 12px 15px; font-weight: 600; color: #555555; font-size: 12px; text-transform: uppercase; border: 1px solid #e0e0e0;">Last Name</td>
+                                    <td width="25%" style="padding: 12px 15px; border: 1px solid #e0e0e0;">!*nameLast*!</td>
+                                </tr>
+                                <tr>
+                                    <td style="background-color: #f5f5f5; padding: 12px 15px; font-weight: 600; color: #555555; font-size: 12px; text-transform: uppercase; border: 1px solid #e0e0e0;">Email Address</td>
+                                    <td style="padding: 12px 15px; border: 1px solid #e0e0e0;"><a href="mailto:!*email*!" style="color: #1976D2;">!*email*!</a></td>
+                                    <td style="background-color: #f5f5f5; padding: 12px 15px; font-weight: 600; color: #555555; font-size: 12px; text-transform: uppercase; border: 1px solid #e0e0e0;">Mobile Number</td>
+                                    <td style="padding: 12px 15px; border: 1px solid #e0e0e0;">!*mobileNumber*!</td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <!-- Business Details Section -->
+                    <tr>
+                        <td style="padding: 0 30px 20px 30px;">
+                            <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color: #1976D2; border-radius: 6px 6px 0 0;">
+                                <tr>
+                                    <td style="padding: 12px 15px;">
+                                        <strong style="color: #ffffff; font-size: 14px;">BUSINESS DETAILS</strong>
+                                    </td>
+                                </tr>
+                            </table>
+                            <table width="100%" cellpadding="0" cellspacing="0" border="1" style="border-color: #e0e0e0; border-collapse: collapse;">
+                                <tr>
+                                    <td width="50%" style="background-color: #f5f5f5; padding: 12px 15px; font-weight: 600; color: #555555; font-size: 12px; text-transform: uppercase; border: 1px solid #e0e0e0;">Company Name</td>
+                                    <td width="50%" style="padding: 12px 15px; border: 1px solid #e0e0e0;">!*company*!</td>
+                                </tr>
+                                <tr>
+                                    <td style="background-color: #f5f5f5; padding: 12px 15px; font-weight: 600; color: #555555; font-size: 12px; text-transform: uppercase; border: 1px solid #e0e0e0;">Business Description</td>
+                                    <td style="padding: 12px 15px; border: 1px solid #e0e0e0;">!*businessDescription*!</td>
+                                </tr>
+                                <tr>
+                                    <td style="background-color: #f5f5f5; padding: 12px 15px; font-weight: 600; color: #555555; font-size: 12px; text-transform: uppercase; border: 1px solid #e0e0e0;">Vehicle Ownership</td>
+                                    <td style="padding: 12px 15px; border: 1px solid #e0e0e0;">!*ownedRentedDescription*!</td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <!-- Vehicle Tables (Dynamic) -->
+                    <tr>
+                        <td style="padding: 0 30px 20px 30px;">
+                            !*trucks*!
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 0 30px 20px 30px;">
+                            !*trailers*!
+                        </td>
+                    </tr>
+
+                    <!-- Benefits Section -->
+                    <tr>
+                        <td style="padding: 0 30px 25px 30px;">
+                            <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px;">
+                                <tr>
+                                    <td style="padding: 20px;">
+                                        <p style="color: #166534; font-size: 15px; font-weight: 600; margin: 0 0 15px 0;">What's Included in Your Coverage</p>
+                                        <table cellpadding="0" cellspacing="0" border="0">
+                                            <tr><td style="padding: 5px 0; color: #555555;">&#8226; <strong>Comprehensive Vehicle Cover</strong> - Protection against theft, hijacking, fire, and accidents</td></tr>
+                                            <tr><td style="padding: 5px 0; color: #555555;">&#8226; <strong>Third-Party Liability</strong> - Up to R10 million cover for damage to other vehicles or property</td></tr>
+                                            <tr><td style="padding: 5px 0; color: #555555;">&#8226; <strong>Roadside Assistance</strong> - 24/7 breakdown and towing services nationwide</td></tr>
+                                            <tr><td style="padding: 5px 0; color: #555555;">&#8226; <strong>SASRIA Cover</strong> - Protection against civil unrest and strikes</td></tr>
+                                            <tr><td style="padding: 5px 0; color: #555555;">&#8226; <strong>Credit Shortfall Cover</strong> - Optional cover for financed vehicles</td></tr>
+                                            <tr><td style="padding: 5px 0; color: #555555;">&#8226; <strong>Goods in Transit</strong> - Cover for cargo while in transit (optional add-on)</td></tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <!-- Validity Notice -->
+                    <tr>
+                        <td style="padding: 0 30px 25px 30px;">
+                            <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color: #fff7ed; border: 1px solid #fed7aa; border-radius: 8px;">
+                                <tr>
+                                    <td align="center" style="padding: 15px;">
+                                        <p style="margin: 0; color: #9a3412;">This quote is valid until <strong style="color: #c2410c;">!*validUntil*!</strong></p>
+                                        <p style="margin: 8px 0 0 0; font-size: 12px; color: #78716c;">Prices are subject to underwriting approval and may vary based on final assessment.</p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <!-- CTA Button -->
+                    <tr>
+                        <td align="center" style="padding: 0 30px 30px 30px;">
+                            <table cellpadding="0" cellspacing="0" border="0">
+                                <tr>
+                                    <td align="center" style="background-color: #16a34a; border-radius: 30px;">
+                                        <a href="https://loadgistix.com/quote/!*id*!" style="display: inline-block; padding: 16px 50px; color: #ffffff; text-decoration: none; font-weight: 600; font-size: 16px;">
+                                            Accept Quote &amp; Get Covered
+                                        </a>
+                                    </td>
+                                </tr>
+                            </table>
+                            <p style="margin: 15px 0 0 0; color: #666666; font-size: 13px;">Or call us directly: <strong>0860 LOADGISTIX</strong></p>
+                        </td>
+                    </tr>
+
+                    <!-- Footer -->
+                    <tr>
+                        <td style="background-color: #1e293b; padding: 25px 30px;">
+                            <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                                <tr>
+                                    <td align="center">
+                                        <p style="color: #ffffff; font-weight: 600; margin: 0 0 10px 0;">Loadgistix (Pty) Ltd</p>
+                                        <p style="margin: 5px 0; color: #94a3b8;"><a href="mailto:insurance@loadgistix.com" style="color: #60a5fa; text-decoration: none;">insurance@loadgistix.com</a></p>
+                                        <p style="margin: 5px 0; color: #94a3b8;"><a href="https://loadgistix.com" style="color: #60a5fa; text-decoration: none;">www.loadgistix.com</a></p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding-top: 20px; border-top: 1px solid #334155; margin-top: 15px;">
+                                        <p style="font-size: 11px; color: #64748b; text-align: center; margin: 15px 0 0 0;">
+                                            This quote is for informational purposes only and does not constitute a binding insurance contract. 
+                                            Final premiums, terms, and conditions are subject to underwriting approval. Loadgistix acts as an 
+                                            authorized financial services provider (FSP License pending). All insurance products are underwritten 
+                                            by registered South African insurers.
+                                        </p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                </table>
+            </td>
+        </tr>
+    </table>
 </body>
 </html>

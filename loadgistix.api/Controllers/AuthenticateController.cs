@@ -235,16 +235,18 @@ namespace loadgistix.api.Controllers
 
         private async Task SendResetEmail(string email, string resetToken)
         {
-            // Configure SMTP client
-            using (var smtpClient = new SmtpClient("mail.madservices.co.za"))
+            // Configure SMTP client - Port 25 without SSL (server doesn't support secure connections)
+            using (var smtpClient = new SmtpClient("winsvrmail01.hostserv.co.za"))
             {
+                smtpClient.Port = 25;
+                smtpClient.EnableSsl = false;
                 smtpClient.UseDefaultCredentials = false;
-                smtpClient.Credentials = new NetworkCredential("info@madservices.co.za", "P@szw0rd");
-                smtpClient.Port = 587;
+                smtpClient.Credentials = new NetworkCredential("info@loadgistix.com", "P@szw0rdL");
+                smtpClient.Timeout = 30000;
 
                 // Create the email message
                 var message = new MailMessage();
-                message.From = new MailAddress("info@madservices.co.za", "Loadgistix");
+                message.From = new MailAddress("info@loadgistix.com", "Loadgistix");
                 message.ReplyTo = new MailAddress("info@loadgistix.com");
                 message.To.Add(email);
                 message.Subject = "Password Reset Instructions";
@@ -261,7 +263,7 @@ namespace loadgistix.api.Controllers
             {
                 MailMessage mail = new MailMessage();
                 SmtpClient smtpClient = new SmtpClient();
-                mail.From = new MailAddress("info@madservices.co.za", "Loadgistix");
+                mail.From = new MailAddress("info@loadgistix.com", "Loadgistix");
                 mail.ReplyTo = new MailAddress("info@loadgistix.com");
                 mail.ReplyToList.Add("info@loadgistix.com");
                 mail.To.Add(email);
@@ -269,12 +271,14 @@ namespace loadgistix.api.Controllers
                 mail.Subject = subject;
                 mail.IsBodyHtml = true;
                 mail.AlternateViews.Add(Mail_Body(id, email, template));
-                smtpClient.Port = 587;
-                smtpClient.Host = "mail.madservices.co.za";
-                //smtpClient.EnableSsl = true;
+                // Port 25 without SSL (server doesn't support secure connections)
+                smtpClient.Port = 25;
+                smtpClient.Host = "winsvrmail01.hostserv.co.za";
+                smtpClient.EnableSsl = false;
                 smtpClient.UseDefaultCredentials = false;
-                smtpClient.Credentials = new NetworkCredential("info@madservices.co.za", "P@szw0rd");
+                smtpClient.Credentials = new NetworkCredential("info@loadgistix.com", "P@szw0rdL");
                 smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
+                smtpClient.Timeout = 30000;
                 smtpClient.Send(mail);
 
                 return "OK";

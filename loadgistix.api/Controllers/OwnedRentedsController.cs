@@ -24,17 +24,10 @@ namespace loadgistix.api.Controllers
             connectionString = config.GetConnectionString("DefaultConnection");
         }
 
-        // GET: api/OwnedRenteds
+        // GET: api/OwnedRenteds - No auth required for lookup data
         [HttpGet]
         public async Task<ProcedureResult> GetOwnedRenteds()
         {
-            var uid = _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Country);
-
-            if (uid == null)
-            {
-                return new ProcedureResult { Result = false, Data = "Unauthorised" };
-            }
-
             var result = await DataTypeHelper.ActionStoredProcedureAsync(connectionString, new OwnedRented(), new OwnedRented(), "ownedRented", "select");
             return new ProcedureResult { Result = true, Data = result };
         }

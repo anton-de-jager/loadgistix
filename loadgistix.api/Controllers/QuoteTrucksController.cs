@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using loadgistix.api.Models;
 using loadgistix.api.Helpers;
-using System.Security.Claims;
 
 namespace loadgistix.api.Controllers
 {
@@ -15,11 +14,9 @@ namespace loadgistix.api.Controllers
     {
         public IConfiguration _configuration;
         public string connectionString;
-        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public QuoteTrucksController(IConfiguration config, IHttpContextAccessor httpContextAccessor)
+        public QuoteTrucksController(IConfiguration config)
         {
-            _httpContextAccessor = httpContextAccessor;
             _configuration = config;
             connectionString = config.GetConnectionString("DefaultConnection");
         }
@@ -28,13 +25,6 @@ namespace loadgistix.api.Controllers
         [HttpGet]
         public async Task<ProcedureResult> GetQuoteTrucks()
         {
-            var uid = _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Country);
-
-            if (uid == null)
-            {
-                return new ProcedureResult { Result = false, Data = "Unauthorised" };
-            }
-
             var result = await DataTypeHelper.ActionStoredProcedureAsync(connectionString, new QuoteTruck(), new QuoteTruck(), "quoteTruck", "select");
             return new ProcedureResult { Result = true, Data = result };
         }
@@ -59,13 +49,6 @@ namespace loadgistix.api.Controllers
         [HttpGet("byQuote/{quoteId}")]
         public async Task<ProcedureResult> GetQuoteTrucksByQuote(Guid quoteId)
         {
-            var uid = _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Country);
-
-            if (uid == null)
-            {
-                return new ProcedureResult { Result = false, Data = "Unauthorised" };
-            }
-
             QuoteTruck request = new QuoteTruck();
             request.QuoteId = quoteId;
             var result = await DataTypeHelper.ActionStoredProcedureAsync(connectionString, request, new QuoteTruck(), "quoteTruck", "select");
@@ -76,13 +59,6 @@ namespace loadgistix.api.Controllers
         [HttpPut]
         public async Task<ProcedureResult> PutQuoteTruck(QuoteTruck quoteTruck)
         {
-            var uid = _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Country);
-
-            if (uid == null)
-            {
-                return new ProcedureResult { Result = false, Data = "Unauthorised" };
-            }
-
             var result = await DataTypeHelper.ActionStoredProcedureAsync(connectionString, quoteTruck, new QuoteTruck(), "quoteTruck", "update");
             return new ProcedureResult { Result = true, Id = result.Id, Data = result };
         }
@@ -91,27 +67,19 @@ namespace loadgistix.api.Controllers
         [HttpPost]
         public async Task<ProcedureResult> PostQuoteTruck(QuoteTruck quoteTruck)
         {
-            var uid = _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Country);
-
-            if (uid == null)
+            if (quoteTruck.Id == null || quoteTruck.Id == Guid.Empty)
             {
-                return new ProcedureResult { Result = false, Data = "Unauthorised" };
+                quoteTruck.Id = Guid.NewGuid();
             }
-
-            var result = await DataTypeHelper.ActionStoredProcedureAsync(connectionString, quoteTruck, new QuoteTruck(), "quoteTruck", "insert");
-            return new ProcedureResult { Result = true, Id = result.Id, Data = result };
+            quoteTruck.CreatedOn = DateTime.UtcNow;
+            await DataTypeHelper.ActionStoredProcedureAsync(connectionString, quoteTruck, new QuoteTruck(), "quoteTruck", "insert");
+            // Return the input object with the generated ID
+            return new ProcedureResult { Result = true, Id = quoteTruck.Id ?? Guid.Empty, Data = quoteTruck };
         }
 
         [HttpPost("delete/{id}")]
         public async Task<ProcedureResult> DeleteQuoteTruck(Guid id)
         {
-            var uid = _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Country);
-
-            if (uid == null)
-            {
-                return new ProcedureResult { Result = false, Data = "Unauthorised" };
-            }
-
             QuoteTruck request = new QuoteTruck();
             request.Id = id;
             string message = await DataTypeHelper.ActionStoredProcedureAsync(connectionString, request, new QuoteTruck(), "quoteTruck", "delete");
@@ -120,4 +88,3 @@ namespace loadgistix.api.Controllers
         }
     }
 }
-

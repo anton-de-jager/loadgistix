@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using loadgistix.api.Models;
 using loadgistix.api.Helpers;
-using System.Security.Claims;
 
 namespace loadgistix.api.Controllers
 {
@@ -15,11 +14,9 @@ namespace loadgistix.api.Controllers
     {
         public IConfiguration _configuration;
         public string connectionString;
-        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public QuoteTrailersController(IConfiguration config, IHttpContextAccessor httpContextAccessor)
+        public QuoteTrailersController(IConfiguration config)
         {
-            _httpContextAccessor = httpContextAccessor;
             _configuration = config;
             connectionString = config.GetConnectionString("DefaultConnection");
         }
@@ -28,13 +25,6 @@ namespace loadgistix.api.Controllers
         [HttpGet]
         public async Task<ProcedureResult> GetQuoteTrailers()
         {
-            var uid = _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Country);
-
-            if (uid == null)
-            {
-                return new ProcedureResult { Result = false, Data = "Unauthorised" };
-            }
-
             var result = await DataTypeHelper.ActionStoredProcedureAsync(connectionString, new QuoteTrailer(), new QuoteTrailer(), "quoteTrailer", "select");
             return new ProcedureResult { Result = true, Data = result };
         }
@@ -59,13 +49,6 @@ namespace loadgistix.api.Controllers
         [HttpGet("byQuote/{quoteId}")]
         public async Task<ProcedureResult> GetQuoteTrailersByQuote(Guid quoteId)
         {
-            var uid = _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Country);
-
-            if (uid == null)
-            {
-                return new ProcedureResult { Result = false, Data = "Unauthorised" };
-            }
-
             QuoteTrailer request = new QuoteTrailer();
             request.QuoteId = quoteId;
             var result = await DataTypeHelper.ActionStoredProcedureAsync(connectionString, request, new QuoteTrailer(), "quoteTrailer", "select");
@@ -76,13 +59,6 @@ namespace loadgistix.api.Controllers
         [HttpPut]
         public async Task<ProcedureResult> PutQuoteTrailer(QuoteTrailer quoteTrailer)
         {
-            var uid = _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Country);
-
-            if (uid == null)
-            {
-                return new ProcedureResult { Result = false, Data = "Unauthorised" };
-            }
-
             var result = await DataTypeHelper.ActionStoredProcedureAsync(connectionString, quoteTrailer, new QuoteTrailer(), "quoteTrailer", "update");
             return new ProcedureResult { Result = true, Id = result.Id, Data = result };
         }
@@ -91,27 +67,19 @@ namespace loadgistix.api.Controllers
         [HttpPost]
         public async Task<ProcedureResult> PostQuoteTrailer(QuoteTrailer quoteTrailer)
         {
-            var uid = _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Country);
-
-            if (uid == null)
+            if (quoteTrailer.Id == null || quoteTrailer.Id == Guid.Empty)
             {
-                return new ProcedureResult { Result = false, Data = "Unauthorised" };
+                quoteTrailer.Id = Guid.NewGuid();
             }
-
-            var result = await DataTypeHelper.ActionStoredProcedureAsync(connectionString, quoteTrailer, new QuoteTrailer(), "quoteTrailer", "insert");
-            return new ProcedureResult { Result = true, Id = result.Id, Data = result };
+            quoteTrailer.CreatedOn = DateTime.UtcNow;
+            await DataTypeHelper.ActionStoredProcedureAsync(connectionString, quoteTrailer, new QuoteTrailer(), "quoteTrailer", "insert");
+            // Return the input object with the generated ID
+            return new ProcedureResult { Result = true, Id = quoteTrailer.Id ?? Guid.Empty, Data = quoteTrailer };
         }
 
         [HttpPost("delete/{id}")]
         public async Task<ProcedureResult> DeleteQuoteTrailer(Guid id)
         {
-            var uid = _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Country);
-
-            if (uid == null)
-            {
-                return new ProcedureResult { Result = false, Data = "Unauthorised" };
-            }
-
             QuoteTrailer request = new QuoteTrailer();
             request.Id = id;
             string message = await DataTypeHelper.ActionStoredProcedureAsync(connectionString, request, new QuoteTrailer(), "quoteTrailer", "delete");
@@ -120,4 +88,3 @@ namespace loadgistix.api.Controllers
         }
     }
 }
-

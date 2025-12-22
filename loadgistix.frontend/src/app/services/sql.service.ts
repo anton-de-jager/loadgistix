@@ -423,4 +423,49 @@ export class SqlService {
             return observableResult;
         }
     }
+
+    sendContactRequest(quoteId: string): Observable<any> {
+        try {
+            return this.http.get(
+                `${environment.apiDotNet}quotes/SendContactRequest/${quoteId}`
+            ).pipe(
+                map(response => this.normalizeApiResponse(response))
+            );
+        } catch (error) {
+            console.error(error);
+            const result = { result: false };
+            const observableResult: Observable<any> = of(result);
+            return observableResult;
+        }
+    }
+
+    getItemsByField(table: string, field: string, value: string): Observable<any> {
+        try {
+            return this.http.get(
+                `${environment.apiDotNet}${table}?${field}=${value}`
+            ).pipe(
+                map(response => this.normalizeApiResponse(response))
+            );
+        } catch (error) {
+            console.error(error);
+            const result = { data: [] };
+            const observableResult: Observable<any> = of(result);
+            return observableResult;
+        }
+    }
+
+    getItemsByQuote(table: string, quoteId: string): Observable<any> {
+        try {
+            return this.http.get(
+                `${environment.apiDotNet}${table}/byQuote/${quoteId}`
+            ).pipe(
+                map(response => this.normalizeApiResponse(response))
+            );
+        } catch (error) {
+            console.error(error);
+            const result = { data: [] };
+            const observableResult: Observable<any> = of(result);
+            return observableResult;
+        }
+    }
 }
