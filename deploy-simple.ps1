@@ -70,8 +70,12 @@ function Upload-ToFtp {
     $webclient = New-Object System.Net.WebClient
     $webclient.Credentials = New-Object System.Net.NetworkCredential($FtpUsername, $FtpPassword)
     
-    $files = Get-ChildItem -Path $LocalPath -Recurse -File
+    $files = @(Get-ChildItem -Path $LocalPath -Recurse -File)
     $total = $files.Count
+    if ($total -eq 0) {
+        Write-Host "  No files to upload" -ForegroundColor Yellow
+        return
+    }
     $current = 0
     
     foreach ($file in $files) {
@@ -82,7 +86,8 @@ function Upload-ToFtp {
         # Create directory structure
         $remoteDir = Split-Path $remoteFile -Parent
         
-        Write-Progress -Activity "Uploading $Description" -Status "$current of $total - $relativePath" -PercentComplete (($current / $total) * 100)
+        $percentComplete = [math]::Round(($current / $total) * 100, 0)
+        Write-Progress -Activity "Uploading $Description" -Status "$current of $total - $relativePath" -PercentComplete $percentComplete
         
         try {
             $webclient.UploadFile($remoteFile, $file.FullName) | Out-Null

@@ -24,39 +24,49 @@ jobs:
           cd loadgistix.api
           dotnet publish -c Release -o ./publish
 
-      - name: Upload app_offline.htm (stop app)
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-          server: ${{ secrets.FTP_HOST }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: ./.github/app_offline/
-          server-dir: /api.loadgistix.com/
-          dangerous-clean-slate: false
+      - name: Install lftp
+        run: sudo apt-get install -y lftp
 
-      - name: Wait for app to stop
-        run: sleep 5
-
-      - name: Deploy API files
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-          server: ${{ secrets.FTP_HOST }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: ./loadgistix.api/publish/
-          server-dir: /api.loadgistix.com/
-          dangerous-clean-slate: true
-          exclude: |
-            **/app_offline.htm
-
-      - name: Remove app_offline.htm (start app)
-        uses: appleboy/ssh-action@v1.0.3
-        continue-on-error: true
-        with:
-          host: ${{ secrets.FTP_HOST }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          script: rm -f /api.loadgistix.com/app_offline.htm || true
+      - name: Deploy API via FTP
+        env:
+          FTP_HOST: ${{ secrets.FTP_HOST }}
+          FTP_USER: ${{ secrets.FTP_USERNAME }}
+          FTP_PASS: ${{ secrets.FTP_PASSWORD }}
+        run: |
+          # Create app_offline.htm to stop the app
+          echo '<!DOCTYPE html><html><body><h1>Updating...</h1></body></html>' > app_offline.htm
+          
+          # Upload app_offline.htm first
+          lftp -u "$FTP_USER,$FTP_PASS" "ftp://$FTP_HOST" << EOF
+          set ssl:verify-certificate no
+          set ftp:ssl-allow no
+          cd /api.loadgistix.com
+          put app_offline.htm
+          bye
+          EOF
+          
+          echo "Waiting for app to stop..."
+          sleep 5
+          
+          # Deploy all API files (mirror will sync, not delete everything)
+          lftp -u "$FTP_USER,$FTP_PASS" "ftp://$FTP_HOST" << EOF
+          set ssl:verify-certificate no
+          set ftp:ssl-allow no
+          set mirror:set-permissions no
+          mirror --reverse --delete --no-perms --exclude app_offline.htm -v ./loadgistix.api/publish/ /api.loadgistix.com/
+          bye
+          EOF
+          
+          # Remove app_offline.htm to start the app
+          lftp -u "$FTP_USER,$FTP_PASS" "ftp://$FTP_HOST" << EOF
+          set ssl:verify-certificate no
+          set ftp:ssl-allow no
+          cd /api.loadgistix.com
+          rm -f app_offline.htm || true
+          bye
+          EOF
+          
+          echo "API deployment complete"
 
   deploy-frontend:
     name: Deploy Frontend
@@ -113,18 +123,28 @@ jobs:
           </configuration>
           EOF
 
-      - name: Deploy Frontend files
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-          server: ${{ secrets.FTP_HOST }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: ./loadgistix.frontend/dist/
-          server-dir: /loadgistix.com/
-          dangerous-clean-slate: true
-          exclude: |
-            **/.well-known/**
-            **/fuse/**
+      - name: Install lftp
+        run: sudo apt-get install -y lftp
+
+      - name: Deploy Frontend via FTP
+        env:
+          FTP_HOST: ${{ secrets.FTP_HOST }}
+          FTP_USER: ${{ secrets.FTP_USERNAME }}
+          FTP_PASS: ${{ secrets.FTP_PASSWORD }}
+        run: |
+          # Remove the fuse subfolder from dist (not needed)
+          rm -rf loadgistix.frontend/dist/fuse || true
+          
+          # Deploy frontend files (mirror syncs changes, excludes .well-known)
+          lftp -u "$FTP_USER,$FTP_PASS" "ftp://$FTP_HOST" << EOF
+          set ssl:verify-certificate no
+          set ftp:ssl-allow no
+          set mirror:set-permissions no
+          mirror --reverse --delete --no-perms --exclude .well-known/ -v ./loadgistix.frontend/dist/ /loadgistix.com/
+          bye
+          EOF
+          
+          echo "Frontend deployment complete"
 
   verify:
     name: Verify Deployment
@@ -137,7 +157,7 @@ jobs:
 
       - name: Check Frontend
         run: |
-          response=$(curl -s -o /dev/null -w "%{http_code}" https://loadgistix.com)
+          response=$(curl -s -o /dev/null -w "%{http_code}" https://loadgistix.com || echo "000")
           if [ "$response" = "200" ]; then
             echo "✅ Frontend is up (HTTP $response)"
           else
@@ -146,6 +166,5 @@ jobs:
 
       - name: Check API Health
         run: |
-          response=$(curl -s https://api.loadgistix.com/health || echo "failed")
+          response=$(curl -s https://api.loadgistix.com/health 2>/dev/null || echo '{"status":"unreachable"}')
           echo "API Health: $response"
-

@@ -70,6 +70,7 @@ export class LandingHomeComponent implements OnInit, OnDestroy, AfterViewInit {
     userCountLoadNew: number = 0;
     userCountVehicleTotal: number = 0;
     userCountVehicleNew: number = 0;
+    currentYear: number = new Date().getFullYear();
 
     constructor(
         private _activatedRoute: ActivatedRoute,

@@ -132,14 +132,19 @@ if (Test-Path $winscpPath) {
     }
     
     # Get all files to upload
-    $files = Get-ChildItem -Path $localPath -Recurse -File
+    $files = @(Get-ChildItem -Path $localPath -Recurse -File)
     $totalFiles = $files.Count
+    if ($totalFiles -eq 0) {
+        Write-Host "  No files to upload" -ForegroundColor Yellow
+        return
+    }
     $currentFile = 0
     
     foreach ($file in $files) {
         $currentFile++
         $relativePath = $file.FullName.Substring($localPath.Length + 1).Replace("\", "/")
-        Write-Progress -Activity "Uploading files" -Status "$currentFile of $totalFiles" -PercentComplete (($currentFile / $totalFiles) * 100)
+        $percentComplete = [math]::Round(($currentFile / $totalFiles) * 100, 0)
+        Write-Progress -Activity "Uploading files" -Status "$currentFile of $totalFiles" -PercentComplete $percentComplete
         
         try {
             Upload-FtpFile -LocalFile $file.FullName -RemoteFile $relativePath
