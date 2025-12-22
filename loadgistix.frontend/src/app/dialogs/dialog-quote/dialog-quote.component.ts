@@ -81,7 +81,7 @@ export class DialogQuoteComponent implements OnDestroy {
             .observe('(min-width: 800px)')
             .pipe(map(({ matches }) => (matches ? 'horizontal' : 'vertical')));
 
-        this.getItems("companyTypes").then((items) => {
+        this.getItems("businessDescriptions").then((items) => {
             this.businessDescriptionList = items;
         });
         this.getItems("ownedRenteds").then((items) => {

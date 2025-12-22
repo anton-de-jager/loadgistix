@@ -64,6 +64,44 @@ namespace loadgistix.api.Controllers
             return quote;
         }
 
+        // POST: api/Quotes
+        [HttpPost]
+        public async Task<ProcedureResult> PostQuote(Quote quote)
+        {
+            try
+            {
+                if (quote.Id == null || quote.Id == Guid.Empty)
+                {
+                    quote.Id = Guid.NewGuid();
+                }
+                quote.CreatedOn = DateTime.UtcNow;
+                quote.Status = "Pending";
+
+                var result = await DataTypeHelper.ActionStoredProcedureAsync(connectionString, quote, new Quote(), "quote", "insert");
+                return new ProcedureResult { Result = true, Data = result };
+            }
+            catch (Exception ex)
+            {
+                return new ProcedureResult { Result = false, Message = ex.Message };
+            }
+        }
+
+        // PUT: api/Quotes/5
+        [HttpPut("{id}")]
+        public async Task<ProcedureResult> PutQuote(Guid id, Quote quote)
+        {
+            try
+            {
+                quote.Id = id;
+                var result = await DataTypeHelper.ActionStoredProcedureAsync(connectionString, quote, new Quote(), "quote", "update");
+                return new ProcedureResult { Result = true, Data = result };
+            }
+            catch (Exception ex)
+            {
+                return new ProcedureResult { Result = false, Message = ex.Message };
+            }
+        }
+
         [HttpGet("SendQuoteRequest/{id}")]
         public async Task<ActionResult<QuoteView>> SendQuoteRequest(Guid id)
         {
