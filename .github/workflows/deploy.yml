@@ -83,6 +83,15 @@ jobs:
           cache: 'npm'
           cache-dependency-path: loadgistix.frontend/package-lock.json
 
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+
       - name: Install dependencies
         run: |
           cd loadgistix.frontend
@@ -92,6 +101,35 @@ jobs:
         run: |
           cd loadgistix.frontend
           npm run build -- --configuration=production
+
+      - name: Sync Capacitor
+        run: |
+          cd loadgistix.frontend
+          npx cap sync android
+
+      - name: Create keystore.properties
+        working-directory: loadgistix.frontend/android
+        run: |
+          echo "storeFile=../../loadgistix.keystore" > keystore.properties
+          echo "storePassword=${{ secrets.KEYSTORE_PASSWORD }}" >> keystore.properties
+          echo "keyAlias=${{ secrets.KEY_ALIAS }}" >> keystore.properties
+          echo "keyPassword=${{ secrets.KEY_PASSWORD }}" >> keystore.properties
+
+      - name: Decode Keystore
+        working-directory: loadgistix.frontend
+        run: |
+          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > loadgistix.keystore
+
+      - name: Build Release APK
+        working-directory: loadgistix.frontend/android
+        run: |
+          chmod +x ./gradlew
+          ./gradlew assembleRelease
+
+      - name: Copy APK to dist
+        run: |
+          mkdir -p loadgistix.frontend/dist/assets/download
+          cp loadgistix.frontend/android/app/build/outputs/apk/release/app-release.apk loadgistix.frontend/dist/assets/download/loadgistix.apk
 
       - name: Create web.config
         run: |
