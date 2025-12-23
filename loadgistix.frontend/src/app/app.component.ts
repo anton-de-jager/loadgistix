@@ -9,6 +9,7 @@ import { SqlService } from './services/sql.service';
 import { User } from './core/user/user.types';
 import { UserService } from './core/user/user.service';
 import { Guid } from 'guid-typescript';
+import { VersionService } from './services/version.service';
 
 const options: PositionOptions = {
     enableHighAccuracy: true,
@@ -33,10 +34,12 @@ export class AppComponent {
         private router: Router,
         private zone: NgZone,
         private sqlService: SqlService,
-        private userService: UserService
+        private userService: UserService,
+        private versionService: VersionService
         ) {
         this.initDevice();
         this.initPWAInstallPrompt();
+        this.initVersionCheck();
         this.userService.user$.subscribe(user => {
             if (user) {
                 this.currentUser = user;
@@ -108,6 +111,21 @@ export class AppComponent {
         window.addEventListener('appinstalled', () => {
             console.log('PWA was installed');
             (window as any).deferredPrompt = null;
+        });
+    }
+
+    initVersionCheck() {
+        // Initialize version checking
+        this.versionService.init();
+
+        // Listen for update available event (mobile fallback)
+        window.addEventListener('app-update-available', (event: CustomEvent) => {
+            this.zone.run(() => {
+                const { version } = event.detail;
+                if (confirm(`A new version (${version}) is available. Would you like to update now?`)) {
+                    this.versionService.openAppStore();
+                }
+            });
         });
     }
 }

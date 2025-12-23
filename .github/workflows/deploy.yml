@@ -103,6 +103,23 @@ jobs:
         run: |
           cd loadgistix.frontend
           npm run build -- --configuration=production
+          
+      - name: Generate version.json
+        run: |
+          VERSION=$(node -p "require('./loadgistix.frontend/package.json').version")
+          BUILD_TIME=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+          COMMIT_HASH="${GITHUB_SHA:0:8}"
+          
+          cat > loadgistix.frontend/dist/assets/version.json << EOF
+          {
+            "version": "${VERSION}-${COMMIT_HASH}",
+            "buildTime": "${BUILD_TIME}",
+            "commitHash": "${COMMIT_HASH}"
+          }
+          EOF
+          
+          echo "Generated version.json:"
+          cat loadgistix.frontend/dist/assets/version.json
 
       - name: Sync Capacitor
         run: |
