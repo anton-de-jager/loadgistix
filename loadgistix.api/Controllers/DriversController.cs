@@ -135,9 +135,9 @@ namespace drivergistix_api.Controllers
                 var pathToSave = Path.Combine(System.IO.Directory.GetCurrentDirectory(), folderName);
                 
                 // Ensure directory exists
-                if (!Directory.Exists(pathToSave))
+                if (!System.IO.Directory.Exists(pathToSave))
                 {
-                    Directory.CreateDirectory(pathToSave);
+                    System.IO.Directory.CreateDirectory(pathToSave);
                 }
                 
                 if (file.Length > 0)
@@ -182,9 +182,9 @@ namespace drivergistix_api.Controllers
                 var pathToSave = Path.Combine(System.IO.Directory.GetCurrentDirectory(), folderName);
                 
                 // Ensure directory exists
-                if (!Directory.Exists(pathToSave))
+                if (!System.IO.Directory.Exists(pathToSave))
                 {
-                    Directory.CreateDirectory(pathToSave);
+                    System.IO.Directory.CreateDirectory(pathToSave);
                 }
                 
                 if (file.Length > 0)
