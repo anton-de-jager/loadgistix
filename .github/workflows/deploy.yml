@@ -207,15 +207,19 @@ jobs:
           
           # Explicitly upload APK (in case mirror missed it)
           echo "=== Force uploading APK ==="
-          lftp -u "$FTP_USER,$FTP_PASS" "ftp://$FTP_HOST" << EOF
-          set ssl:verify-certificate no
-          set ftp:ssl-allow no
-          mkdir -p /loadgistix.com/assets/download
-          cd /loadgistix.com/assets/download
-          put ./loadgistix.frontend/dist/assets/download/loadgistix.apk
-          ls -la
-          bye
-          EOF
+          echo "APK file size: $(ls -la loadgistix.frontend/dist/assets/download/loadgistix.apk 2>&1)"
+          echo "APK file exists: $(test -f loadgistix.frontend/dist/assets/download/loadgistix.apk && echo YES || echo NO)"
+          
+          # Upload with verbose output
+          lftp -d -u "$FTP_USER,$FTP_PASS" "ftp://$FTP_HOST" -e "
+            set ssl:verify-certificate no;
+            set ftp:ssl-allow no;
+            set ftp:passive-mode yes;
+            mkdir -f -p /loadgistix.com/assets/download;
+            put -O /loadgistix.com/assets/download loadgistix.frontend/dist/assets/download/loadgistix.apk;
+            ls /loadgistix.com/assets/download/;
+            quit
+          " || echo "LFTP upload failed with exit code: $?"
 
   verify:
     name: Verify Deployment
