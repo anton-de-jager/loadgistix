@@ -13,8 +13,9 @@ android {
         applicationId "com.loadgistix.www"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 11134
-        versionName "1.0.0"
+        // Version code from CI or default. Set VERSION_CODE env var in CI.
+        versionCode Integer.parseInt(System.getenv("VERSION_CODE") ?: "11135")
+        versionName System.getenv("VERSION_NAME") ?: "1.0.1"
         resConfigs "en"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         aaptOptions {

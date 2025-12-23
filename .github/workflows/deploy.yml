@@ -141,10 +141,22 @@ jobs:
 
       - name: Build Release APK
         working-directory: loadgistix.frontend/android
+        env:
+          VERSION_CODE: ${{ github.run_number }}
+          VERSION_NAME: "1.0.${{ github.run_number }}"
         run: |
           chmod +x ./gradlew
+          echo "Building with VERSION_CODE=$VERSION_CODE VERSION_NAME=$VERSION_NAME"
           ./gradlew assembleRelease
 
+      - name: Build Release AAB (for Play Store)
+        working-directory: loadgistix.frontend/android
+        env:
+          VERSION_CODE: ${{ github.run_number }}
+          VERSION_NAME: "1.0.${{ github.run_number }}"
+        run: |
+          ./gradlew bundleRelease
+          
       - name: Copy APK to dist/assets
         run: |
           # Copy APK to assets folder (known to work)
@@ -156,6 +168,20 @@ jobs:
             echo "❌ APK not found! Build may have failed."
             exit 1
           fi
+
+      - name: Upload AAB as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-release-aab
+          path: loadgistix.frontend/android/app/build/outputs/bundle/release/app-release.aab
+          retention-days: 30
+
+      - name: Upload APK as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-release-apk
+          path: loadgistix.frontend/android/app/build/outputs/apk/release/app-release.apk
+          retention-days: 30
 
       - name: Create web.config
         run: |
@@ -234,6 +260,34 @@ jobs:
           ls loadgistix.apk
           bye
           EOF
+
+  # Separate job for Play Store deployment (only runs if PLAY_STORE_JSON secret exists)
+  deploy-playstore:
+    name: Deploy to Play Store
+    runs-on: ubuntu-latest
+    needs: deploy-frontend
+    if: ${{ github.event_name == 'workflow_dispatch' }}  # Only on manual trigger
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Download AAB artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: app-release-aab
+          path: ./
+
+      - name: Upload to Play Store
+        uses: r0adkll/upload-google-play@v1
+        with:
+          serviceAccountJsonPlainText: ${{ secrets.PLAY_STORE_SERVICE_ACCOUNT_JSON }}
+          packageName: com.loadgistix.www
+          releaseFiles: app-release.aab
+          track: internal  # Options: internal, alpha, beta, production
+          status: completed
+          inAppUpdatePriority: 2
+        continue-on-error: true  # Don't fail the whole workflow if Play Store upload fails
 
   verify:
     name: Verify Deployment
