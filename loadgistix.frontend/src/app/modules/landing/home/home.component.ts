@@ -57,6 +57,7 @@ export class LandingHomeComponent implements OnInit, OnDestroy, AfterViewInit {
     data: any;
 
     currentUser: User;
+    currentYear: number = new Date().getFullYear();
 
     loadCountTotal: number = 0;
     loadCountNew: number = 0;

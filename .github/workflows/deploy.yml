@@ -131,7 +131,14 @@ jobs:
       - name: Copy APK to dist
         run: |
           mkdir -p loadgistix.frontend/dist/assets/download
-          cp loadgistix.frontend/android/app/build/outputs/apk/release/app-release.apk loadgistix.frontend/dist/assets/download/loadgistix.apk
+          if [ -f "loadgistix.frontend/android/app/build/outputs/apk/release/app-release.apk" ]; then
+            cp loadgistix.frontend/android/app/build/outputs/apk/release/app-release.apk loadgistix.frontend/dist/assets/download/loadgistix.apk
+            echo "✅ APK copied successfully"
+            ls -la loadgistix.frontend/dist/assets/download/
+          else
+            echo "❌ APK not found! Build may have failed."
+            exit 1
+          fi
 
       - name: Create web.config
         run: |
@@ -160,6 +167,8 @@ jobs:
                 <mimeMap fileExtension=".json" mimeType="application/json" />
                 <remove fileExtension=".webmanifest" />
                 <mimeMap fileExtension=".webmanifest" mimeType="application/manifest+json" />
+                <remove fileExtension=".apk" />
+                <mimeMap fileExtension=".apk" mimeType="application/vnd.android.package-archive" />
               </staticContent>
             </system.webServer>
           </configuration>

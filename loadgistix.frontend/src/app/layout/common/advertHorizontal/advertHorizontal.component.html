@@ -13,14 +13,9 @@
             </div>
 
             <!-- Adverts Grid -->
-            <div class="gap-8" 
-                 [ngClass]="{
-                     'flex justify-center': advertItems.length === 1,
-                     'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3': advertItems.length > 1
-                 }">
+            <div class="flex flex-wrap justify-center gap-8">
                 <div *ngFor="let advertItem of advertItems" 
-                     class="group bg-white dark:bg-gray-800 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden transform hover:-translate-y-2 flex flex-col"
-                     [ngClass]="{'w-full max-w-lg': advertItems.length === 1, 'w-full h-full': advertItems.length > 1}">
+                     class="group bg-white dark:bg-gray-800 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden transform hover:-translate-y-2 flex flex-col w-full sm:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.5rem)] max-w-md">
                     
                     <!-- Card Header with Gradient -->
                     <div class="relative p-6 text-white flex-shrink-0" style="background: linear-gradient(135deg, #1976D2 0%, #2196F3 50%, #42A5F5 100%);">
@@ -79,7 +74,7 @@
                             </a>
                             
                             <a mat-menu-item 
-                               [href]="'mailto:' + advertItem.email + '?subject=RE: LoadGistix Partner Service&body='"
+                               [href]="'mailto:' + advertItem.email + '?subject=RE: Loadgistix Partner Service&body='"
                                class="!py-3 hover:!bg-blue-50 dark:hover:!bg-gray-700">
                                 <mat-icon class="text-blue-600 dark:text-blue-400" svgIcon="heroicons_outline:envelope"></mat-icon>
                                 <span class="ml-3 text-gray-900 dark:text-gray-100">{{ advertItem.email }}</span>
