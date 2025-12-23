@@ -29,11 +29,11 @@
                 <p class="text-blue-100 mb-6">
                     Download the APK file directly to your Android device. No Google Play Store required.
                 </p>
-                <a href="/assets/loadgistix.apk" download="loadgistix.apk"
-                    class="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-4 px-6 rounded-xl flex items-center justify-center gap-3 transition-colors no-underline">
+                <button (click)="downloadAPK()"
+                    class="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-4 px-6 rounded-xl flex items-center justify-center gap-3 transition-colors cursor-pointer border-none">
                     <mat-icon>download</mat-icon>
                     <span>Download APK</span>
-                </a>
+                </button>
                 <div class="mt-4 text-sm text-blue-200">
                     <p class="flex items-center gap-2">
                         <mat-icon class="text-base">info</mat-icon>

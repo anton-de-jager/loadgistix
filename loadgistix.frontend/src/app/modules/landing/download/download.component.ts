@@ -22,7 +22,14 @@ export class DownloadComponent {
     }
 
     downloadAPK(): void {
-        window.location.href = '/assets/loadgistix.apk';
+        // Create a temporary link with download attribute to force correct filename
+        const link = document.createElement('a');
+        link.href = '/assets/loadgistix.apk';
+        link.download = 'loadgistix.apk';
+        link.type = 'application/vnd.android.package-archive';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
     }
 
     installPWA(): void {
