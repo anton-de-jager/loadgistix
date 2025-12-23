@@ -196,14 +196,14 @@ jobs:
           # Remove the fuse subfolder from dist (not needed)
           rm -rf loadgistix.frontend/dist/fuse || true
           
-          # Deploy frontend files (only upload changed files by comparing size)
+          # Deploy frontend files (full sync to ensure consistency)
           lftp -u "$FTP_USER,$FTP_PASS" "ftp://$FTP_HOST" << EOF
           set ssl:verify-certificate no
           set ftp:ssl-allow no
           set mirror:set-permissions no
           set net:timeout 30
           set net:max-retries 3
-          mirror --reverse --delete --no-perms --only-newer --ignore-time --parallel=5 --exclude .well-known/ -v ./loadgistix.frontend/dist/ /loadgistix.com/
+          mirror --reverse --delete --no-perms --parallel=5 --exclude .well-known/ -v ./loadgistix.frontend/dist/ /loadgistix.com/
           bye
           EOF
           
