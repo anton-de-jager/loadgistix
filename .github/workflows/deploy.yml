@@ -130,11 +130,11 @@ jobs:
 
       - name: Copy APK to dist
         run: |
-          mkdir -p loadgistix.frontend/dist/assets/download
+          # Copy APK to root of dist (simpler path)
           if [ -f "loadgistix.frontend/android/app/build/outputs/apk/release/app-release.apk" ]; then
-            cp loadgistix.frontend/android/app/build/outputs/apk/release/app-release.apk loadgistix.frontend/dist/assets/download/loadgistix.apk
-            echo "✅ APK copied successfully"
-            ls -la loadgistix.frontend/dist/assets/download/
+            cp loadgistix.frontend/android/app/build/outputs/apk/release/app-release.apk loadgistix.frontend/dist/loadgistix.apk
+            echo "✅ APK copied to dist root"
+            ls -la loadgistix.frontend/dist/loadgistix.apk
           else
             echo "❌ APK not found! Build may have failed."
             exit 1
@@ -177,8 +177,10 @@ jobs:
       - name: Verify dist structure before upload
         run: |
           echo "=== Dist folder structure ==="
-          find loadgistix.frontend/dist -type f -name "*.apk" 2>/dev/null || echo "No APK files found"
-          ls -la loadgistix.frontend/dist/assets/download/ 2>/dev/null || echo "Download folder not found"
+          echo "APK in dist root:"
+          ls -la loadgistix.frontend/dist/loadgistix.apk 2>/dev/null || echo "APK not found"
+          echo "=== All files in dist ==="
+          ls -la loadgistix.frontend/dist/
           
       - name: Install lftp
         run: sudo apt-get install -y lftp
@@ -205,21 +207,14 @@ jobs:
           
           echo "Frontend deployment complete"
           
-          # Explicitly upload APK (in case mirror missed it)
-          echo "=== Force uploading APK ==="
-          echo "APK file size: $(ls -la loadgistix.frontend/dist/assets/download/loadgistix.apk 2>&1)"
-          echo "APK file exists: $(test -f loadgistix.frontend/dist/assets/download/loadgistix.apk && echo YES || echo NO)"
-          
-          # Upload with verbose output
-          lftp -d -u "$FTP_USER,$FTP_PASS" "ftp://$FTP_HOST" -e "
-            set ssl:verify-certificate no;
-            set ftp:ssl-allow no;
-            set ftp:passive-mode yes;
-            mkdir -f -p /loadgistix.com/assets/download;
-            put -O /loadgistix.com/assets/download loadgistix.frontend/dist/assets/download/loadgistix.apk;
-            ls /loadgistix.com/assets/download/;
-            quit
-          " || echo "LFTP upload failed with exit code: $?"
+          # Verify APK was uploaded
+          lftp -u "$FTP_USER,$FTP_PASS" "ftp://$FTP_HOST" << EOF
+          set ssl:verify-certificate no
+          set ftp:ssl-allow no
+          cd /loadgistix.com
+          ls loadgistix.apk
+          bye
+          EOF
 
   verify:
     name: Verify Deployment
@@ -246,7 +241,7 @@ jobs:
 
       - name: Check APK Download
         run: |
-          response=$(curl -s -o /dev/null -w "%{http_code}" https://loadgistix.com/assets/download/loadgistix.apk || echo "000")
+          response=$(curl -s -o /dev/null -w "%{http_code}" https://loadgistix.com/loadgistix.apk || echo "000")
           if [ "$response" = "200" ]; then
             echo "✅ APK is accessible (HTTP $response)"
           else
