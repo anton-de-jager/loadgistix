@@ -16,7 +16,9 @@ export interface VersionInfo {
 export class VersionService {
     private readonly VERSION_STORAGE_KEY = 'loadgistix_version';
     private readonly CHECK_INTERVAL = 5 * 60 * 1000; // 5 minutes
+    private readonly SERVER_URL = 'https://loadgistix.com';
     private currentVersion: VersionInfo | null = null;
+    private initialized = false;
 
     constructor(private http: HttpClient) {}
 
@@ -24,8 +26,15 @@ export class VersionService {
      * Initialize version checking
      */
     async init(): Promise<void> {
-        // Check version on startup
-        await this.checkVersion();
+        if (this.initialized) {
+            return;
+        }
+        this.initialized = true;
+
+        // Delay version check to allow app to fully initialize
+        setTimeout(() => {
+            this.checkVersion();
+        }, 3000);
 
         // Set up periodic checks (only on web)
         if (Capacitor.getPlatform() === 'web') {
@@ -45,49 +54,113 @@ export class VersionService {
      */
     async checkVersion(): Promise<boolean> {
         try {
-            // Fetch version.json with cache-busting
+            const platform = Capacitor.getPlatform();
+            
+            // Build the correct URL based on platform
             const timestamp = new Date().getTime();
-            const versionInfo = await this.http.get<VersionInfo>(
-                `/assets/version.json?t=${timestamp}`
-            ).toPromise();
+            let versionUrl: string;
+            
+            if (platform === 'web') {
+                // On web, use relative URL
+                versionUrl = `/assets/version.json?t=${timestamp}`;
+            } else {
+                // On mobile, fetch from server
+                versionUrl = `${this.SERVER_URL}/assets/version.json?t=${timestamp}`;
+            }
+
+            const versionInfo = await this.http.get<VersionInfo>(versionUrl).toPromise();
 
             if (!versionInfo) {
                 return false;
             }
 
-            const storedVersion = this.getStoredVersion();
             this.currentVersion = versionInfo;
 
-            // First time - just store the version
-            if (!storedVersion) {
-                this.storeVersion(versionInfo);
-                console.log('Version initialized:', versionInfo.version);
-                return false;
+            if (platform === 'web') {
+                // Web: Compare with stored version
+                return await this.handleWebVersionCheck(versionInfo);
+            } else {
+                // Mobile: Compare with app version
+                return await this.handleMobileVersionCheck(versionInfo);
             }
-
-            // Compare versions
-            if (storedVersion.version !== versionInfo.version || 
-                storedVersion.buildTime !== versionInfo.buildTime) {
-                console.log('New version detected!', {
-                    old: storedVersion.version,
-                    new: versionInfo.version
-                });
-
-                if (Capacitor.getPlatform() === 'web') {
-                    // Web: Clear cache and reload
-                    await this.clearCacheAndReload(versionInfo);
-                } else {
-                    // Mobile: Show update notification
-                    await this.showUpdateNotification(versionInfo);
-                }
-                return true;
-            }
-
-            return false;
         } catch (error) {
             console.warn('Version check failed:', error);
             return false;
         }
+    }
+
+    /**
+     * Handle version check for web platform
+     */
+    private async handleWebVersionCheck(serverVersion: VersionInfo): Promise<boolean> {
+        const storedVersion = this.getStoredVersion();
+
+        // First time - just store the version
+        if (!storedVersion) {
+            this.storeVersion(serverVersion);
+            console.log('Version initialized:', serverVersion.version);
+            return false;
+        }
+
+        // Compare versions
+        if (storedVersion.version !== serverVersion.version || 
+            storedVersion.buildTime !== serverVersion.buildTime) {
+            console.log('New version detected!', {
+                old: storedVersion.version,
+                new: serverVersion.version
+            });
+            
+            await this.clearCacheAndReload(serverVersion);
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Handle version check for mobile platform
+     */
+    private async handleMobileVersionCheck(serverVersion: VersionInfo): Promise<boolean> {
+        try {
+            const appInfo = await App.getInfo();
+            const appVersion = appInfo.version;
+            
+            // Extract version number from server version (e.g., "18.0.0-692a9422" -> "18.0.0")
+            const serverVersionNumber = serverVersion.version.split('-')[0];
+            
+            // Compare versions
+            if (this.isNewerVersion(serverVersionNumber, appVersion)) {
+                console.log('App update available!', {
+                    installed: appVersion,
+                    available: serverVersionNumber
+                });
+                
+                await this.showUpdateNotification(serverVersion);
+                return true;
+            }
+        } catch (error) {
+            console.warn('Mobile version check failed:', error);
+        }
+        
+        return false;
+    }
+
+    /**
+     * Compare version strings (returns true if v1 > v2)
+     */
+    private isNewerVersion(v1: string, v2: string): boolean {
+        const parts1 = v1.split('.').map(Number);
+        const parts2 = v2.split('.').map(Number);
+        
+        for (let i = 0; i < Math.max(parts1.length, parts2.length); i++) {
+            const p1 = parts1[i] || 0;
+            const p2 = parts2[i] || 0;
+            
+            if (p1 > p2) return true;
+            if (p1 < p2) return false;
+        }
+        
+        return false;
     }
 
     /**
@@ -141,8 +214,8 @@ export class VersionService {
                         {
                             id: 1001,
                             title: 'Loadgistix Update Available',
-                            body: `Version ${newVersion.version} is available. Tap to update.`,
-                            largeBody: `A new version of Loadgistix (${newVersion.version}) is available. Update now to get the latest features and improvements.`,
+                            body: `Version ${newVersion.version.split('-')[0]} is available. Tap to update.`,
+                            largeBody: `A new version of Loadgistix is available. Update now to get the latest features and improvements.`,
                             actionTypeId: 'UPDATE_ACTION',
                             extra: {
                                 action: 'update',
@@ -158,6 +231,9 @@ export class VersionService {
                         this.openAppStore();
                     }
                 });
+            } else {
+                // Permission not granted, show in-app alert
+                this.showInAppUpdateAlert(newVersion);
             }
         } catch (error) {
             console.warn('Failed to show update notification:', error);
@@ -233,4 +309,3 @@ export class VersionService {
         return this.currentVersion;
     }
 }
-

@@ -115,17 +115,23 @@ export class AppComponent {
     }
 
     initVersionCheck() {
-        // Initialize version checking
-        this.versionService.init();
-
-        // Listen for update available event (mobile fallback)
-        window.addEventListener('app-update-available', (event: CustomEvent) => {
-            this.zone.run(() => {
-                const { version } = event.detail;
-                if (confirm(`A new version (${version}) is available. Would you like to update now?`)) {
-                    this.versionService.openAppStore();
-                }
+        try {
+            // Initialize version checking (non-blocking)
+            this.versionService.init().catch(error => {
+                console.warn('Version check initialization failed:', error);
             });
-        });
+
+            // Listen for update available event (mobile fallback)
+            window.addEventListener('app-update-available', (event: CustomEvent) => {
+                this.zone.run(() => {
+                    const { version } = event.detail;
+                    if (confirm(`A new version (${version}) is available. Would you like to update now?`)) {
+                        this.versionService.openAppStore();
+                    }
+                });
+            });
+        } catch (error) {
+            console.warn('Version check setup failed:', error);
+        }
     }
 }
