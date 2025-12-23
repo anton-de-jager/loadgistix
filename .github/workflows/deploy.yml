@@ -128,13 +128,13 @@ jobs:
           chmod +x ./gradlew
           ./gradlew assembleRelease
 
-      - name: Copy APK to dist
+      - name: Copy APK to dist/assets
         run: |
-          # Copy APK to root of dist (simpler path)
+          # Copy APK to assets folder (known to work)
           if [ -f "loadgistix.frontend/android/app/build/outputs/apk/release/app-release.apk" ]; then
-            cp loadgistix.frontend/android/app/build/outputs/apk/release/app-release.apk loadgistix.frontend/dist/loadgistix.apk
-            echo "✅ APK copied to dist root"
-            ls -la loadgistix.frontend/dist/loadgistix.apk
+            cp loadgistix.frontend/android/app/build/outputs/apk/release/app-release.apk loadgistix.frontend/dist/assets/loadgistix.apk
+            echo "✅ APK copied to assets folder"
+            ls -la loadgistix.frontend/dist/assets/loadgistix.apk
           else
             echo "❌ APK not found! Build may have failed."
             exit 1
@@ -176,11 +176,8 @@ jobs:
 
       - name: Verify dist structure before upload
         run: |
-          echo "=== Dist folder structure ==="
-          echo "APK in dist root:"
-          ls -la loadgistix.frontend/dist/loadgistix.apk 2>/dev/null || echo "APK not found"
-          echo "=== All files in dist ==="
-          ls -la loadgistix.frontend/dist/
+          echo "=== APK in assets folder ==="
+          ls -la loadgistix.frontend/dist/assets/loadgistix.apk 2>/dev/null || echo "APK not found"
           
       - name: Install lftp
         run: sudo apt-get install -y lftp
@@ -211,7 +208,7 @@ jobs:
           lftp -u "$FTP_USER,$FTP_PASS" "ftp://$FTP_HOST" << EOF
           set ssl:verify-certificate no
           set ftp:ssl-allow no
-          cd /loadgistix.com
+          cd /loadgistix.com/assets
           ls loadgistix.apk
           bye
           EOF
@@ -241,7 +238,7 @@ jobs:
 
       - name: Check APK Download
         run: |
-          response=$(curl -s -o /dev/null -w "%{http_code}" https://loadgistix.com/loadgistix.apk || echo "000")
+          response=$(curl -s -o /dev/null -w "%{http_code}" https://loadgistix.com/assets/loadgistix.apk || echo "000")
           if [ "$response" = "200" ]; then
             echo "✅ APK is accessible (HTTP $response)"
           else

@@ -22,7 +22,7 @@ export class DownloadComponent {
     }
 
     downloadAPK(): void {
-        window.location.href = '/loadgistix.apk';
+        window.location.href = '/assets/loadgistix.apk';
     }
 
     installPWA(): void {
