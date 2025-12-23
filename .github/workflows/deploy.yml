@@ -48,12 +48,14 @@ jobs:
           echo "Waiting for app to stop..."
           sleep 5
           
-          # Deploy all API files (mirror will sync, not delete everything)
+          # Deploy all API files (only upload changed files by comparing size)
           lftp -u "$FTP_USER,$FTP_PASS" "ftp://$FTP_HOST" << EOF
           set ssl:verify-certificate no
           set ftp:ssl-allow no
           set mirror:set-permissions no
-          mirror --reverse --delete --no-perms --exclude app_offline.htm -v ./loadgistix.api/publish/ /api.loadgistix.com/
+          set net:timeout 30
+          set net:max-retries 3
+          mirror --reverse --delete --no-perms --only-newer --ignore-time --parallel=5 --exclude app_offline.htm -v ./loadgistix.api/publish/ /api.loadgistix.com/
           bye
           EOF
           
@@ -175,12 +177,14 @@ jobs:
           # Remove the fuse subfolder from dist (not needed)
           rm -rf loadgistix.frontend/dist/fuse || true
           
-          # Deploy frontend files (mirror syncs changes, excludes .well-known)
+          # Deploy frontend files (only upload changed files by comparing size)
           lftp -u "$FTP_USER,$FTP_PASS" "ftp://$FTP_HOST" << EOF
           set ssl:verify-certificate no
           set ftp:ssl-allow no
           set mirror:set-permissions no
-          mirror --reverse --delete --no-perms --exclude .well-known/ -v ./loadgistix.frontend/dist/ /loadgistix.com/
+          set net:timeout 30
+          set net:max-retries 3
+          mirror --reverse --delete --no-perms --only-newer --ignore-time --parallel=5 --exclude .well-known/ -v ./loadgistix.frontend/dist/ /loadgistix.com/
           bye
           EOF
           
