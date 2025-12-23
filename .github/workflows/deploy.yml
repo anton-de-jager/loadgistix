@@ -174,6 +174,12 @@ jobs:
           </configuration>
           EOF
 
+      - name: Verify dist structure before upload
+        run: |
+          echo "=== Dist folder structure ==="
+          find loadgistix.frontend/dist -type f -name "*.apk" 2>/dev/null || echo "No APK files found"
+          ls -la loadgistix.frontend/dist/assets/download/ 2>/dev/null || echo "Download folder not found"
+          
       - name: Install lftp
         run: sudo apt-get install -y lftp
 
@@ -198,6 +204,15 @@ jobs:
           EOF
           
           echo "Frontend deployment complete"
+          
+          # Verify APK was uploaded
+          lftp -u "$FTP_USER,$FTP_PASS" "ftp://$FTP_HOST" << EOF
+          set ssl:verify-certificate no
+          set ftp:ssl-allow no
+          cd /loadgistix.com/assets/download
+          ls
+          bye
+          EOF
 
   verify:
     name: Verify Deployment
@@ -221,3 +236,12 @@ jobs:
         run: |
           response=$(curl -s https://api.loadgistix.com/health 2>/dev/null || echo '{"status":"unreachable"}')
           echo "API Health: $response"
+
+      - name: Check APK Download
+        run: |
+          response=$(curl -s -o /dev/null -w "%{http_code}" https://loadgistix.com/assets/download/loadgistix.apk || echo "000")
+          if [ "$response" = "200" ]; then
+            echo "✅ APK is accessible (HTTP $response)"
+          else
+            echo "❌ APK returned HTTP $response - NOT ACCESSIBLE"
+          fi
