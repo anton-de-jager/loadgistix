@@ -89,6 +89,11 @@ export const appRoutes: Route[] = [
                 loadChildren: () =>
                     import('app/modules/landing/download/download.routes'),
             },
+            {
+                path: 'debug',
+                loadChildren: () =>
+                    import('app/modules/landing/debug/debug.routes'),
+            },
         ]
     },
 

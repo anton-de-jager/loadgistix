@@ -1,5 +1,5 @@
 import { provideHttpClient } from '@angular/common/http';
-import { ApplicationConfig, importProvidersFrom } from '@angular/core';
+import { ApplicationConfig, ErrorHandler, importProvidersFrom } from '@angular/core';
 import { LuxonDateAdapter } from '@angular/material-luxon-adapter';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import { provideAnimations } from '@angular/platform-browser/animations';
@@ -14,9 +14,14 @@ import { Angular4PaystackModule } from 'angular4-paystack';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { environment } from 'environments/environment';
+import { GlobalErrorHandler, CrashLoggerService } from 'app/services/crash-logger.service';
 
 export const appConfig: ApplicationConfig = {
     providers: [
+        // Global error handler for crash logging
+        CrashLoggerService,
+        { provide: ErrorHandler, useClass: GlobalErrorHandler },
+        
         importProvidersFrom([
             Angular4PaystackModule.forRoot(environment.paystack_key),
             NgxSpinnerModule,

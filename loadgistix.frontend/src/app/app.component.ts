@@ -10,6 +10,7 @@ import { User } from './core/user/user.types';
 import { UserService } from './core/user/user.service';
 import { Guid } from 'guid-typescript';
 import { VersionService } from './services/version.service';
+import { CrashLoggerService } from './services/crash-logger.service';
 
 const options: PositionOptions = {
     enableHighAccuracy: true,
@@ -35,35 +36,44 @@ export class AppComponent {
         private zone: NgZone,
         private sqlService: SqlService,
         private userService: UserService,
-        private versionService: VersionService
+        private versionService: VersionService,
+        private crashLogger: CrashLoggerService
         ) {
-        this.initDevice();
-        this.initPWAInstallPrompt();
-        this.initVersionCheck();
-        this.userService.user$.subscribe(user => {
-            if (user) {
-                this.currentUser = user;
-            }
-        });
-        App.addListener('appUrlOpen', (event: URLOpenListenerEvent) => {
-            this.zone.run(() => {
-                const domain = 'loadgistix.com';
-                const pathAttay = event.url.split(domain);
-                const appPath = pathAttay.pop();
-
-                if(appPath) {
-                    this.router.navigateByUrl(appPath);
+        // Initialize crash logger first to catch any errors
+        this.crashLogger.init().catch(() => {});
+        
+        try {
+            this.initDevice();
+            this.initPWAInstallPrompt();
+            this.initVersionCheck();
+            this.userService.user$.subscribe(user => {
+                if (user) {
+                    this.currentUser = user;
                 }
             });
-        });
+            App.addListener('appUrlOpen', (event: URLOpenListenerEvent) => {
+                this.zone.run(() => {
+                    const domain = 'loadgistix.com';
+                    const pathAttay = event.url.split(domain);
+                    const appPath = pathAttay.pop();
 
-        App.addListener('appStateChange', ({ isActive }) => {
-            //console.log('App state changed. Is active?', isActive);
-            if (isActive) {
-                //this.router.navigateByUrl('refresh');
-                this.initDevice();
-            }
-        });
+                    if(appPath) {
+                        this.router.navigateByUrl(appPath);
+                    }
+                });
+            });
+
+            App.addListener('appStateChange', ({ isActive }) => {
+                //console.log('App state changed. Is active?', isActive);
+                if (isActive) {
+                    //this.router.navigateByUrl('refresh');
+                    this.initDevice();
+                }
+            });
+        } catch (error) {
+            this.crashLogger.logError(error as Error, 'AppComponent.constructor');
+            throw error; // Re-throw to let the global handler catch it too
+        }
     }
 
     initDevice() {
