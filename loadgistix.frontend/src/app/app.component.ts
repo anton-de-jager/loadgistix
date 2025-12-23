@@ -49,7 +49,7 @@ export class AppComponent {
                 const appPath = pathAttay.pop();
 
                 if(appPath) {
-                    this,router.navigateByUrl(appPath);
+                    this.router.navigateByUrl(appPath);
                 }
             });
         });
@@ -90,6 +90,11 @@ export class AppComponent {
     }
 
     initPWAInstallPrompt() {
+        // Only run PWA code on web platform
+        if (Capacitor.getPlatform() !== 'web') {
+            return;
+        }
+        
         // Listen for the beforeinstallprompt event
         window.addEventListener('beforeinstallprompt', (e: Event) => {
             // Prevent the mini-infobar from appearing on mobile
