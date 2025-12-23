@@ -160,11 +160,18 @@ namespace loadgistix.api.Controllers
                 var file = Request.Form.Files[0];
                 var folderName = Path.Combine("Images", "Adverts");
                 var pathToSave = Path.Combine(System.IO.Directory.GetCurrentDirectory(), folderName);
+                
+                // Ensure directory exists
+                if (!Directory.Exists(pathToSave))
+                {
+                    Directory.CreateDirectory(pathToSave);
+                }
+                
                 if (file.Length > 0)
                 {
                     var fullPath = Path.Combine(pathToSave, filename + ".jpg");
                     var dbPath = Path.Combine(folderName, filename + ".jpg");
-                    using (var stream = new FileStream(fullPath, FileMode.OpenOrCreate))
+                    using (var stream = new FileStream(fullPath, FileMode.Create))
                     {
                         file.CopyTo(stream);
                         stream.Flush();
