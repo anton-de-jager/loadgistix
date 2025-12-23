@@ -205,12 +205,15 @@ jobs:
           
           echo "Frontend deployment complete"
           
-          # Verify APK was uploaded
+          # Explicitly upload APK (in case mirror missed it)
+          echo "=== Force uploading APK ==="
           lftp -u "$FTP_USER,$FTP_PASS" "ftp://$FTP_HOST" << EOF
           set ssl:verify-certificate no
           set ftp:ssl-allow no
+          mkdir -p /loadgistix.com/assets/download
           cd /loadgistix.com/assets/download
-          ls
+          put ./loadgistix.frontend/dist/assets/download/loadgistix.apk
+          ls -la
           bye
           EOF
 
