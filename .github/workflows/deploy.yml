@@ -157,6 +157,17 @@ jobs:
                     <action type="Rewrite" url="/index.html" />
                   </rule>
                 </rules>
+                <outboundRules>
+                  <rule name="Add APK Content-Disposition" preCondition="IsAPK">
+                    <match serverVariable="RESPONSE_Content-Disposition" pattern=".*" />
+                    <action type="Rewrite" value="attachment; filename=loadgistix.apk" />
+                  </rule>
+                  <preConditions>
+                    <preCondition name="IsAPK">
+                      <add input="{REQUEST_URI}" pattern="\.apk$" />
+                    </preCondition>
+                  </preConditions>
+                </outboundRules>
               </rewrite>
               <staticContent>
                 <remove fileExtension=".woff" />
@@ -170,6 +181,11 @@ jobs:
                 <remove fileExtension=".apk" />
                 <mimeMap fileExtension=".apk" mimeType="application/vnd.android.package-archive" />
               </staticContent>
+              <httpProtocol>
+                <customHeaders>
+                  <add name="X-Content-Type-Options" value="nosniff" />
+                </customHeaders>
+              </httpProtocol>
             </system.webServer>
           </configuration>
           EOF
