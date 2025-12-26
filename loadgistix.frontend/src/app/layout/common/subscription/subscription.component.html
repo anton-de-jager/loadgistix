@@ -1,23 +1,150 @@
-<form name="PayFastPayNowForm" (submit)="onSubmit($event)" [action]="actionUrl" method="post">
-    <input required type="hidden" name="cmd" value="_paynow">
-    <input required type="hidden" name="receiver" pattern="[0-9]" value="12100762">
-    <input type="hidden" name="email_address" maxlength="255" [value]="emailAddress">
-    <input type="hidden" name="return_url" [value]="returnUrl">
-    <input type="hidden" name="cancel_url" [value]="cancelUrl">
-    <input type="hidden" name="notify_url" [value]="notifyUrl">
-    <input required type="hidden" name="amount" [value]="amount">
-    <input required type="hidden" name="item_name" maxlength="255" [value]="itemName">
-    <input type="hidden" name="item_description" maxlength="255" [value]="itemDescription ">
-    <input required type="hidden" name="subscription_type" pattern="1" value="1">
-    <input type="hidden" name="recurring_amount" [value]="recurringAmount">
-    <input required type="hidden" name="cycles" pattern="[0-9]" value="0">
-    <input required type="hidden" name="frequency" pattern="[0-9]" value="3">
-    <table *ngIf="!loading">
-        <tr>
-            <td colspan=2 align=center>
-                <input type="image" src="https://my.payfast.io/images/buttons/Subscribe/Light-Small-Subscribe.png"
-                    alt="Subscribe" title="Subscribe with Payfast">
-            </td>
-        </tr>
-    </table>
-</form>
+<div class="payment-container">
+    <!-- Main Subscribe Button -->
+    <form name="PayFastPayNowForm" (submit)="onSubmit($event)" [action]="actionUrl" method="post" #paymentForm>
+        <input required type="hidden" name="cmd" value="_paynow">
+        <input required type="hidden" name="receiver" pattern="[0-9]" value="12100762">
+        <input type="hidden" name="email_address" maxlength="255" [value]="emailAddress">
+        <input type="hidden" name="return_url" [value]="returnUrl">
+        <input type="hidden" name="cancel_url" [value]="cancelUrl">
+        <input type="hidden" name="notify_url" [value]="notifyUrl">
+        <input required type="hidden" name="amount" [value]="amount">
+        <input required type="hidden" name="item_name" maxlength="255" [value]="itemName">
+        <input type="hidden" name="item_description" maxlength="255" [value]="itemDescription">
+        <input required type="hidden" name="subscription_type" pattern="1" value="1">
+        <input type="hidden" name="recurring_amount" [value]="recurringAmount">
+        <input required type="hidden" name="cycles" pattern="[0-9]" value="0">
+        <input required type="hidden" name="frequency" pattern="[0-9]" value="3">
+        <input *ngIf="selectedPaymentMethod" type="hidden" name="payment_method" [value]="selectedPaymentMethod">
+        
+        <div class="payment-actions" *ngIf="!loading">
+            <!-- Payment Methods Toggle -->
+            <button type="button" class="payment-toggle" (click)="togglePaymentMethods()">
+                <span class="toggle-icon">{{ showPaymentMethods ? '▲' : '▼' }}</span>
+                <span>{{ showPaymentMethods ? 'Hide' : 'Show' }} Payment Methods</span>
+            </button>
+
+            <!-- Payment Methods Grid -->
+            <div class="payment-methods-wrapper" [class.expanded]="showPaymentMethods">
+                <!-- Popular Methods -->
+                <div class="method-section">
+                    <div class="section-title">⭐ Popular</div>
+                    <div class="methods-grid">
+                        <button type="button" 
+                            *ngFor="let method of getPopularMethods()" 
+                            class="method-card"
+                            [class.selected]="selectedPaymentMethod === method.id"
+                            (click)="selectPaymentMethod(method)">
+                            <span class="method-icon">{{ method.icon }}</span>
+                            <span class="method-name">{{ method.name }}</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Cards -->
+                <div class="method-section">
+                    <div class="section-title">💳 Cards</div>
+                    <div class="methods-grid">
+                        <button type="button" 
+                            *ngFor="let method of getMethodsByCategory('card')" 
+                            class="method-card"
+                            [class.selected]="selectedPaymentMethod === method.id"
+                            (click)="selectPaymentMethod(method)">
+                            <span class="method-icon">{{ method.icon }}</span>
+                            <span class="method-name">{{ method.name }}</span>
+                            <span class="method-desc">{{ method.description }}</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Bank Transfer -->
+                <div class="method-section">
+                    <div class="section-title">🏦 Bank Transfer</div>
+                    <div class="methods-grid">
+                        <button type="button" 
+                            *ngFor="let method of getMethodsByCategory('eft')" 
+                            class="method-card"
+                            [class.selected]="selectedPaymentMethod === method.id"
+                            (click)="selectPaymentMethod(method)">
+                            <span class="method-icon">{{ method.icon }}</span>
+                            <span class="method-name">{{ method.name }}</span>
+                            <span class="method-desc">{{ method.description }}</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Digital Wallets -->
+                <div class="method-section">
+                    <div class="section-title">📱 Digital Wallets</div>
+                    <div class="methods-grid small">
+                        <button type="button" 
+                            *ngFor="let method of getMethodsByCategory('wallet')" 
+                            class="method-card compact"
+                            [class.selected]="selectedPaymentMethod === method.id"
+                            (click)="selectPaymentMethod(method)">
+                            <span class="method-icon">{{ method.icon }}</span>
+                            <span class="method-name">{{ method.name }}</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Buy Now Pay Later -->
+                <div class="method-section">
+                    <div class="section-title">⏰ Buy Now Pay Later</div>
+                    <div class="methods-grid small">
+                        <button type="button" 
+                            *ngFor="let method of getMethodsByCategory('bnpl')" 
+                            class="method-card compact"
+                            [class.selected]="selectedPaymentMethod === method.id"
+                            (click)="selectPaymentMethod(method)">
+                            <span class="method-icon">{{ method.icon }}</span>
+                            <span class="method-name">{{ method.name }}</span>
+                            <span class="method-desc">{{ method.description }}</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Other Options -->
+                <div class="method-section">
+                    <div class="section-title">🎫 Other Options</div>
+                    <div class="methods-grid small">
+                        <button type="button" 
+                            *ngFor="let method of getMethodsByCategory('other')" 
+                            class="method-card compact"
+                            [class.selected]="selectedPaymentMethod === method.id"
+                            (click)="selectPaymentMethod(method)">
+                            <span class="method-icon">{{ method.icon }}</span>
+                            <span class="method-name">{{ method.name }}</span>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Subscribe Button -->
+            <button type="submit" class="subscribe-btn">
+                <span class="btn-icon">🚀</span>
+                <span class="btn-text">Subscribe Now</span>
+                <span class="btn-subtext" *ngIf="selectedPaymentMethod">
+                    via {{ getSelectedMethodName() }}
+                </span>
+            </button>
+
+            <!-- Secure Payment Badge -->
+            <div class="security-badge">
+                <span class="lock-icon">🔒</span>
+                <span>Secure payment powered by PayFast</span>
+            </div>
+
+            <!-- Payment Logos -->
+            <div class="payment-logos">
+                <img src="https://my.payfast.io/images/buttons/Subscribe/Light-Small-Subscribe.png" alt="PayFast" class="payfast-logo">
+            </div>
+        </div>
+
+        <!-- Loading State -->
+        <div class="loading-state" *ngIf="loading">
+            <div class="spinner"></div>
+            <span>Processing...</span>
+        </div>
+    </form>
+</div>
