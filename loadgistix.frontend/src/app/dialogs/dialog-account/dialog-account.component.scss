@@ -1,3 +1,32 @@
+// Make the dialog wider and scrollable
+:host {
+  display: block;
+  width: 100%;
+}
+
+// Style the dialog container (ViewEncapsulation.None allows this)
+.mat-mdc-dialog-container {
+  .mdc-dialog__surface {
+    min-width: 420px !important;
+    max-width: 520px !important;
+    
+    @media (max-width: 480px) {
+      min-width: calc(100vw - 32px) !important;
+      max-width: calc(100vw - 32px) !important;
+    }
+  }
+}
+
+// Fix the dialog content scrolling
+.mat-mdc-dialog-content {
+  overflow-y: auto !important;
+  max-height: 60vh !important;
+  
+  @media (max-width: 480px) {
+    max-height: 70vh !important;
+  }
+}
+
 mat-list {
   --mdc-switch-selected-focus-state-layer-color: #3088c8 !important;
   --mdc-switch-selected-handle-color: #3088c8 !important;
@@ -45,4 +74,15 @@ mat-list {
   --mdc-elevated-card-container-elevation: unset !important;
   --mdc-elevated-card-container-shape: unset !important;
   --mdc-outlined-card-container-elevation: unset !important;
+}
+
+// Payment section styling
+.payment-section {
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  
+  .total-display {
+    .text-primary {
+      color: var(--fuse-primary);
+    }
+  }
 }
